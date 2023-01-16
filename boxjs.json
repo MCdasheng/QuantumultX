@@ -1,32 +1,21 @@
 {
-    "id": "mcdasheng.app.sub",
-    "name": "mcdasheng备份应用订阅",
-    "author": "@mcdasheng",
-    "apps": [
-      {
-        "id": "qcs",
-        "name": "屈臣氏",
-        "keys": ["chavy_signheader_10000"],
-        "settings": [
-          {
-            "id": "qcsAuthorization",
-            "name": "qcsAuthorization",
-            "val": "",
-            "type": "textarea",
-            "autoGrow": true,
-            "rows": 5,
-          },
-          {
-            "id": "qcsunionId",
-            "name": "qcsunionId",
-            "val": "",
-            "type": "textarea",
-            "autoGrow": true,
-            "rows": 5,
-          }
-        ],
-        "script": "https://raw.githubusercontent.com/lu0b0/Script/main/qcs.js",
-        
-      }
-    ]
-  }
+    {
+    "id": "iQIYI",
+    "name": "爱奇艺",
+    "keys": ["CookieQY"],
+    "descs_html": [
+      "<h4 align=\"center\">获取Cookie以及脚本配置请查看<a href=\"https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js\">脚本注释</a></h4>"
+    ],
+    "settings": [{
+      "id": "iQIYI_LogDetails",
+      "name": "响应日志",
+      "val": false,
+      "type": "boolean",
+      "desc": ""
+    }],
+    "script": "https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js",
+    "author": "@NobyDa",
+    "repo": "https://github.com/NobyDa/Script/blob/master/iQIYI-DailyBonus/iQIYI.js",
+    "icons": ["https://raw.githubusercontent.com/NobyDa/mini/master/Alpha/iQIYI.png", "https://raw.githubusercontent.com/NobyDa/mini/master/Color/iQIYI.png"]
+}
+}
