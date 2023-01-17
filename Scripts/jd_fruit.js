@@ -1,5 +1,6 @@
 /* 自用备份
 From https://raw.githubusercontent.com/ChuheGit/1/main/Script/jd_scripts/jd_fruit.js
+url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/jd_fruit.js
 
 东东水果:脚本更新地址 jd_fruit.js
 更新时间：2021-5-18
