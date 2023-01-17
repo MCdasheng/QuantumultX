@@ -3,9 +3,7 @@
     "id": "iQIYI",
     "name": "爱奇艺",
     "keys": ["CookieQY"],
-    "descs_html": [
-      "<h4 align=\"center\">获取Cookie以及脚本配置请查看<a href=\"https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js\">脚本注释</a></h4>"
-    ],
+    "descs":"",
     "settings": [{
       "id": "iQIYI_LogDetails",
       "name": "响应日志",
@@ -14,7 +12,7 @@
       "desc": ""
     }],
     "script": "https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js",
-    "author": "@NobyDa",
+    "author": "@",
     "repo": "https://github.com/NobyDa/Script/blob/master/iQIYI-DailyBonus/iQIYI.js",
 }
 }
