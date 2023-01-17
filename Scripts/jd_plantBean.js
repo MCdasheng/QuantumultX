@@ -1,6 +1,6 @@
 /* 自用备份
 From https://raw.githubusercontent.com/ChuheGit/1/main/Script/jd_scripts/jd_plantBean.js
-
+url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/jd_fruit.js
 种豆得豆 脚本更新地址：jd_plantBean.js
 更新时间：2021-04-9
 活动入口：京东APP我的-更多工具-种豆得豆
