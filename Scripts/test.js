@@ -1,6 +1,6 @@
 /*
 [rewrite_local]
-^http[s]s:\/\/cdn\.alzhuanxian1\.com:7390\/platform-ns\/v1\.0\/member\/money url script-response-body test.js
+^http[s]s:\/\/cdn\.alzhuanxian1\.com:7390\/platform-ns\/v1\.0\/member\/money url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/test.js
 [mitm] 
 hostname = cdn.alzhuanxian1.com
 */
