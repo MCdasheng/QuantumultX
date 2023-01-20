@@ -18,7 +18,7 @@ TG频道群：https://t.me/py996
 [rewrite_local]
 
 
-^https?:\/\/notability\.com\/subscriptions url script-response-body https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/Notability.js
+^https?:\/\/notability\.com\/subscriptions url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Notability.js
 
 [mitm] 
 
