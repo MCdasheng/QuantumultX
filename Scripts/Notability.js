@@ -107,7 +107,7 @@ obj = {
                 'status': _0x2e1d('0x5', 'k3NU'),
                 'originalPurchaseDate': _0x2e1d('0x6', '%*f6'),
                 'originalTransactionId': _0x2e1d('0x7', 'Inb]'),
-                'expirationDate': _0x2e1d('0xf', '5e7d'),
+                'expirationDate': _0x2e1d('0x9', '5e7d'),
                 'productId': _0x2e1d('0x9', 'Tonb'),
                 'tier': _0x2e1d('0xa', 'Inb]'),
                 'refundedDate': null,
