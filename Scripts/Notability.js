@@ -1,31 +1,3 @@
-/******************************
-
-脚本功能：Notability +解锁订阅
-下载地址：http://mtw.so/6bQodv
-特别说明：老版本解锁，然后同步新版本，
-软件版本：11.7.1
-脚本作者：彭于晏💞
-更新时间：2022-9-29
-问题反馈：QQ+89996462
-QQ会员群：779392027💞
-TG反馈群：https://t.me/plus8889
-TG频道群：https://t.me/py996
-使用声明：⚠️此脚本仅供学习与交流，请勿转载与贩卖！⚠️⚠️⚠️
-
-
-*******************************
-
-[rewrite_local]
-
-
-^https?:\/\/notability\.com\/subscriptions url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Notability.js
-
-[mitm] 
-
-hostname = notability.com
-
-*******************************/
-
 ;var encode_version = 'jsjiami.com.v5', esugt = '__0xd0f78',
     __0xd0f78 = ['woBFAMKwwp0=', 'RcKtwqXDiVg=', 'XcO9GTZ4', 'wpvCj8O4w5PCqA==', 'RcOIwo4qUA==', 'U8KOwprDr0A=', 'S8Ouw5I5QA==', 'fkhZw6rDiw==', 'wo8ICcOd', 'NDTCnnbCuTAZEGlcZHcVCBw=', 'w7J1NQTCk1stwqDDmUZIwpZ0JsO0wqXDpcO4', 'LT1Qw7sswpnCtcObw6PDs29QwpbDhcKZw70NUlNc', 'U8KnFcO8wpph', 'CMKASVcCwofDu8OjLB5MZnxTMTAhbU4kw7bDrBnCtA==', 'PxkbwqjCnkzCmcKmSzRsZm3CqcON', 'wrodw7AfMWlNw6PDhcKwUSDDmwnDiMKqdCvDrno7wrbDhsKO', 'DyJNwoYhwofCpMKQw4DDtGhOwpzDgsKdw5IKTl5Bw5skATJYMVMG', 'fltOw7TDhwDDjA==', 'O0/CrjBbGcOzOsKp', 'w6USUA==', 'LMO7OMKaXsOcwop1w6Q=', 'w7/DsMKHXk8mKWvCmcOAw6V0EcO4', '54mx5p2K5YyX776eDcOJ5L2y5ayC5p+N5byz56u177+D6LyF6K2L5pWF5o+85ouT5Lio55ul5be45L+5', '5Yuo6ZqY54iT5pyF5Y6j77yxFhzkvprlrqXmn73lvarnqLo=', 'wqLCqRBOGg=='];
 (function (_0x8d23ec, _0x48cace) {
@@ -107,7 +79,7 @@ obj = {
                 'status': _0x2e1d('0x5', 'k3NU'),
                 'originalPurchaseDate': _0x2e1d('0x6', '%*f6'),
                 'originalTransactionId': _0x2e1d('0x7', 'Inb]'),
-                'expirationDate': _0x2e1d('0x1', '5e7d'),
+                'expirationDate': _0x2e1d('0x8', '5e7d'),
                 'productId': _0x2e1d('0x9', 'Tonb'),
                 'tier': _0x2e1d('0xa', 'Inb]'),
                 'refundedDate': null,
