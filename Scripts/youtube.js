@@ -1,6 +1,6 @@
 /*
 自用备份 Youtube 🚫AD & 📺PIP 
-url = https://raw.githubusercontent.com/MCdasheng/Module/main/Scripts/youtube.js
+url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/youtube.js
 From https://raw.githubusercontent.com/Maasea/sgmodule/master/Script/Youtube/youtube.js
 */
 
