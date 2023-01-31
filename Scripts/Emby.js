@@ -2,7 +2,7 @@
 自用备份 Emby Premiere
 
 [Rewrite Local]
-^https?:\/\/mb3admin.com\/admin\/service\/registration\/validateDevice url script-response-body https://raw.githubusercontent.com/Tartarus2014/Script/master/Emby.js
+^https?:\/\/mb3admin.com\/admin\/service\/registration\/validateDevice url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Emby.js
 
 [Hostname]
 hostname = mb3admin.com
