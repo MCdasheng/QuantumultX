@@ -1,0 +1,30 @@
+{
+  "name": "IconSet",
+  "description": "For own use",
+  "icons": [
+    {
+      "name": "Ali",
+      "url": "https://raw.githubusercontent.com/lowking/Scripts/master/doc/icon/aliYunPan.png"
+    },
+    {
+      "name": "Maying",
+      "url": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Maying.png"
+    },
+    {
+      "name": "Nexitally",
+      "url": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Nex.png"
+    },
+    {
+      "name": "Dler",
+      "url": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Dler.png"
+    },
+    {
+      "name": "Cylink",
+      "url": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Cylink.png"
+    },
+    {
+      "name": "SaySS",
+      "url": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/SaySS.png"
+    }
+  ]
+}
