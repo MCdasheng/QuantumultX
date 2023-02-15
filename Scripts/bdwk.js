@@ -1,6 +1,7 @@
 /******************************
 自用备份 
 !url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/bdwk.js
+From https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/bdwk.js
 脚本功能：百度文库☆解锁VIP文档阅读权限
 下载地址：https://is.gd/NYKRaD
 软件版本：8.1.01
