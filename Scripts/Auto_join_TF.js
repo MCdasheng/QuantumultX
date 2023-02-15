@@ -1,9 +1,9 @@
 /*
 自用备份 自动加入TF
-url = 
+url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Auto_join_TF.js
 From https://raw.githubusercontent.com/chouchoui/QuanX/master/Scripts/testflight/Auto_join_TF.js
 [task local]
-30 10 * * * https://raw.githubusercontent.com/chouchoui/QuanX/master/Scripts/testflight/Auto_join_TF.js, tag=TestFlight自动加入, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/testflight.png, enabled=true
+30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Auto_join_TF.js, tag=TestFlight自动加入, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/testflight.png, enabled=true
 
 */
 
