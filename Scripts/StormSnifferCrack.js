@@ -1,10 +1,11 @@
 /*
-url = 
-脚本功能：解锁StormSniffer
-脚本作者：PayNe
+自用备份 解锁StormSniffer
+!url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/StormSnifferCrack.js
+From  https://raw.githubusercontent.com/paynexss/Scripts/main/Scripts/StormSnifferCrack.js
+@PayNe
 
 [rewrite_local]
-^http[s]?:\/\/api\.x-storm\.com(:\d{2,5})?\/app/((user-profile\/)|(auth-device\/list\/))$ url script-response-body https://raw.githubusercontent.com/paynexss/Scripts/main/Scripts/StormSnifferCrack.js
+^http[s]?:\/\/api\.x-storm\.com(:\d{2,5})?\/app/((user-profile\/)|(auth-device\/list\/))$ url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/StormSnifferCrack.js
 
 [mitm]
 hostname = *.x-storm.com
