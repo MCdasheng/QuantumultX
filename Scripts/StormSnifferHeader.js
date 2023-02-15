@@ -1,11 +1,11 @@
 /*
 自用备份 Storm Sniffer Header
-!url = 
+!url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/StormSnifferHeader.js
 From https://raw.githubusercontent.com/paynexss/Scripts/main/Scripts/StormSnifferHeader.js
 @PayNe
 
 [rewrite_local]
-^http[s]?:\/\/api\.x-storm\.com(:\d{2,5})?\/app/.+$ url script-request-header https://raw.githubusercontent.com/paynexss/Scripts/main/Scripts/StormSnifferHeader.js
+^http[s]?:\/\/api\.x-storm\.com(:\d{2,5})?\/app/.+$ url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/StormSnifferHeader.js
 
 [mitm]
 hostname = *.x-storm.com
