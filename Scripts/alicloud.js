@@ -1,7 +1,7 @@
 /*
 自用备份 阿里云盘净化+解锁本地会员功能 [倍速、码率]
 From https://gist.githubusercontent.com/ddgksf2013/f4752e632fd3375ea2811985c5b635dc/raw/alicloud.js
-url = 
+url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/alicloud.js
 
 [rewrite_local]
 
