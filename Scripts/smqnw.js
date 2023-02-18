@@ -1,10 +1,10 @@
 /*
 自用备份 扫描全能王
 From https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/smqnw.js
-url = 
+url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/smqnw.js
 [rewrite_local]
 
-^https:\/\/(api|api-cs)\.intsig\.net\/purchase\/cs\/query_property\? url script-response-body 
+^https:\/\/(api|api-cs)\.intsig\.net\/purchase\/cs\/query_property\? url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/smqnw.js
 
 [mitm]
 
