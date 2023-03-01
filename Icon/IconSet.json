@@ -3,8 +3,12 @@
   "description": "For own use",
   "icons": [
     {
-      "name": "AliYun",
-      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/AliYun.png"
+      "name": "Ali",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/Ali.png"
+    },
+    {
+      "name": "Aliyun",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/Aliyun.png"
     },
     {
       "name": "Maying",
