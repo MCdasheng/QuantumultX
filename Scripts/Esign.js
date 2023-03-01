@@ -34,7 +34,7 @@ $task.fetch(myRequest).then(
     $done();
   },
   (reason) => {
-    $notify("🔴Error", "请检查脚本", reason.error);
+    $notify("Error", "请检查脚本", reason.error);
     $done();
   }
 );
