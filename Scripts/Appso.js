@@ -29,9 +29,10 @@ $task.fetch(myRequest).then(
       var link = obj.objects[i].app.download_link[0].link.split(" ").join("");
       var discounted_price = obj.objects[i].discount_info[0].discounted_price.split(" ").join("");
       var original_price = obj.objects[i].discount_info[0].original_price.split(" ").join("");
-      str = name +":￥" + original_price + " --> ￥" + discounted_price + "\n" + content + "\n" + link+ "\n";
+      str = name +":￥" + original_price + " --> ￥" + discounted_price + "\n" + content + "\n" + link + "\n"+ "\n";
       notice += str;    
     }
+    notice = notice.trim();
     $notify("Appso", "今日限免已送达,点击查看日志👇", notice);
     console.log(notice);
     $done();
