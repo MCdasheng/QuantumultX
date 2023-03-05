@@ -25,7 +25,7 @@ $task.fetch(myRequest).then(
     var notice = " ";
     for (i = 0; i < 10; i++) {
       var name = obj.objects[i].app.name.split(" ").join("").replace("\n", "");
-      var content = obj.objects[i].content.split(" ").join("").replace("\n", "");
+      var content = obj.objects[i].content.replace("\n", "");
       var link = obj.objects[i].app.download_link[0].link.split(" ").join("").replace("\n", "");
       var discounted_price = obj.objects[i].discount_info[0].discounted_price.split(" ").join("").replace("\n", "");
       var original_price = obj.objects[i].discount_info[0].original_price.split(" ").join("").replace("\n", "");
