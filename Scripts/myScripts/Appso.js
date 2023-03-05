@@ -1,6 +1,6 @@
 /*
 脚本功能: Appso今日限免
-29 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Appso.js, tag=Appso今日限免, img-url=applelogo.system, enabled=true
+29 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Appso.js, tag=Appso今日限免, img-url=applelogo.system, enabled=true
 */
 const url = "https://app.so/api/v5/appso/discount/?platform=web";
 const method = "GET";
