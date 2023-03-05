@@ -31,10 +31,10 @@ $task.fetch(myRequest).then(
     var obj = eval("(" + json + ")");
     var notice = " ";
     for (i = 0; i < 10; i++) {
-        var name = obj.data[i].name.split(" ").join("").replace("\n", "");
+        var name = '🟢' + obj.data[i].name.split(" ").join("").replace("\n", "");
         var description = obj.data[i].description.replace("\n", "");
         // 通过uuid拼接得到的url,与网页不同，而在iPhone上可以轻松访问
-        var uuid = "https://m.gofans.cn/app/"+ obj.data[i].uuid.split(" ").join("").replace("\n", ""); 
+        var uuid = "🔗https://m.gofans.cn/app/"+ obj.data[i].uuid.split(" ").join("").replace("\n", ""); 
         var price = obj.data[i].price.split(" ").join("").replace("\n", "");
         var original_price = obj.data[i].original_price.split(" ").join("").replace("\n", "");
         str = name +":￥" + original_price + " --> ￥" + price + "\n" + description + "\n" + uuid + "\n"+ "\n";
