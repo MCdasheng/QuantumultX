@@ -5,7 +5,7 @@ From https://raw.githubusercontent.com/chouchoui/QuanX/master/Scripts/testflight
 
 [rewrite_local]
 ^https:\/\/testflight\.apple\.com\/v3\/accounts/.*\/apps$ url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/TF_keys.js
-^https://testflight.apple.com/join/(.*) url script-request-headerhttps://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/TF_keys.js
+^https:\/\/testflight\.apple\.com\/join\/(.*) url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/TF_keys.js
 [mitm]
 hostname = testflight.apple.com
 
