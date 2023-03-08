@@ -1,18 +1,16 @@
 {
-    {
-    "id": "iQIYI",
-    "name": "爱奇艺",
-    "keys": ["CookieQY"],
-    "descs":"",
-    "settings": [{
-      "id": "iQIYI_LogDetails",
-      "name": "响应日志",
-      "val": false,
-      "type": "boolean",
-      "desc": ""
-    }],
-    "script": "https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js",
-    "author": "@",
-    "repo": "https://github.com/NobyDa/Script/blob/master/iQIYI-DailyBonus/iQIYI.js",
-}
+  "id": "mcdasheng",
+  "name": "mcdasheng 脚本订阅",
+  "description": "自用",
+  "author": "@mcdasheng",
+  "icon": "https://avatars.githubusercontent.com/u/92009557",
+  "repo": "https://github.com/mcdasheng",
+  "apps": [{
+    "id": "cuiun",
+    "name": "cuiun签到",
+    "keys": ["AUTH"],
+    "script": "https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js",
+    "author": "@mcdasheng",
+    "repo": "https://github.com/NobyDa/Script/blob/master/Bilibili-DailyBonus/Manga.js",
+  },
 }
