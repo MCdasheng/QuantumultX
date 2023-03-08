@@ -1,5 +1,5 @@
 {
-  "id": "mcdasheng",
+  "id": "mcdasheng.app.sub",
   "name": "mcdasheng 脚本订阅",
   "description": "自用",
   "author": "@mcdasheng",
@@ -16,7 +16,7 @@
     "author": "@NobyDa",
     "repo": "https://github.com/NobyDa/Script/blob/master/Bilibili-DailyBonus/Manga.js",
     "icons": ["https://raw.githubusercontent.com/NobyDa/mini/master/Alpha/manga.png", "https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png"]
-  },{
+  }, {
     "id": "cuiun",
     "name": "cuiun签到",
     "keys": ["AUTH"],
@@ -28,12 +28,12 @@
       "type": "text",
       "placeholder": "'Bearer '+ token 形式",
       "desc": ""
-    }]
+    }],
     "script": "https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js",
     "author": "@mcdasheng",
     "repo": "https://github.com/mcdasheng",
     "icons": ["https://raw.githubusercontent.com/NobyDa/mini/master/Alpha/manga.png", "https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png"]
-  },{
+  }, {
     "id": "GoFans",
     "name": "GoFans今日限免",
     "keys": ["AUTH"],
@@ -45,11 +45,10 @@
       "type": "text",
       "placeholder": "'Bearer '+ token 形式",
       "desc": ""
-    }]
+    }],
     "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/GoFans.js",
     "author": "@mcdasheng",
     "repo": "https://github.com/mcdasheng",
     "icons": ["https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"]
-  }
- ]
+  }]
 }
