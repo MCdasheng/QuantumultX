@@ -6,11 +6,25 @@
   "icon": "https://avatars.githubusercontent.com/u/92009557",
   "repo": "https://github.com/mcdasheng",
   "apps": [{
+    "id": "BiliManga",
+    "name": "哔哩漫画",
+    "keys": ["CookieBM"],
+    "descs_html": [
+      "<h4 align=\"center\">获取Cookie以及脚本配置请查看<a href=\"https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js\">脚本注释</a></h4>"
+    ],
+    "script": "https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js",
+    "author": "@NobyDa",
+    "repo": "https://github.com/NobyDa/Script/blob/master/Bilibili-DailyBonus/Manga.js",
+    "icons": ["https://raw.githubusercontent.com/NobyDa/mini/master/Alpha/manga.png", "https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png"]
+  },{
     "id": "cuiun",
     "name": "cuiun签到",
     "keys": ["AUTH"],
+    "desc": "",
     "script": "https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js",
     "author": "@mcdasheng",
-    "repo": "https://github.com/NobyDa/Script/blob/master/Bilibili-DailyBonus/Manga.js",
-  }]
+    "repo": "https://github.com/mcdasheng",
+    "icons": ["https://raw.githubusercontent.com/NobyDa/mini/master/Alpha/manga.png", "https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png"]
+  }
+ ]
 }
