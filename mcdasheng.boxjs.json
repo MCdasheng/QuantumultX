@@ -33,6 +33,23 @@
     "author": "@mcdasheng",
     "repo": "https://github.com/mcdasheng",
     "icons": ["https://raw.githubusercontent.com/NobyDa/mini/master/Alpha/manga.png", "https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png"]
+  },{
+    "id": "GoFans",
+    "name": "GoFans今日限免",
+    "keys": ["AUTH"],
+    "desc": "",
+    "settings": [{
+      "id": "AUTH",
+      "name": "authorization",
+      "val": "",
+      "type": "text",
+      "placeholder": "'Bearer '+ token 形式",
+      "desc": ""
+    }]
+    "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/GoFans.js",
+    "author": "@mcdasheng",
+    "repo": "https://github.com/mcdasheng",
+    "icons": ["https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"]
   }
  ]
 }
