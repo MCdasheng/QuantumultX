@@ -21,6 +21,14 @@
     "name": "cuiun签到",
     "keys": ["AUTH"],
     "desc": "",
+    "settings": [{
+      "id": "AUTH",
+      "name": "authorization",
+      "val": "",
+      "type": "text",
+      "placeholder": "'Bearer '+ token 形式",
+      "desc": ""
+    }]
     "script": "https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js",
     "author": "@mcdasheng",
     "repo": "https://github.com/mcdasheng",
