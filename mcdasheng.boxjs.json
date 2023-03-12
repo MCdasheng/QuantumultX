@@ -34,6 +34,23 @@
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": []
+    }, {
+      "id": "esign",
+      "name": "轻松签版本监控",
+      "keys": ["cuurrentVersion"],
+      "desc": "",
+      "settings": [{
+        "id": "cuurrentVersion",
+        "name": "cuurrentVersion",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://rawhttps://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Esign.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": ["https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png"]
     },
     {
       "id": "GoFans",
