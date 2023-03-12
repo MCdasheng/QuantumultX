@@ -1,6 +1,6 @@
 /*
 脚本功能: 哇哈体育签到
-29 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/waha.js, tag=哇哈体育签到
+29 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/waha.js, img-url=figure.disc.sports.system, enabled=true
 */
 
 let cookie = $prefs.valueForKey("cookie");
