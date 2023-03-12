@@ -6,49 +6,52 @@
   "icon": "https://avatars.githubusercontent.com/u/92009557",
   "repo": "https://github.com/mcdasheng",
   "apps": [{
-    "id": "BiliManga",
-    "name": "哔哩漫画",
-    "keys": ["CookieBM"],
-    "descs_html": [
-      "<h4 align=\"center\">获取Cookie以及脚本配置请查看<a href=\"https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js\">脚本注释</a></h4>"
-    ],
-    "script": "https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js",
-    "author": "@NobyDa",
-    "repo": "https://github.com/NobyDa/Script/blob/master/Bilibili-DailyBonus/Manga.js",
-    "icons": ["https://raw.githubusercontent.com/NobyDa/mini/master/Alpha/manga.png", "https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png"]
-  }, {
-    "id": "cuiun",
-    "name": "cuiun签到",
-    "keys": ["AUTH"],
-    "desc": "",
-    "settings": [{
-      "id": "AUTH",
-      "name": "authorization",
-      "val": "",
-      "type": "text",
-      "placeholder": "'Bearer '+ token 形式",
-      "desc": ""
-    }],
-    "script": "https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js",
-    "author": "@mcdasheng",
-    "repo": "https://github.com/mcdasheng",
-    "icons": ["https://raw.githubusercontent.com/NobyDa/mini/master/Alpha/manga.png", "https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png"]
-  }, {
-    "id": "GoFans",
-    "name": "GoFans今日限免",
-    "keys": ["AUTH"],
-    "desc": "",
-    "settings": [{
-      "id": "AUTH",
-      "name": "authorization",
-      "val": "",
-      "type": "text",
-      "placeholder": "'Bearer '+ token 形式",
-      "desc": ""
-    }],
-    "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/GoFans.js",
-    "author": "@mcdasheng",
-    "repo": "https://github.com/mcdasheng",
-    "icons": ["https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"]
-  }]
+      "id": "BiliManga",
+      "name": "哔哩漫画",
+      "keys": ["CookieBM"],
+      "descs_html": [
+        "<h4 align=\"center\">获取Cookie以及脚本配置请查看<a href=\"https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js\">脚本注释</a></h4>"
+      ],
+      "script": "https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js",
+      "author": "@NobyDa",
+      "repo": "https://github.com/NobyDa/Script/blob/master/Bilibili-DailyBonus/Manga.js",
+      "icons": ["https://raw.githubusercontent.com/NobyDa/mini/master/Alpha/manga.png", "https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png"]
+    },
+    {
+      "id": "waha",
+      "name": "哇哈体育签到",
+      "keys": ["cookie"],
+      "desc": "",
+      "settings": [{
+        "id": "cookie",
+        "name": "cookie",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://rawhttps://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/waha.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": []
+    },
+    {
+      "id": "GoFans",
+      "name": "GoFans今日限免",
+      "keys": ["AUTH"],
+      "desc": "",
+      "settings": [{
+        "id": "AUTH",
+        "name": "authorization",
+        "val": "",
+        "type": "text",
+        "placeholder": "'Bearer '+ token 形式",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/GoFans.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": ["https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"]
+    }
+  ]
 }
