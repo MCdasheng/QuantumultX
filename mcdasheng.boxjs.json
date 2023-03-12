@@ -19,24 +19,24 @@
         "placeholder": "",
         "desc": ""
       }],
-      "script": "https://rawhttps://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/waha.js",
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/waha.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": []
     }, {
       "id": "Esign",
       "name": "轻松签版本监控",
-      "keys": ["cuurrentVersion"],
+      "keys": ["currentVersion"],
       "desc": "",
       "settings": [{
-        "id": "cuurrentVersion",
-        "name": "cuurrentVersion",
+        "id": "currentVersion",
+        "name": "currentVersion",
         "val": "",
         "type": "text",
         "placeholder": "",
         "desc": ""
       }],
-      "script": "https://rawhttps://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Esign.js",
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Esign.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": ["https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png","https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png"]
