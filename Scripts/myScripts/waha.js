@@ -7,12 +7,6 @@ const url =
   "https://bbs.wahatiyu.com/plugin.php?id=gsignin:index&action=signin&formhash=dca5dc70";
 const method = "GET";
 const data = { info: "abc" };
-const myRequest = {
-  url: url,
-  method: method,
-  headers: headers,
-  body: JSON.stringify(data),
-};
 
 let cookie = $prefs.valueForKey("cookie");
 let headers = {
@@ -21,12 +15,18 @@ let headers = {
   Cookie: cookie,
 };
 
+const myRequest = {
+  url: url,
+  method: method,
+  headers: headers,
+  body: JSON.stringify(data),
+};
+
 $task.fetch(myRequest).then(
   (response) => {
     var res = response.body;
     var regex = /(<([^>]+)>)/gi;
-    notice = res.replace(regex, "");
-
+    var notice = res.replace(regex, "");
     $notify("哇哈体育", "", notice);
     $done();
   },
