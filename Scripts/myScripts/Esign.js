@@ -3,6 +3,8 @@
 脚本功能:监控轻松签版本更新
 30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Esign.js, tag=轻松签版本监控, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png, enabled=true
 */
+
+const currentVerision = $prefs.valueForKey("currentVerision");
 const url = "https://esign.yyyue.xyz/yyy/api/esignapp/lastVersion";
 const method = "GET";
 const headers = {
@@ -11,7 +13,6 @@ const headers = {
   "X-Requested-With": " XMLHttpRequest",
 };
 const data = { info: "abc" };
-
 const myRequest = {
   url: url,
   method: method,
@@ -22,7 +23,7 @@ const myRequest = {
 $task.fetch(myRequest).then(
   (response) => {
     const obj = JSON.parse(response.body);
-    if (obj.result.version !== "4.7.7.3") {
+    if (obj.result.version !== currentVerision) {
       const notice = "👇New version has released!\n" + obj.result.lzurl;
       $notify("轻松签版本监控", "", notice);
       console.log(notice);
