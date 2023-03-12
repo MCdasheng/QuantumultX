@@ -7,11 +7,6 @@ let cookie = $prefs.valueForKey("cookie");
 if (!cookie) {
   $notify("Cookie为空,请检查cookie!");
 }
-let headers = {
-  "User-Agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.63",
-  Cookie: cookie,
-};
 
 const url =
   "https://bbs.wahatiyu.com/plugin.php?id=gsignin:index&action=signin&formhash=dca5dc70";
@@ -22,6 +17,11 @@ const myRequest = {
   method: method,
   headers: headers,
   body: JSON.stringify(data),
+};
+const headers = {
+  "User-Agent":
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.63",
+  Cookie: cookie,
 };
 
 $task.fetch(myRequest).then(
