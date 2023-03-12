@@ -5,18 +5,7 @@
   "author": "@mcdasheng",
   "icon": "https://avatars.githubusercontent.com/u/92009557",
   "repo": "https://github.com/mcdasheng",
-  "apps": [{
-      "id": "BiliManga",
-      "name": "哔哩漫画",
-      "keys": ["CookieBM"],
-      "descs_html": [
-        "<h4 align=\"center\">获取Cookie以及脚本配置请查看<a href=\"https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js\">脚本注释</a></h4>"
-      ],
-      "script": "https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js",
-      "author": "@NobyDa",
-      "repo": "https://github.com/NobyDa/Script/blob/master/Bilibili-DailyBonus/Manga.js",
-      "icons": ["https://raw.githubusercontent.com/NobyDa/mini/master/Alpha/manga.png", "https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png"]
-    },
+  "apps": [
     {
       "id": "waha",
       "name": "哇哈体育签到",
@@ -35,7 +24,7 @@
       "repo": "https://github.com/mcdasheng",
       "icons": []
     }, {
-      "id": "esign",
+      "id": "Esign",
       "name": "轻松签版本监控",
       "keys": ["cuurrentVersion"],
       "desc": "",
@@ -50,7 +39,7 @@
       "script": "https://rawhttps://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Esign.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
-      "icons": ["https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png"]
+      "icons": ["https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png","https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png"]
     },
     {
       "id": "GoFans",
@@ -68,7 +57,7 @@
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/GoFans.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
-      "icons": ["https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"]
+      "icons": ["https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png","https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"]
     }
   ]
 }
