@@ -29,7 +29,7 @@ $task.fetch(myRequest).then(
     var res = response.body;
     var regex = /(<([^>]+)>)/gi;
     var notice = res.replace(regex, "");
-    $notify("哇哈体育", "", notice);
+    $notify("哇哈体育", notice);
     $done();
   },
   (reason) => {
