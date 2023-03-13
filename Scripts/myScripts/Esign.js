@@ -28,7 +28,7 @@ $task.fetch(myRequest).then(
       $notify("轻松签版本监控", "", notice);
       console.log(notice);
     } else {
-      const notice = "🥳No updates, now version:" + obj.result.version;
+      const notice = "🥳No updates! Current version:" + obj.result.version;
       $notify("轻松签版本监控", "", notice);
       console.log(notice);
     }
