@@ -1,6 +1,6 @@
 /*
 脚本功能: Appraven今日限免
-29 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Appraven.js, tag=Appraven今日限免, img-url=applelogo.system, enabled=true
+29 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Appraven.js, tag=Appraven今日限免, img-url=applelogo.system, enabled=true
 */
 const url =
   "https://appraven.net/AppRaven/app?t=sn&qt=pd&pr=Free&mr=0&mrc=0&ml=0&pg=0&g=Any&d=Universal&rare=0";
