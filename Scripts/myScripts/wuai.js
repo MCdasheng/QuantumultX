@@ -1,6 +1,6 @@
 /*
 脚本功能: 52appleid 签到
-30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/wuai.js, img-url=figure.disc.sports.system, enabled=true
+30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/wuai.js, tag=52appleid签到, img-url=applelogo.system, enabled=true
 */
 
 const $ = init();
