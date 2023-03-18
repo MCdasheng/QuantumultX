@@ -9,17 +9,17 @@
     {
       "id": "waha",
       "name": "哇哈体育签到",
-      "keys": ["cookie"],
+      "keys": ["waha_cookie"],
       "desc": "",
       "settings": [{
-        "id": "cookie",
-        "name": "cookie",
+        "id": "waha_cookie",
+        "name": "waha_cookie",
         "val": "",
         "type": "text",
         "placeholder": "",
         "desc": ""
       }],
-      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/waha.js",
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/waha.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": []
@@ -36,7 +36,7 @@
         "placeholder": "",
         "desc": ""
       }],
-      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/Esign.js",
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Esign.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": ["https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png","https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png"]
