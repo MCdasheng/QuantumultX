@@ -22,10 +22,10 @@ function sign() {
   };
 
   $.get(options, (error, response, data) => {
-    $.log(data);
     var regex = /(<([^>]+)>)/gi;
-    var notice = data.replace(regex, "");
+    var notice = data.replace(regex, "").trim();
     $.msg("哇哈体育", notice);
+    $.log(notice);
     $.done();
   });
 }
