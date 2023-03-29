@@ -60,7 +60,7 @@
                 "hold": true,
                 "holdCardInfo": [{
                     "__typename": "MemberCardAccount",
-                    "num": 99,
+                    "num": 1,
                     "endTime": 4102329600,
                     "rightType": "AI_CREATE",
                     "name": "作画次数"
