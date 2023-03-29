@@ -41,7 +41,7 @@ $task.fetch(myRequest).then(
         var str = name +": $" + original_price + " --> $" + price + "\n" + link + "\n" + "\n";
         notice += str;
       }
-      notice = notice.trim();
+      // notice = notice.trim();
       notice2 += notice;
     }
     console.log(notice2);
