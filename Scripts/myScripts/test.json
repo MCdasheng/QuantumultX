@@ -2,15 +2,10 @@
     "data": {
         "accountModule": {
             "__typename": "AccountModuleQuery",
-            "userMemberCardList": [{
-                    "__typename": "MemberCard",
-                    "name": "AI魔法体验卡",
-                    "cardType": "ORIGIN_CARD",
-                    "hold": true
-                },
+            "userMemberCardList": [
                 {
                     "__typename": "MemberCard",
-                    "name": "白金",
+                    "name": "铂金权益卡",
                     "cardType": "PLATINUM_CARD",
                     "hold": true
                 }
