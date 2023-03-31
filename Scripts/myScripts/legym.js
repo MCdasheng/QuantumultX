@@ -36,7 +36,7 @@ function login() {
     } else {
       $.msg("Error", error);
     }
-    $.done();
+    // $.done();
   });
 }
 
@@ -58,7 +58,6 @@ function getId() {
     var obj = JSON.parse(data);
     if (obj.code == 0) {
       const items = obj.data.items;
-
       for (i = items.length - 1; i > 0; i--) {
         if (items[i].name.search(/沙河/) != -1) {
           var name = items[i].name;
@@ -68,7 +67,6 @@ function getId() {
       }
 
       $.setdata("legym_activityId", activityId);
-
       if ($.getdata("legym_activityId")) {
         $.log("🎉活动id已更新");
       } else $.msg("🔴活动信息获取失败");
@@ -94,7 +92,7 @@ function signUp() {
     },
     body: `{}`,
   };
-  options.body = `activityId=${activityId}`;
+  options.body = `{"activityId":"` + activityId + `"}`;
   options.headers["Authorization"] = AUTH;
 
   $.post(options, (error, response, data) => {
@@ -112,7 +110,7 @@ function signUp() {
     } else {
       $.msg("Error", error);
     }
-    // $.done();
+    $.done();
   });
 }
 
