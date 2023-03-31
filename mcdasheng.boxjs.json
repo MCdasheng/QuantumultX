@@ -23,6 +23,37 @@
       "repo": "https://github.com/mcdasheng",
       "icons": []
     }, {
+      "id": "legym",
+      "name": "乐健体育报名",
+      "keys": ["legym_auth", "legym_activityId", "legym_loginBody"],
+      "desc": "legym_loginBody",
+      "settings": [{
+        "id": "legym_auth",
+        "name": "legym_auth",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "legym_activityId",
+        "name": "legym_activityId",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "legym_loginBody",
+        "name": "legym_loginBody",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": []
+    }, {
       "id": "wuai",
       "name": "52appleid签到",
       "keys": ["wuai_cookie"],
