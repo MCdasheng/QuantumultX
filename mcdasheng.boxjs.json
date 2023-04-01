@@ -48,6 +48,13 @@
         "type": "text",
         "placeholder": "",
         "desc": ""
+      }, {
+        "id": "legym_signBody",
+        "name": "legym_signBody",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
       }],
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js",
       "author": "@mcdasheng",
