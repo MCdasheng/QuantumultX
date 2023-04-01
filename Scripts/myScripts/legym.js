@@ -1,8 +1,9 @@
 /*
 脚本功能:乐健体育报名
-30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js, tag=乐健体育报名, img-url=figure.disc.sports.system, enabled=true
+30-35 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js, tag=乐健体育报名, img-url=figure.disc.sports.system, enabled=true
 @params: 
   "legym_loginBody"
+运行一次可能不成功(待解决？)
 */
 
 const $ = init();
@@ -29,7 +30,7 @@ function login() {
       var accessToken = obj.data.accessToken;
       accessToken = "Bearer " + accessToken;
       $.setdata("legym_auth", accessToken);
-      if ($.getdata("legym_auth")) {
+      if ($.getdata("legym_auth") == accessToken) {
         $.log("🎉用户鉴权已更新");
         $.log(accessToken);
       } else $.msg("🔴用户鉴权获取失败");
@@ -67,11 +68,11 @@ function getId() {
       }
 
       $.setdata("legym_activityId", activityId);
-      if ($.getdata("legym_activityId")) {
+      if ($.getdata("legym_activityId") == activityId) {
         $.log("🎉活动id已更新");
+        $.log(name);
+        $.log(activityId);
       } else $.msg("🔴活动信息获取失败");
-
-      $.log(name + ":" + activityId);
     } else {
       $.msg("Error", error);
     }
@@ -102,9 +103,11 @@ function signUp() {
       var reason = obj.data.reason;
       if (success) {
         reason = "🎉" + reason;
+        $.log("乐健体育", reason);
         $.msg("乐健体育", reason);
       } else {
         reason = "🔴" + reason;
+        $.log("乐健体育", reason);
         $.msg("乐健体育", reason);
       }
     } else {
