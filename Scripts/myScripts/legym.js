@@ -3,7 +3,7 @@
 30-35 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js, tag=乐健体育报名, img-url=figure.disc.sports.system, enabled=true
 @params: 
   "legym_loginBody"
-运行一次可能不成功(待解决？)
+运行一次可能不成功(待解决?)
 */
 
 const $ = init();
@@ -103,11 +103,11 @@ function signUp() {
       var reason = obj.data.reason;
       if (success) {
         reason = "🎉" + reason;
-        $.log("乐健体育", reason);
+        $.log(reason);
         $.msg("乐健体育", reason);
       } else {
         reason = "🔴" + reason;
-        $.log("乐健体育", reason);
+        $.log(reason);
         $.msg("乐健体育", reason);
       }
     } else {
