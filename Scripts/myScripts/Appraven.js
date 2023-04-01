@@ -37,7 +37,7 @@ $task.fetch(myRequest).then(
         var name = '🟢' + app.app_title;
         var original_price = app.last;
         var price = app.price;
-        var link = '🔗' + "https://apps.apple.com/us/app/id" + app.application_id;
+        var link = "https://apps.apple.com/us/app/id" + app.application_id;
         var str = name +": $" + original_price + " --> $" + price + "\n" + link + "\n" + "\n";
         notice += str;
       }
