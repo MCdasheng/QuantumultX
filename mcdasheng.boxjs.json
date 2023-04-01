@@ -25,8 +25,8 @@
     }, {
       "id": "legym",
       "name": "乐健体育报名",
-      "keys": ["legym_auth", "legym_activityId", "legym_loginBody"],
-      "desc": "legym_loginBody",
+      "keys": ["legym_auth", "legym_activityId", "legym_loginBody", "legym_signBody"],
+      "desc": "手动填入loginBody",
       "settings": [{
         "id": "legym_auth",
         "name": "legym_auth",
