@@ -24,7 +24,7 @@
       "icons": []
     }, {
       "id": "legym",
-      "name": "乐健体育报名",
+      "name": "乐健体育",
       "keys": ["legym_auth", "legym_activityId", "legym_loginBody", "legym_signBody"],
       "desc": "手动填入loginBody",
       "settings": [{
@@ -62,7 +62,7 @@
       "icons": []
     }, {
       "id": "bing",
-      "name": "bing",
+      "name": "Bing",
       "keys": ["bingPointCookieKey", "bingSearchCookieMobileKey", "bingSearchCookiePCKey"],
       "desc": "",
       "settings": [{
