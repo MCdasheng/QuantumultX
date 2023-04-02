@@ -1,7 +1,6 @@
 /*
 脚本功能: 🏆BingSearch Task
-url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bing.js
-img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+0-59/4 * * * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bing.js, tag=🏆BingSearch Task, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png, enabled=false
 */
 
 mbSearch();
