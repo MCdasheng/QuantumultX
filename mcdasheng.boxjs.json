@@ -61,6 +61,40 @@
       "repo": "https://github.com/mcdasheng",
       "icons": []
     }, {
+      "id": "bing",
+      "name": "bing",
+      "keys": ["bingPointCookieKey", "bingSearchCookieMobileKey", "bingSearchCookiePCKey"],
+      "desc": "",
+      "settings": [{
+        "id": "bingPointCookieKey",
+        "name": "bingPointCookieKey",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "bingSearchCookieMobileKey",
+        "name": "bingSearchCookieMobileKey",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "bingSearchCookiePCKey",
+        "name": "bingSearchCookiePCKey",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bing.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/lowking/Scripts/master/doc/icon/bingPoint.png",
+        "https://raw.githubusercontent.com/lowking/Scripts/master/doc/icon/bingPoint.png"
+      ]
+    }, {
       "id": "wuai",
       "name": "52appleid签到",
       "keys": ["wuai_cookie"],
