@@ -22,11 +22,28 @@ function sign() {
   };
 
   $.get(options, (error, response, data) => {
-    var regex = /(<([^>]+)>)/gi;
-    var notice = data.replace(regex, "").trim();
-    $.msg("哇哈体育", notice);
-    $.log(notice);
-    $.done();
+    var exp1 = "!DOCTYPE";
+    var exp2 = "System Error";
+    var exp3 = "您当前的访问请求当中含有非法字符，已经被系统拒绝";
+    var exp4 = "深感歉意";
+
+    if (
+      (data.search(exp1) ||
+        data.search(exp2) ||
+        data.search(exp3) ||
+        data.search(exp4)) != -1
+    ) {
+      var reg = /parent\.showDialog\(\'(.*)function\(\)*\)/;
+      var notice = reg.exec(data)[1];
+      notice = "🟢" + notice;
+      $.msg("哇哈体育", notice);
+      $.log(notice);
+      $.done();
+    } else {
+      var notice = "🔴签到失败!";
+      $.msg("哇哈体育", notice);
+      $.done();
+    }
   });
 }
 
