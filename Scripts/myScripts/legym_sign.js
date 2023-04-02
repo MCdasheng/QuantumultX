@@ -1,6 +1,6 @@
 /* 
 脚本功能: 乐健体育自动签退
-30 16 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym_sign.js, tag=乐健体育报名, img-url=figure.disc.sports.system, enabled=true
+30 16 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym_sign.js, tag=乐健体育签退, img-url=figure.disc.sports.system, enabled=true
 */
 const legym_signBody = $prefs.valueForKey("legym_signBody");
 const AUTH = $prefs.valueForKey("legym_auth");
