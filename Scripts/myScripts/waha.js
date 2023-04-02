@@ -33,15 +33,16 @@ function sign() {
         data.search(exp3) ||
         data.search(exp4)) != -1
     ) {
-      var reg = /parent\.showDialog\(\'(.*)function\(\)*\)/;
-      var notice = reg.exec(data)[1];
-      notice = "🟢" + notice;
-      $.msg("哇哈体育", notice);
-      $.log(notice);
-      $.done();
-    } else {
       var notice = "🔴签到失败!";
       $.msg("哇哈体育", notice);
+      $.log(data);
+      $.done();
+    } else {
+      var reg = /parent\.showDialog\(\'(.*)function\(\)*\)/;
+      var notice = reg.exec(data)[1];
+      notice = "🎉" + notice;
+      $.msg("哇哈体育", notice);
+      $.log(notice);
       $.done();
     }
   });
