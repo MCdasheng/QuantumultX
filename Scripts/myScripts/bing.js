@@ -1,7 +1,7 @@
 /*
-脚本功能: bingSearch Task
+脚本功能: 🏆BingSearch Task
 url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bing.js
-img-url = https://raw.githubusercontent.com/lowking/Scripts/master/doc/icon/bingPoint.png
+img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
 */
 
 mbSearch();
