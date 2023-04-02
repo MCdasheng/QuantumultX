@@ -26,35 +26,35 @@
       "id": "legym",
       "name": "乐健体育",
       "keys": ["legym_auth", "legym_activityId", "legym_loginBody", "legym_signBody"],
-      "desc": "手动填入loginBody",
+      "desc": "自动报名,手动签到,自动签退",
       "settings": [{
         "id": "legym_auth",
         "name": "legym_auth",
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": ""
+        "desc": "登录用户鉴权(日更)"
       }, {
         "id": "legym_activityId",
         "name": "legym_activityId",
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": ""
+        "desc": "沙河活动id(日更)"
       }, {
         "id": "legym_loginBody",
         "name": "legym_loginBody",
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": ""
+        "desc": "自行填入,包括密码学校等"
       }, {
         "id": "legym_signBody",
         "name": "legym_signBody",
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": ""
+        "desc": "手动签到时自动获取"
       }],
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js",
       "author": "@mcdasheng",
@@ -71,21 +71,21 @@
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": ""
+        "desc": "通用lowking脚本,面板cookie,用Alook抓rewards.bing.com"
       }, {
         "id": "bingSearchCookieMobileKey",
         "name": "bingSearchCookieMobileKey",
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": ""
+        "desc": "QX抓cookie,本地执行搜索任务"
       }, {
         "id": "bingSearchCookiePCKey",
         "name": "bingSearchCookiePCKey",
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": ""
+        "desc": "电脑抓cookie,本地执行搜索任务"
       }],
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bing.js",
       "author": "@mcdasheng",
@@ -132,15 +132,15 @@
     {
       "id": "GoFans",
       "name": "GoFans今日限免",
-      "keys": ["AUTH"],
+      "keys": ["GoFans_auth"],
       "desc": "",
       "settings": [{
-        "id": "AUTH",
-        "name": "authorization",
+        "id": "GoFans_auth",
+        "name": "GoFans_auth",
         "val": "",
         "type": "text",
-        "placeholder": "'Bearer '+ token 形式",
-        "desc": ""
+        "placeholder": "",
+        "desc": "'Bearer '+ token 形式"
       }],
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/GoFans.js",
       "author": "@mcdasheng",
