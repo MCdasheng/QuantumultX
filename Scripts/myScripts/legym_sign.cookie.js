@@ -1,15 +1,14 @@
 /* 
-脚本功能: 获取乐健体育签到请求体 用于自动二次签到
+脚本功能: 获取乐健体育签到请求体,用于自动二次签到
 [rewrite local]
 ^https\:\/\/cpes\.legym\.cn\/education\/activity\/app\/attainability\/sign url script-request-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym_sign.cookie.js
 [MITM]
 hostname = cpes.legym.cn
 */
 
-const $ = new init();
+const $ = init();
 
 if ($request.body) {
-  $.msg("🟢会话获取成功");
   const legym_signBody = $request.body;
   $.msg("乐健体育", "🎉signBody获取成功");
   $.log("🎉signBody获取成功");
