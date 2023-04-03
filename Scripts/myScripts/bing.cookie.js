@@ -1,21 +1,25 @@
 /* 
-脚本功能: 获取 bingSearchCookieMobileKey
+脚本功能: 获取 bingSearch Mobile Cookie
+登录对应账号搜索'testt'即可
 [rewrite local]
 ^https\:\/\/www\.bing\.com\/search\?q=testt&.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bing.cookie.js
 [MITM]
 hostname = www.bing.com
 */
 
-const $ =  init();
+const $ = init();
 
 if ($request.headers) {
   const ck = $request.headers["Cookie"];
   $.msg("🏆Bing", "🎉MobileCookie获取成功");
-  $.log("🎉bingMobileCookie获取成功");
+  $.log("🎉MobileCookie获取成功");
   $.log(ck);
   $.setdata("bingSearchCookieMobileKey", ck);
   $.log("testCookie...");
   $.log($.getdata("bingSearchCookieMobileKey"));
+  $.done();
+} else {
+  $.msg("🏆Bing", "🔴Cookie获取失败");
   $.done();
 }
 
