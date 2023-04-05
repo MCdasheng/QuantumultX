@@ -1,6 +1,6 @@
 /*
 脚本功能:乐健体育报名
-30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js, tag=乐健体育报名, img-url=figure.disc.sports.system, enabled=true
+30-35 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js, tag=乐健体育报名, img-url=figure.disc.sports.system, enabled=true
 @params: 
   "legym_loginBody" (手动填入,包含账号密码信息等)
 */
@@ -61,6 +61,7 @@ function getId() {
       Organization: `402881ea7c39c5d5017c39d134ca03ab`, // uestc
       Authorization: $.auth,
     },
+    // campus: 沙河
     body: `{"name":"","campus":"402881ea7c39c5d5017c39d143af0647","page":1,"size":99,"state":"","topicId":"","week":""}`,
   };
 
@@ -99,7 +100,7 @@ function signUp() {
       Organization: `402881ea7c39c5d5017c39d134ca03ab`, // uestc
       Authorization: $.auth,
     },
-    body: `{"activityId":"` + $.activityId + `"}`,
+    body: `{"activityId":"${$.activityId}"}`,
   };
 
   return $.http.post(options).then((resp) => {
