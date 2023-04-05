@@ -51,7 +51,7 @@ function getId() {
       "Content-Type": `application/json`,
       Organization: `402881ea7c39c5d5017c39d134ca03ab`, // uestc
     },
-    body: `{"name":"","campus":"","page":1,"size":99,"state":"","topicId":"","week":""}`,
+    body: `{"name":"","campus":"402881ea7c39c5d5017c39d143af0647","page":1,"size":99,"state":"","topicId":"","week":""}`,
   };
   options.headers["Authorization"] = AUTH;
 
