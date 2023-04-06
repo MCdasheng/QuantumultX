@@ -1,5 +1,5 @@
 /*
-脚本功能: 52appleid 签到
+脚本功能: 52appleid 签到 (cookie过期太快!! 未解决)
 30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/wuai.js, tag=52appleid签到, img-url=applelogo.system, enabled=true
 */
 
