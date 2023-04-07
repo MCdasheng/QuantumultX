@@ -82,10 +82,9 @@ function getLink() {
         /data\-clipboard\-text\=\"(.*?)\"\>复制 Shadowrocket 订阅\<\/button\>/;
       var url = reg.exec(resp.body)[1];
       if (url) {
-        $.log("🎉获取订阅链接成功!");
-        url += "#emoji=2"; // 解析器
-        $.log(url);
         $.msg("iMao", "🎉获取订阅链接成功!", url);
+        $.log("🎉获取订阅链接成功!");
+        $.log(`${url}#emoji=2, tag=iMao, opt-parser=true, enabled=true`);
       } else {
         $.log("🔴获取订阅链接失败");
         $.msg("iMao", "🔴获取订阅链接失败");
