@@ -71,21 +71,21 @@
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": "通用lowking脚本,面板cookie,用Alook抓rewards.bing.com"
+        "desc": "通用lowking脚本(面板cookie), 用Alook抓rewards.bing.com"
       }, {
         "id": "bingSearchCookieMobileKey",
         "name": "bingSearchCookieMobileKey",
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": "QX抓cookie,本地执行搜索任务"
+        "desc": "QX重写抓cookie"
       }, {
         "id": "bingSearchCookiePCKey",
         "name": "bingSearchCookiePCKey",
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": "电脑抓cookie,本地执行搜索任务"
+        "desc": "电脑抓cookie"
       }],
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bing.js",
       "author": "@mcdasheng",
@@ -111,6 +111,23 @@
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": ["https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png", "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"]
+    }, {
+      "id": "mmy",
+      "name": "漫漫游签到",
+      "keys": ["mmy_cookie"],
+      "desc": "",
+      "settings": [{
+        "id": "mmy_cookie",
+        "name": "mmy_cookie",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/mmy.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": []
     }, {
       "id": "Esign",
       "name": "轻松签版本监控",
