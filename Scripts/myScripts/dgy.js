@@ -1,5 +1,6 @@
 /*
-脚本功能: 获取大哥云试用订阅(10G/24h)
+脚本功能: 获取大哥云试用订阅 (10G/24h)
+注: 关闭代理运行
 33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/dgy.js, tag=八方云订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
 */
 
