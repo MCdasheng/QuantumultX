@@ -39,13 +39,14 @@ function login() {
     if (obj.code == 0) {
       var accessToken = obj.data.accessToken;
       accessToken = "Bearer " + accessToken;
-      $.setdata("legym_auth", accessToken);
-      if ($.getdata("legym_auth") == accessToken) {
+      $prefs.setValueForKey(accessToken, "legym_auth");
+      if ($prefs.valueForKey("legym_auth") == accessToken) {
         $.log("🎉用户鉴权已更新");
-        $.log(accessToken);
-      } else $.msg("🔴用户鉴权获取失败");
+        $.log($prefs.valueForKey("legym_auth"));
+      } else $.msg("🔴用户鉴权更新失败");
     } else {
-      $.msg("Error", error);
+      $.msg("乐健体育", "🔴登录失败");
+      $.log(resp.body);
     }
     // $.done();
   });
@@ -77,14 +78,17 @@ function getId() {
           break;
         } else continue;
       }
-      $.setdata("legym_activityId", activityId);
-      if ($.getdata("legym_activityId") == activityId) {
+      $prefs.setValueForKey(activityId, "legym_activityId");
+      if ($prefs.valueForKey("legym_activityId") == activityId) {
         $.log("🎉活动id已更新");
         $.log(name);
-        $.log(activityId);
-      } else $.msg("🔴活动信息获取失败");
+        $.log($prefs.valueForKey("legym_activityId"));
+      } else {
+        $.msg("🔴活动id更新失败");
+      }
     } else {
-      $.msg("Error", error);
+      $.msg("乐健体育", "🔴活动信息获取失败");
+      $.log(resp.body);
     }
     // $.done();
   });
@@ -119,7 +123,8 @@ function signUp() {
         $.msg("乐健体育", reason);
       }
     } else {
-      $.msg("Error", error);
+      $.msg("乐健体育", "🔴报名失败");
+      $.log(resp.body);
     }
     $.done();
   });
