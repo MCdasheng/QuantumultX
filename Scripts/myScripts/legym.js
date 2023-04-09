@@ -7,9 +7,9 @@
 
 const $ = new Env("legym");
 
-$.body = $.getdata("legym_loginBody");
-$.auth = $.getdata("legym_auth");
-$.activityId = $.getdata("legym_activityId");
+$.body = $prefs.valueForKey("legym_loginBody");
+$.auth = $prefs.valueForKey("legym_auth");
+$.activityId = $prefs.valueForKey("legym_activityId");
 
 (async function () {
   await login();
