@@ -1,21 +1,17 @@
 /*
 脚本功能:乐健体育报名
-30-35 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js, tag=乐健体育报名, img-url=figure.disc.sports.system, enabled=true
+30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js, tag=乐健体育报名, img-url=figure.disc.sports.system, enabled=true
 @params: 
   "legym_loginBody" (手动填入,包含账号密码信息等)
+@tips: 
+  注意async函数内部执行的先后顺序,适当调用参数更合理
 */
 
 const $ = new Env("legym");
 
-$.body = $prefs.valueForKey("legym_loginBody");
-$.auth = $prefs.valueForKey("legym_auth");
-$.activityId = $prefs.valueForKey("legym_activityId");
+$.body = $.getdata("legym_loginBody");
 
-(async function () {
-  await login();
-  await getId();
-  await signUp();
-})()
+signUp()
   .catch((e) => $.log(e))
   .finally(() => {
     $.log("ok");
@@ -38,21 +34,21 @@ function login() {
     var obj = JSON.parse(resp.body);
     if (obj.code == 0) {
       var accessToken = obj.data.accessToken;
-      accessToken = "Bearer " + accessToken;
-      $prefs.setValueForKey(accessToken, "legym_auth");
-      if ($prefs.valueForKey("legym_auth") == accessToken) {
-        $.log("🎉用户鉴权已更新");
-        $.log($prefs.valueForKey("legym_auth"));
-      } else $.msg("🔴用户鉴权更新失败");
+      var auth = "Bearer " + accessToken;
+      $.log("🎉用户鉴权获取成功");
+      $.log(auth);
+      // 返回 auth
+      return auth;
     } else {
-      $.msg("乐健体育", "🔴登录失败");
+      $.log("乐健体育", "🔴登录失败");
       $.log(resp.body);
+      $.done();
     }
     // $.done();
   });
 }
 
-function getId() {
+async function getId(auth) {
   $.log("正在获取活动id...");
   let options = {
     url: "https://cpes.legym.cn/education/app/activity/getActivityList",
@@ -60,7 +56,7 @@ function getId() {
       "User-Agent": `Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Html5Plus/1.0 (Immersed/50) uni-app`,
       "Content-Type": `application/json`,
       Organization: `402881ea7c39c5d5017c39d134ca03ab`, // uestc
-      Authorization: $.auth,
+      Authorization: auth,
     },
     // campus: 沙河
     body: `{"name":"","campus":"","page":1,"size":99,"state":"","topicId":"","week":""}`,
@@ -78,33 +74,35 @@ function getId() {
           break;
         } else continue;
       }
-      $prefs.setValueForKey(activityId, "legym_activityId");
-      if ($prefs.valueForKey("legym_activityId") == activityId) {
-        $.log("🎉活动id已更新");
-        $.log(name);
-        $.log($prefs.valueForKey("legym_activityId"));
-      } else {
-        $.msg("🔴活动id更新失败");
-      }
+
+      $.log("🎉活动id获取成功");
+      $.log(name);
+      $.log(activityId);
+      // 返回 activityId
+      return activityId;
     } else {
-      $.msg("乐健体育", "🔴活动信息获取失败");
+      $.log("乐健体育", "🔴活动信息获取失败");
       $.log(resp.body);
+      $.done();
     }
     // $.done();
   });
 }
 
-function signUp() {
+async function signUp() {
   $.log("正在报名...");
+  const auth = await login();
+  const id = await getId(auth);
+
   let options = {
     url: "https://cpes.legym.cn/education/app/activity/signUp",
     headers: {
       "User-Agent": `Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Html5Plus/1.0 (Immersed/50) uni-app`,
       "Content-Type": `application/json`,
       Organization: `402881ea7c39c5d5017c39d134ca03ab`, // uestc
-      Authorization: $.auth,
+      Authorization: auth,
     },
-    body: `{"activityId":"${$.activityId}"}`,
+    body: `{"activityId":"${id}"}`,
   };
 
   return $.http.post(options).then((resp) => {
