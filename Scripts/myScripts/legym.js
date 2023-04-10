@@ -37,8 +37,9 @@ function login() {
       var auth = "Bearer " + accessToken;
       $.log("🎉用户鉴权获取成功");
       $.log(auth);
-      // 返回 auth
-      return auth;
+      $prefs.setValueForKey(auth, "legym_auth");
+
+      return auth; // 返回 auth
     } else {
       $.log("乐健体育", "🔴登录失败");
       $.log(resp.body);
@@ -78,8 +79,8 @@ async function getId(auth) {
       $.log("🎉活动id获取成功");
       $.log(name);
       $.log(activityId);
-      // 返回 activityId
-      return activityId;
+
+      return activityId; // 返回 activityId
     } else {
       $.log("乐健体育", "🔴活动信息获取失败");
       $.log(resp.body);
