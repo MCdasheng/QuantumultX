@@ -1,10 +1,12 @@
 /*
-脚本功能: 获取JCBB试用订阅(1G/1d)
-33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_JCBB.js, tag=JCBB订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
+脚本功能: 获取jcbb试用订阅(1G/1d)
+节点地区: 港、台、日、美、新、英、德、印
+运行失败: 尝试关闭代理运行
+33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_jcbb.js, tag=JCBB订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
 */
 
-const auth = "JCBB_auth";
-const tagName = "JCBB";
+const auth = "jcbb_auth";
+const tagName = "jcbb";
 const domain = "https://www.ckcloud.xyz";
 const register_url = domain + `/api/v1/passport/auth/register`;
 const subscribe_url = domain + `/api/v1/user/getSubscribe`;
