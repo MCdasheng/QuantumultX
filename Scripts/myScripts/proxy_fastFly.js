@@ -1,5 +1,7 @@
 /*
 脚本功能: 获取快飞试用订阅(2G/1d)
+节点地区: 港、台、日、美、新、英、澳、印
+运行失败: 尝试关闭代理运行
 33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_fastFly.js, tag=快飞订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
 */
 
