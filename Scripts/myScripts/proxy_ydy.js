@@ -1,13 +1,16 @@
 /*
 脚本功能: 获取移动云试用订阅(10G/1d)
-注: 关闭代理运行
-33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/ydy.js, tag=移动云订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
+注: 
+  关闭代理运行 
+  港、日、美 
+33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_ydy.js, tag=移动云订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
 */
 
 const auth = "ydy_auth";
 const tagName = "移动云";
-const register_url = `https://fly10086.top/api/v1/passport/auth/register`;
-const subscribe_url = `https://fly10086.top/api/v1/user/getSubscribe`;
+const domain = "https://fly10086.top";
+const register_url = domain + `/api/v1/passport/auth/register`;
+const subscribe_url = domain + `/api/v1/user/getSubscribe`;
 
 a();
 
