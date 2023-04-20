@@ -1,5 +1,7 @@
 /*
 脚本功能: 获取LemonTea试用订阅(5G/5d)
+节点地区: 港、日、美、新、韩
+运行失败: 尝试关闭代理运行
 33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_lemon.js, tag=LemonTea订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
 */
 
