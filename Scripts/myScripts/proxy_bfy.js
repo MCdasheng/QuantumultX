@@ -1,13 +1,13 @@
 /*
 脚本功能: 获取八方云试用订阅(3h有效)
-注: 关闭代理运行
-33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bfy.js, tag=八方云订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
+33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_bfy.js, tag=八方云订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
 */
 
 const auth = "bfy_auth";
 const tagName = "八方云";
-const register_url = `https://bafangyun.vip/api/v1/passport/auth/register`;
-const subscribe_url = `https://bafangyun.vip/api/v1/user/getSubscribe`;
+const domain = "https://bafangyun.vip";
+const register_url = domain + `/api/v1/passport/auth/register`;
+const subscribe_url = domain + `/api/v1/user/getSubscribe`;
 
 a();
 
