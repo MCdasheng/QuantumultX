@@ -15,7 +15,7 @@ const $ = new Env("bingSearch");
 if ($request.url.search(/q=testt/) != -1) {
   const ck = $request.headers["Cookie"];
   $.msg("bingSearch", "🎉MobileCookie获取成功!");
-  $.log("🎉PCCookie获取成功!");
+  $.log("🎉MobileCookie获取成功!");
   $.log(ck);
   $.setval(ck, "bingSearchCookieMobileKey");
   $.log("testCookie...");
