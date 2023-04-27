@@ -1,7 +1,7 @@
 /* 
 脚本功能: 获取 bingSearch Cookie
 操作步骤: 
-  Bing web登录、搜索 ' pc '
+  Bing web登录、搜索  'pc'
   Bing app登录、搜索 'testt'
 [rewrite local]
 ^https\:\/\/www\.bing\.com\/search\?q=pc&.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js
