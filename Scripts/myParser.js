@@ -161,7 +161,7 @@ SubFlow() //流量通知
 // 🥳For own use
 var Pemoji = 2;
 var Pudp0 = -1;
-var Psort0 = "🇭🇰>🇨🇳>🇯🇵>🇺🇸"
+var Psort0 = "🏳️‍🌈>🇭🇰>🇨🇳>🇯🇵>🇺🇸>🇸🇬"
 
 var Pin0 = mark0 && para1.indexOf("in=") != -1 ? (para1.split("in=")[1].split("&")[0].split("+")).map(decodeURIComponent) : null;
 var Pout0 = mark0 && (para.indexOf("#out=") != -1 || para.indexOf("&out=") != -1)? ((para.indexOf("#out=")!=-1? para.split("#out="): para.split("&out="))[1].split("&")[0].split("+")).map(decodeURIComponent) : null;
