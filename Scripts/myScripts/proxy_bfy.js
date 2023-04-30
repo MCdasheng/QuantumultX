@@ -1,12 +1,11 @@
 /*
 脚本功能: 获取八方云试用订阅(1G/3h)
+节点地区: 🇭🇰🇨🇳>🇯🇵🇰🇷🇸🇬>🇷🇺
 33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_bfy.js, tag=八方云订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
 */
 
 const tagName = "八方云";
 const domain = "https://bafangyun.vip";
-const register_url = domain + `/api/v1/passport/auth/register`;
-const subscribe_url = domain + `/api/v1/user/getSubscribe`;
 
 const $ = new Env(`${tagName}`);
 
@@ -18,8 +17,10 @@ getSubscribe()
   });
 
 function register() {
-  $.log(`正在注册${tagName}...`);
+  const register_url = domain + `/api/v1/passport/auth/register`;
   const rd = Math.random().toString(36).slice(-8);
+  $.log(`正在注册${tagName}...`);
+
   let options = {
     url: register_url,
     headers: {
@@ -30,21 +31,25 @@ function register() {
   };
 
   return $.http.post(options).then(
-    (response) => {
-      // console.log(response.body);
-      if (response.body) {
-        var obj = JSON.parse(response.body);
+    (resp) => {
+      // $.log(resp.body);
+      var obj = JSON.parse(resp.body);
+      if (obj.data) {
         var auth = obj.data.auth_data;
         $.log("🎉注册成功!");
         $.log(auth);
         return auth; // 返回 auth
       } else {
+        var msg = resp.body;
+        if (obj.message) msg = obj.message;
         $.log("🔴注册失败!");
-        $.log(response.body);
+        $.log(resp.body);
+        $.msg(`${tagName}`, "🔴注册失败!", msg);
         $.done();
       }
     },
     (reason) => {
+      $.msg(`${tagName}`, "❌注册失败!", reason.error);
       $.log(reason.error);
       $.done();
     }
@@ -52,8 +57,9 @@ function register() {
 }
 
 async function getSubscribe() {
-  $.log(`正在获取${tagName}订阅...`);
+  const subscribe_url = domain + `/api/v1/user/getSubscribe`;
   const auth = await register();
+  $.log(`正在获取${tagName}订阅...`);
 
   let options = {
     url: subscribe_url,
@@ -64,25 +70,29 @@ async function getSubscribe() {
   };
 
   return $.http.get(options).then(
-    (response) => {
-      // console.log(response.body);
-      var obj = JSON.parse(response.body);
-      if (obj.data.subscribe_url) {
+    (resp) => {
+      // $.log(resp.body);
+      var obj = JSON.parse(resp.body);
+      if (obj.data) {
         var url = obj.data.subscribe_url;
-        var sub = `${url}#emoji=2, tag=${tagName}, opt-parser=true, enabled=true`;
+        var sub = `${url}, tag=${tagName}, opt-parser=true, enabled=true`;
         $.log("🎉订阅获取成功!");
         $.log(sub);
-        $.msg(`${tagName}订阅`, "🎉获取订阅链接成功!", sub);
+        $.msg(`${tagName}`, "🎉获取订阅链接成功!", sub);
         $.done();
       } else {
+        var msg = resp.body;
+        if (obj.message) msg = obj.message;
         $.log("🔴订阅获取失败!");
-        $.log(response.body);
+        $.log(resp.body);
+        $.msg(`${tagName}`, "🔴订阅获取失败!", msg);
         $.done();
       }
     },
     (reason) => {
+      $.msg(`${tagName}`, "❌错误!", reason.error);
       $.log(reason.error);
-      $done();
+      $.done();
     }
   );
 }
