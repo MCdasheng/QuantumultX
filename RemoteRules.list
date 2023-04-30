@@ -6,6 +6,7 @@ geoip, cn, direct
 
 # ✈️机场订阅
 host, xunfan.co, 节点选择
+host, fmmmz.com, 节点选择
 host, sub.cloudflare.quest, direct
 host, proxy.aries.ovh, direct
 host, get.ooop.ink, direct
