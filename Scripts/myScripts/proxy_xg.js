@@ -1,5 +1,6 @@
 /*
-脚本功能:获取西瓜皮试用订阅
+脚本功能: 获取西瓜皮试用订阅(10G/d)
+节点地区: 🇭🇰>🇸🇬>🇨🇳🇯🇵🇺🇸
 33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_xg.js, tag=西瓜, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Catnet.png, enabled=true
 */
 
