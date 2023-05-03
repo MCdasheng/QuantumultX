@@ -1,7 +1,7 @@
 /** 
 ☑️ 资源解析器 ©𝐒𝐡𝐚𝐰𝐧  ⟦2023-05-02 13:40⟧
 ----------------------------------------------------------
-🥳For own use
+🥳For own use 
 url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/myParser.js
 From https://github.com/KOP-XIAO/QuantumultX/blob/master/Scripts/resource-parser.js
 ----------------------------------------------------------
@@ -242,12 +242,12 @@ var ProfileInfo = {
   "rewrite":""
 }
 
-
+----------------------------------------------------------
 // 🥳For own use
-Pemoji = 2;
+Pemoji = mark0 && para1.indexOf("emoji=") != -1 ? para1.split("emoji=")[1].split("&")[0] : 2;
 Pudp0 = -1;
 Psort0 = "🏳️‍🌈>🇭🇰>🇨🇳>🇯🇵>🇺🇸>🇸🇬"
-
+----------------------------------------------------------
 
 function VCheck(cnt) {
   cnts=cnt.split("\n").filter(Boolean).map(item=>item.trim()).filter(item => /^http/.test(item)).map(item=>"\""+item+"\"")
@@ -2481,7 +2481,7 @@ function get_emoji(emojip, sname) {
     "🇰🇵": ["KP", "朝鲜", "North Korea"],
     "🇰🇷": ["KR", "Korea", "KOR", "韩国", "首尔", "韩", "韓","春川"],
     "🇬🇭": ["加纳", "Ghana"],
-    "🇱🇺": ["卢森堡", "LU ", "Luxembourg"],
+    "🇱🇺": ["卢森堡", "LU", "Luxembourg"],
     "🇱🇻": ["Latvia", "Latvija", "拉脱维亚"],
     "🇧🇩": ["孟加拉", "Bengal"],
     "🇲🇽️": [" MEX", "MX", "墨西哥", "Mexico", "MEXICO"],
@@ -2493,7 +2493,7 @@ function get_emoji(emojip, sname) {
     "🇸🇦": ["沙特", "利雅得", "Saudi Arabia", "Saudi"],
     "🇸🇪": ["SE", "Sweden","瑞典"],
     "🇹🇭": [" TH", "Thailand", "泰国", "泰國", "曼谷"],
-    "🇹🇷": ["TR ","TR-", "TR_", "TUR", "Turkey", "土耳其", "伊斯坦布尔"],
+    "🇹🇷": ["TR","TR-", "TR_", "TUR", "Turkey", "土耳其", "伊斯坦布尔"],
     "🇻🇳": ["VN", "越南", "胡志明市", "Vietnam"],
     "🇮🇹": ["Italy", " IT ", "Nachash", "意大利", "米兰", "義大利"],
     "🇿🇦": ["South Africa", "南非", "Johannesburg"],
