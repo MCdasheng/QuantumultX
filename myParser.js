@@ -1,7 +1,7 @@
 /** 
 ☑️ 资源解析器 ©𝐒𝐡𝐚𝐰𝐧  ⟦2023-05-02 13:40⟧
 ----------------------------------------------------------
-🥳For own use v1.3
+🥳For own use v1.3.1
 default params: 
   emoji=2, udp=-1, sort="🏳️‍🌈>🇭🇰>🇨🇳>🇯🇵>🇺🇸>🇸🇬"
 modify get_emoji(): add flags & cities
@@ -2502,7 +2502,7 @@ function get_emoji(emojip, sname) {
     "🇿🇦": ["South Africa", "南非", "Johannesburg"],
     "🇦🇪": ["United Arab Emirates", "阿联酋", "AE", "迪拜", "Dubai"],
     "🇧🇷": ["BR", "Brazil", "巴西", "圣保罗"],
-    "🇯🇵": ["🇯🇵", "JP", "Japan","JAPAN", "日本", "东京", "大阪", "埼玉", "京日", "苏日", "沪日","上日", "穗日", "川日", "中日", "泉日", "杭日", "深日", "辽日", "广日", "Tokyo"],
+    "🇯🇵": ["🇯🇵", "JP", "jp", "Japan","JAPAN", "日本", "东京", "大阪", "埼玉", "京日", "苏日", "沪日","上日", "穗日", "川日", "中日", "泉日", "杭日", "深日", "辽日", "广日", "Tokyo"],
     "🇦🇷": ["AR", "Argentina", "阿根廷"],
     "🇳🇴": ["Norway", "挪威", "NO"],
     "🇵🇱": ["PL", "POL", "波兰","波蘭", "Poland"],
@@ -2541,7 +2541,7 @@ function get_emoji(emojip, sname) {
     "🇲🇺": ["毛里求斯", "Mauritius"],
     "🇵🇷": ["波多黎各", "PR ","PR-", "Puerto Rico"],
     "🇬🇹": ["危地马拉", " GT "],
-    "🇭🇰": ["🇭🇰", "HK", "Hongkong", "Hong Kong", "HongKong", "HONG KONG","香港", "深港", "沪港", "呼港", "HKT", "HKBN", "HGC", "WTT", "CMI", "穗港", "京港", "港"],
+    "🇭🇰": ["🇭🇰", "HK", "hk", "Hongkong", "Hong Kong", "HongKong", "HONG KONG","香港", "深港", "沪港", "呼港", "HKT", "HKBN", "HGC", "WTT", "CMI", "穗港", "京港", "港"],
  // "🇨🇳": ["CN", "China", "回国", "中国","中國", "江苏", "北京", "上海", "广州", "深圳", "杭州", "徐州", "青岛", "宁波", "镇江", "back"],
     "🇱🇮": ["列支敦士登"],
     "🇬🇺": ["🇬🇺", "关岛"],
