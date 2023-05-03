@@ -10,6 +10,7 @@ host, fmmmz.com, 节点选择
 host, sub.cloudflare.quest, direct
 host, proxy.aries.ovh, direct
 host, get.ooop.ink, direct
+host, get.arki.ink, direct
 
 # 🎯签到网站
 host, www.52appleid.com, direct
