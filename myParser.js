@@ -1,8 +1,9 @@
 /** 
 ☑️ 资源解析器 ©𝐒𝐡𝐚𝐰𝐧  ⟦2023-05-02 13:40⟧
 ----------------------------------------------------------
-🥳For own use v1.2
-default params: emoji=2, udp=-1, sort="🏳️‍🌈>🇭🇰>🇨🇳>🇯🇵>🇺🇸>🇸🇬"
+🥳For own use v1.3
+default params: 
+  emoji=2, udp=-1, sort="🏳️‍🌈>🇭🇰>🇨🇳>🇯🇵>🇺🇸>🇸🇬"
 modify get_emoji(): add flags & cities
 url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/myParser.js
 From https://github.com/KOP-XIAO/QuantumultX/blob/master/Scripts/resource-parser.js
@@ -246,9 +247,9 @@ var ProfileInfo = {
 
 // ----------------------------------------------------------
 // 🥳For own use
+Pudp0 = mark0 && para1.indexOf("udp=") != -1 ? para1.split("udp=")[1].split("&")[0] : -1;
 Pemoji = mark0 && para1.indexOf("emoji=") != -1 ? para1.split("emoji=")[1].split("&")[0] : 2;
-Pudp0 = -1;
-Psort0 = "🏳️‍🌈>🇭🇰>🇨🇳>🇯🇵>🇺🇸>🇸🇬"
+Psort0 = mark0 && para1.indexOf("sort=") != -1 ? para1.split("sort=")[1].split("&")[0] : "🏳️‍🌈>🇭🇰>🇨🇳>🇯🇵>🇺🇸>🇸🇬";
 // ----------------------------------------------------------
 
 function VCheck(cnt) {
