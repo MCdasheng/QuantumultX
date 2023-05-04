@@ -1,6 +1,6 @@
 /*
 [general]
-geo_location_checker=http://ip-api.com/json/?lang=zh-CN, https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/IP_API.js
+geo_location_checker=http://ip-api.com/json/?lang=zh-CN, https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/IP_API.js
 */
 
 if ($response.statusCode != 200) {
