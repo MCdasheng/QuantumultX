@@ -45,8 +45,11 @@ function json2info(a) {
 
   var res_ip = cnt["ip"];
   var res_isp = cnt["isp"];
-  var res_country_code = flags.get(cnt["country_code"].toUpperCase()) + cnt["country_code"]; // 添加flag
-  var res_city = flags.get(cnt["country_code"].toUpperCase()) + cnt["city"]; // 添加flag
+  var flag = flags.get(cnt["country_code"].toUpperCase())
+    ? flags.get(cnt["country_code"].toUpperCase())
+    : "🏴‍☠️";
+  var res_city = cnt["city"] ? flag + cnt["city"] : null; // 添加flag
+  var res_country_code = flag + cnt["country_code"]; // 添加flag
 
   // 添加css样式
   res =
@@ -98,6 +101,7 @@ function json2info(a) {
     res +
     "------------------------------" +
     `</br><font color=#6959CD><b>节点</b> ➟ ${$environment.params} </font>`;
+
   res =
     `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` +
     res +
@@ -241,4 +245,3 @@ var flags = new Map([
   ["VN", "🇻🇳"],
   ["ZA", "🇿🇦"],
 ]);
-
