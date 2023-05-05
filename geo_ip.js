@@ -43,6 +43,9 @@ function json2info(a) {
   // 开始检查参数
   cnt = JSON.parse(a);
 
+  var res_netWork = $environment.ssid
+    ? "🌐" + $environment.ssid
+    : "📶" + $environment.cellular.carrierName;
   var res_ip = cnt["ip"];
   var res_isp = cnt["isp"];
   var flag = flags.get(cnt["country_code"].toUpperCase())
@@ -52,6 +55,17 @@ function json2info(a) {
   var res_country_code = flag + cnt["country_code"]; // 添加flag
 
   // 添加css样式
+  res =
+    res +
+    "</br><b>" +
+    "<font  color=>" +
+    "NetWork" +
+    "</font> : " +
+    "</b>" +
+    "<font  color=>" +
+    res_netWork +
+    "</font></br>";
+
   res =
     res +
     "</br><b>" +
