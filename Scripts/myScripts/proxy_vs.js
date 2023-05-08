@@ -1,12 +1,10 @@
 /*
-脚本功能: 获取vpnSelling试用订阅(6G/2d)
-33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_vpnSelling.js, tag=vpnSelling订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
+脚本功能: 获取vpnSelling试用订阅(10G/d)
+33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_vs.js, tag=vpnSelling订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
 */
 
 const tagName = "vpnSelling";
 const domain = "https://vpnselling.top";
-const register_url = domain + `/api/v1/passport/auth/register`;
-const subscribe_url = domain + `/api/v1/user/getSubscribe`;
 
 const $ = new Env(`${tagName}`);
 
@@ -18,8 +16,10 @@ getSubscribe()
   });
 
 function register() {
-  $.log(`正在注册${tagName}...`);
+  const register_url = domain + `/api/v1/passport/auth/register`;
   const rd = Math.random().toString(36).slice(-8);
+  $.log(`🟢正在注册${tagName}...`);
+
   let options = {
     url: register_url,
     headers: {
@@ -30,25 +30,25 @@ function register() {
   };
 
   return $.http.post(options).then(
-    (response) => {
-      // $.log(response.body);
-      var obj = JSON.parse(response.body);
+    (resp) => {
+      // $.log(resp.body);
+      var obj = JSON.parse(resp.body);
       if (obj.data) {
         var auth = obj.data.auth_data;
         $.log("🎉注册成功!");
         $.log(auth);
         return auth; // 返回 auth
       } else {
-        var msg = response.body;
+        var msg = resp.body;
         if (obj.message) msg = obj.message;
         $.log("🔴注册失败!");
-        $.log(response.body);
+        $.log(resp.body);
         $.msg(`${tagName}`, "🔴注册失败!", msg);
         $.done();
       }
     },
     (reason) => {
-      $.msg(`${tagName}`, "❌错误!", reason.error);
+      $.msg(`${tagName}`, "❌注册失败!", reason.error);
       $.log(reason.error);
       $.done();
     }
@@ -56,8 +56,10 @@ function register() {
 }
 
 async function getSubscribe() {
-  $.log(`正在获取${tagName}订阅...`);
+  $.log(`🟢正在获取${tagName}订阅...`);
+  const subscribe_url = domain + `/api/v1/user/getSubscribe`;
   const auth = await register();
+
   let options = {
     url: subscribe_url,
     headers: {
@@ -67,9 +69,9 @@ async function getSubscribe() {
   };
 
   return $.http.get(options).then(
-    (response) => {
-      // $.log(response.body);
-      var obj = JSON.parse(response.body);
+    (resp) => {
+      // $.log(resp.body);
+      var obj = JSON.parse(resp.body);
       if (obj.data) {
         var url = obj.data.subscribe_url;
         var sub = `${url}, tag=${tagName}, opt-parser=true, enabled=true`;
@@ -78,10 +80,10 @@ async function getSubscribe() {
         $.msg(`${tagName}`, "🎉获取订阅链接成功!", sub);
         $.done();
       } else {
-        var msg = response.body;
+        var msg = resp.body;
         if (obj.message) msg = obj.message;
         $.log("🔴订阅获取失败!");
-        $.log(response.body);
+        $.log(resp.body);
         $.msg(`${tagName}`, "🔴订阅获取失败!", msg);
         $.done();
       }
