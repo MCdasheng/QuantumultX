@@ -1,6 +1,6 @@
 /*
 脚本功能: 获取八方云试用订阅(1G/3h)
-节点地区: 🇭🇰🇨🇳>🇯🇵🇰🇷🇸🇬>🇷🇺
+节点地区: 🇭🇰🇼🇸>🇯🇵🇰🇷🇸🇬>🇷🇺
 33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_bfy.js, tag=八方云订阅, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png, enabled=true
 */
 
@@ -19,7 +19,7 @@ getSubscribe()
 function register() {
   const register_url = domain + `/api/v1/passport/auth/register`;
   const rd = Math.random().toString(36).slice(-8);
-  $.log(`正在注册${tagName}...`);
+  $.log(`🟢正在注册${tagName}...`);
 
   let options = {
     url: register_url,
@@ -57,9 +57,9 @@ function register() {
 }
 
 async function getSubscribe() {
+  $.log(`🟢正在获取${tagName}订阅...`);
   const subscribe_url = domain + `/api/v1/user/getSubscribe`;
   const auth = await register();
-  $.log(`正在获取${tagName}订阅...`);
 
   let options = {
     url: subscribe_url,

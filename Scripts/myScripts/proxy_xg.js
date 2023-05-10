@@ -4,7 +4,7 @@
 33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/proxy_xg.js, tag=西瓜, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/Catnet.png, enabled=true
 */
 
-const tagName = "西瓜皮";
+const tagName = "🍉西瓜";
 const domain = "https://fmmmz.com";
 
 const $ = new Env(`${tagName}`);
@@ -16,95 +16,76 @@ getSubscribe()
     $.done();
   });
 
-async function getSubscribe() {
-  const user_url = domain + `/user`;
-  const cookie = await register();
-  $.log(`正在获取${tagName}订阅...`);
-
-  let options = {
-    url: user_url,
-    headers: {
-      "user-agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
-      accept:
-        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-      "accept-encoding": "gzip, deflate, br",
-      "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-US;q=0.7,en-GB;q=0.6",
-      cookie: cookie,
-    },
-  };
-  return $.http.get(options).then((resp) => {
-    // $.log(resp.body);
-    if (resp.body) {
-      $.log("🎉登录成功!");
-      var reg =
-        /data\-clipboard\-text\=\"(.*?)\"\>复制 Shadowrocket 订阅\<\/button\>/;
-      var url = reg.exec(resp.body)[1];
-      if (url) {
-        var sub = `${url}, tag=${tagName}, opt-parser=true, enabled=true`;
-        $.log("🎉订阅获取成功!");
-        $.log(sub);
-        $.msg(`${tagName}`, "🎉获取订阅链接成功!", sub);
-        $.done();
-      } else {
-        $.log("🔴订阅获取失败!");
-        $.log(resp.body);
-        $.msg(`${tagName}`, "🔴订阅获取失败!", resp.body);
-        $.done();
-      }
-    } else {
-      $.log("❌登录失败");
-      $.log(resp.body);
-      $.msg(`${tagName}`, "❌登录失败",resp.body);
-      $.done();
-    }
-  });
-}
-
 function register() {
-  const register_url = domain + "/auth/register";
+  const register_url = domain + `/api/v1/passport/auth/register`;
   const rd = Math.random().toString(36).slice(-8);
-  $.log(`正在注册${tagName}...`);
+  $.log(`🟢正在注册${tagName}...`);
 
   let options = {
     url: register_url,
     headers: {
-      "user-agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
+      "Content-Type": `application/x-www-form-urlencoded`,
+      "User-Agent": `Mozilla/5.0 (iPhone; CPU iPhone OS 16_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1`,
     },
-    body: `name=admin&email=${rd}%40qq.com&passwd=12345678&repasswd=12345678&code=`,
+    body: `email=${rd}%40qq.com&password=12345678&invite_code=&email_code=`,
   };
 
   return $.http.post(options).then(
     (resp) => {
       // $.log(resp.body);
       var obj = JSON.parse(resp.body);
-      if (obj.ret == 1) {
+      if (obj.data) {
+        var auth = obj.data.auth_data;
         $.log("🎉注册成功!");
-        var set_cookie = resp.headers["Set-Cookie"];
-        // $.log(set_cookie);
-
-        // 数据处理
-        var c = [];
-        var cookie = "";
-        var a = set_cookie.split(",");
-        for (var i = 0; i < a.length; i++) {
-          var b = a[i].split(";");
-          c.push(b[0]);
-        }
-        // $.log(c)
-        for (var j = 0; j < c.length; j = j + 2) {
-          // $.log(c[j])
-          cookie += c[j] + ";";
-        }
-
-        $.log("正在处理cookie...");
-        $.log(cookie);
-        return cookie; // 返回cookie
+        $.log(auth);
+        return auth; // 返回 auth
       } else {
-        $.log("🔴注册失败");
+        var msg = resp.body;
+        if (obj.message) msg = obj.message;
+        $.log("🔴注册失败!");
         $.log(resp.body);
-        $.msg(`${tagName}`, "🔴注册失败", resp.body);
+        $.msg(`${tagName}`, "🔴注册失败!", msg);
+        $.done();
+      }
+    },
+    (reason) => {
+      $.msg(`${tagName}`, "❌注册失败!", reason.error);
+      $.log(reason.error);
+      $.done();
+    }
+  );
+}
+
+async function getSubscribe() {
+  $.log(`🟢正在获取${tagName}订阅...`);
+  const subscribe_url = domain + `/api/v1/user/getSubscribe`;
+  const auth = await register();
+
+  let options = {
+    url: subscribe_url,
+    headers: {
+      "User-Agent": `Mozilla/5.0 (iPhone; CPU iPhone OS 16_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1`,
+      Authorization: auth,
+    },
+  };
+
+  return $.http.get(options).then(
+    (resp) => {
+      // $.log(resp.body);
+      var obj = JSON.parse(resp.body);
+      if (obj.data) {
+        var url = obj.data.subscribe_url;
+        var sub = `${url}, tag=${tagName}, opt-parser=true, enabled=true`;
+        $.log("🎉订阅获取成功!");
+        $.log(sub);
+        $.msg(`${tagName}`, "🎉获取订阅链接成功!", sub);
+        $.done();
+      } else {
+        var msg = resp.body;
+        if (obj.message) msg = obj.message;
+        $.log("🔴订阅获取失败!");
+        $.log(resp.body);
+        $.msg(`${tagName}`, "🔴订阅获取失败!", msg);
         $.done();
       }
     },
