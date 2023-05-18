@@ -1,1 +1,2 @@
-原创+搬运
+🥳原创:https://github.com/MCdasheng/QuantumultX/tree/main/Scripts/myScripts
+🤓搬运
