@@ -19,6 +19,8 @@ sign()
   });
 
 function getFormhash() {
+  $.log(`🟢正在获取formhash...`);
+
   let options = {
     url: "https://bbs.wahatiyu.com/",
     headers: {
@@ -53,6 +55,7 @@ function getFormhash() {
 
 async function sign() {
   const formhash = await getFormhash();
+  $.log(`🟢正在签到...`);
 
   let options = {
     url: `https://bbs.wahatiyu.com/plugin.php?id=gsignin:index&action=signin&formhash=${formhash}`,
