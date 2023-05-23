@@ -42,6 +42,7 @@ function getFormhash() {
       } else {
         $.log("🔴formhash获取失败!");
         $.log(resp.body);
+        $.done();
       }
       // $.done();
     },
@@ -73,13 +74,14 @@ async function sign() {
       if (resp.body.search(reg)) {
         var notice = reg.exec(resp.body)[1];
         notice = "🎉" + notice;
-        $.msg("哇哈体育", notice);
         $.log(notice);
+        $.msg("哇哈体育", notice);
         $.done();
       } else {
         var notice = "🔴签到失败!";
-        $.msg("哇哈体育", notice);
+        $.log(notice);
         $.log(resp.body);
+        $.msg("哇哈体育", notice);
         $.done();
       }
     },
