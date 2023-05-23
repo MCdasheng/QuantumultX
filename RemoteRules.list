@@ -7,12 +7,15 @@ geoip, cn, direct
 # ✈️机场订阅
 host, xunfan.co, 节点选择
 host, fmmmz.com, 节点选择
+host, ruicloud.one, 节点选择
 host, sub.cloudflare.quest, direct
 host, proxy.aries.ovh, direct
+host, get.noaries.app, direct
 host, get.ooop.ink, direct
 host, get.arki.ink, direct
 
 # 🎯签到网站
+host, www.macat.vip, direct
 host, www.52appleid.com, direct
 host, esign.yyyue.xyz, direct
 host, bbs.wahatiyu.com, 🇼🇸台湾最优节点
