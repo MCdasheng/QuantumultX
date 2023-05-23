@@ -22,6 +22,23 @@
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": []
+    },{
+      "id": "macat",
+      "name": "macat签到",
+      "keys": ["macat_loginBody"],
+      "desc": "",
+      "settings": [{
+        "id": "macat_loginBody",
+        "name": "macat_loginBody",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": "登录请求体(自行填入,包括账号密码等)"
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/macat.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": []
     }, {
       "id": "legym",
       "name": "乐健体育",
@@ -34,20 +51,13 @@
         "type": "text",
         "placeholder": "",
         "desc": "登录用户鉴权(日更)"
-      }, {
-        "id": "legym_activityId",
-        "name": "legym_activityId",
-        "val": "",
-        "type": "text",
-        "placeholder": "",
-        "desc": "沙河活动id(日更)"
-      }, {
+      },  {
         "id": "legym_loginBody",
         "name": "legym_loginBody",
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": "自行填入,包括密码学校等"
+        "desc": "登录请求体(自行填入,包括密码学校等)"
       }, {
         "id": "legym_signBody",
         "name": "legym_signBody",
@@ -85,7 +95,7 @@
         "val": "",
         "type": "text",
         "placeholder": "",
-        "desc": "电脑抓cookie"
+        "desc": "QX重写or电脑抓cookie"
       }],
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bing.js",
       "author": "@mcdasheng",
@@ -112,19 +122,19 @@
       "repo": "https://github.com/mcdasheng",
       "icons": ["https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png", "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"]
     }, {
-      "id": "mmy",
-      "name": "漫漫游签到",
-      "keys": ["mmy_cookie"],
+      "id": "acfun",
+      "name": "acfun签到",
+      "keys": ["acfun_cookie"],
       "desc": "",
       "settings": [{
-        "id": "mmy_cookie",
-        "name": "mmy_cookie",
+        "id": "acfun_cookie",
+        "name": "acfun_cookie",
         "val": "",
         "type": "text",
         "placeholder": "",
         "desc": ""
       }],
-      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/mmy.js",
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": []
