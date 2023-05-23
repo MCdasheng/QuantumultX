@@ -137,7 +137,7 @@
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
-      "icons": []
+      "icons": ["https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png","https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png"]
     }, {
       "id": "Esign",
       "name": "轻松签版本监控",
