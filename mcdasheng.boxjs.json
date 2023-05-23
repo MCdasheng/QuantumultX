@@ -38,7 +38,7 @@
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/macat.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
-      "icons": []
+      "icons": ["https://raw.githubusercontent.com/Orz-3/mini/master/Color/Skicat.png", "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Skicat.png"]
     }, {
       "id": "legym",
       "name": "乐健体育",
