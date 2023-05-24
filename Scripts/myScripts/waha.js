@@ -71,7 +71,7 @@ async function sign() {
     (resp) => {
       // $.log(resp.body);
       var reg = /parent\.showDialog\(\'(.*)\'.*function\(\)*\)/;
-      if (resp.body.search(reg)) {
+      if (resp.body.search(reg) != -1) {
         var notice = reg.exec(resp.body)[1];
         notice = "🎉" + notice;
         $.log(notice);
