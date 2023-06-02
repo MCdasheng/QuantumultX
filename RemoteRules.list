@@ -8,10 +8,12 @@ geoip, cn, direct
 host, xunfan.co, 节点选择
 host, fmmmz.com, 节点选择
 host, ruicloud.one, 节点选择
+host, sub.ssrsub.com, 节点选择
 host, sub.cloudflare.quest, direct
 host, proxy.aries.ovh, direct
 host, get.noaries.app, direct
 host, get.ooop.ink, direct
+host, woc.ooop.ink, direct
 host, get.arki.ink, direct
 
 # 🎯签到网站
