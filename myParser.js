@@ -1,7 +1,7 @@
 /** 
 ☑️ 资源解析器 ©𝐒𝐡𝐚𝐰𝐧  ⟦2023-05-31 10:10⟧
 ----------------------------------------------------------
-🥳For own use v1.4.6
+🥳For own use v1.5.1
 default params: 
   emoji=2, udp=-1, sort="🏳️‍🌈>🇭🇰>🇼🇸>🇯🇵>🇺🇸>🇸🇬"
 modify get_emoji(): add flags & cities
@@ -2559,7 +2559,7 @@ function get_emoji(emojip, sname) {
     },
     str1 = JSON.stringify(Lmoji)
     aa = JSON.parse(str1)
-    bb = JSON.parse(str1.replace(/🇹🇼/g, " 🇨🇳"))
+    bb = JSON.parse(str1.replace(/🇹🇼/g, " 🇼🇸"))
     var cnt = emojip ==1? aa:bb;
     var flag = 0;
     for (var key in cnt) {
