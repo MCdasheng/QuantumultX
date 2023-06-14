@@ -4,6 +4,9 @@
 # 🇨🇳Geoip
 geoip, cn, direct
 
+# 📍Ip
+host, ip-api.com, 节点选择
+
 # ✈️机场订阅
 host, xunfan.co, 节点选择
 host, fmmmz.com, 节点选择
