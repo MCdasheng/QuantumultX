@@ -241,14 +241,14 @@ var flags = new Map([
 var body = $response.body;
 var obj = JSON.parse(body);
 
+var isp = obj.isp ? obj.isp : org;
 var org = obj.org ? obj.org : "GFW.org";
 var city = obj.city ? obj.city : "ChinaTown";
-var isp = obj.isp ? obj.isp : org;
 var flag = flags.get(obj.countryCode);
 
+var ip = obj.query;
 var title = flag + " " + city;
 var subtitle = isp;
-var ip = obj.query;
-var description = `ISP:${isp}\n地区:${city}\nIP:${obj["query"]}\n时区:${obj["timezone"]}`;
+var description = `ISP:${isp},地区:${city},IP:${ip}`;
 
 $done({ title, subtitle, ip, description });
