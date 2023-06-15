@@ -1,7 +1,8 @@
 /*
 脚本功能: Appraven今日限免
-29 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Appraven.js, tag=Appraven今日限免, img-url=applelogo.system, enabled=true
+29 10,16 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Appraven.js, tag=Appraven今日限免, img-url=https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Final.png, enabled=true
 */
+
 const url =
   "https://appraven.net/AppRaven/app?t=sn&qt=pd&pr=Free&mr=0&mrc=0&ml=0&pg=0&g=Any&d=Universal&rare=0";
 const method = `GET`;
@@ -28,7 +29,7 @@ $task.fetch(myRequest).then(
     var json = response.body;
     var obj = eval("(" + json + ")");
     var count = Object.keys(obj).length;
-    var notice2 = " ";
+    var notice2 = "ios限免新脚本AppSLiced.js已发布!\n如果对你有帮助,给个⭐️Star吧!\n";
     for (var i = 0; i < count; i++) {
       var count2 = obj[i].apps.length;
       var notice = "";
