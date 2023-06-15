@@ -73,8 +73,8 @@ function a() {
       var notice = "";
       for (var k = 0; k < a.length; k++) {
         //   $.log(names[k]);
-        //     $.log(links[k]);
-        notice += names[k] + links[k] + "\n";
+        //   $.log(links[k]);
+        notice += names[k] + "\n" + links[k] + "\n";
       }
       $.log(notice);
       $.msg($.name, "今日限免已送达,点击查看日志👇", notice);
