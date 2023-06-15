@@ -29,7 +29,7 @@ $task.fetch(myRequest).then(
     var json = response.body;
     var obj = eval("(" + json + ")");
     var count = Object.keys(obj).length;
-    var notice2 = "ios限免新脚本AppSLiced.js已发布!\n如果对你有帮助,给个⭐️Star吧!\n";
+    var notice2 = "🥳ios限免新脚本AppSLiced.js已发布!\n如果对你有帮助,给个⭐️Star吧!\n\n";
     for (var i = 0; i < count; i++) {
       var count2 = obj[i].apps.length;
       var notice = "";
