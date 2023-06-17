@@ -81,7 +81,8 @@ function a() {
       $.done();
     },
     (reason) => {
-      $.msg($.name, "❌错误", reason.error);
+      $.msg($.name, "❌网络错误", reason);
+      $.log(reason);
       $.done();
     }
   );
