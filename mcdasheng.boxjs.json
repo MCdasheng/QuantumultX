@@ -1,14 +1,14 @@
 {
 	"id": "mcdasheng.app.sub",
 	"name": "mcdasheng 脚本订阅",
-	"description": "自用",
+	"description": "@mcdasheng",
 	"author": "@mcdasheng",
 	"icon": "https://avatars.githubusercontent.com/u/92009557",
 	"repo": "https://github.com/mcdasheng",
 	"apps": [
 		{
 			"id": "waha",
-			"name": "哇哈体育签到",
+			"name": "哇哈体育",
 			"keys": ["waha_cookie"],
 			"desc": "",
 			"settings": [
@@ -28,7 +28,7 @@
 		},
 		{
 			"id": "macat",
-			"name": "macat签到",
+			"name": "macat",
 			"keys": ["macat_loginBody"],
 			"desc": "",
 			"settings": [
@@ -51,7 +51,7 @@
 		},
 		{
 			"id": "mmy",
-			"name": "漫漫游签到",
+			"name": "漫漫游",
 			"keys": ["mmy_cookie"],
 			"desc": "",
 			"settings": [
@@ -116,7 +116,8 @@
 			"keys": [
 				"bingPointCookieKey",
 				"bingSearchCookieMobileKey",
-				"bingSearchCookiePCKey"
+				"bingSearchCookiePCKey",
+				"bing_cn"
 			],
 			"desc": "",
 			"settings": [
@@ -126,7 +127,7 @@
 					"val": "",
 					"type": "text",
 					"placeholder": "",
-					"desc": "通用lowking脚本(面板cookie), 用Alook抓rewards.bing.com"
+					"desc": "通用lowking脚本(面板cookie), Alook或QX重写抓cookie"
 				},
 				{
 					"id": "bingSearchCookieMobileKey",
@@ -162,7 +163,7 @@
 		},
 		{
 			"id": "wuai",
-			"name": "52appleid签到",
+			"name": "52appleid",
 			"keys": ["wuai_cookie"],
 			"desc": "cookie过期太快,挖坑",
 			"settings": [
@@ -185,7 +186,7 @@
 		},
 		{
 			"id": "acfun",
-			"name": "acfun签到",
+			"name": "acfun",
 			"keys": ["acfun_cookie"],
 			"desc": "",
 			"settings": [
@@ -208,9 +209,9 @@
 		},
 		{
 			"id": "Esign",
-			"name": "轻松签版本监控",
+			"name": "轻松签",
 			"keys": ["currentVersion"],
-			"desc": "",
+			"desc": "版本监控",
 			"settings": [
 				{
 					"id": "currentVersion",
@@ -218,7 +219,7 @@
 					"val": "",
 					"type": "text",
 					"placeholder": "",
-					"desc": ""
+					"desc": "轻松签当前版本"
 				}
 			],
 			"script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Esign.js",
@@ -231,9 +232,9 @@
 		},
 		{
 			"id": "GoFans",
-			"name": "GoFans今日限免",
+			"name": "GoFans",
 			"keys": ["GoFans_auth"],
-			"desc": "",
+			"desc": "今日限免",
 			"settings": [
 				{
 					"id": "GoFans_auth",
