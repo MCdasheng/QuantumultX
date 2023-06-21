@@ -14,7 +14,7 @@ a()
 
 function a() {
   let options = {
-    url: `https://appsliced.co/apps/?sort=magic&time=all&price=free&l=nav`,
+    url: `https://appsliced.co/apps?sort=latest&threshold=all&price=free&l=nav`,
     headers: {
       "User-Agent": `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36`,
     },
