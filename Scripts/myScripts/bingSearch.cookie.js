@@ -1,20 +1,26 @@
 /* 
 脚本功能: 获取 bingSearch Cookie
 操作步骤: 
-  Bing web登录、搜索  'pc'
-  Bing app登录、搜索 'testt'
+  Bing web登录,搜索  'pc'
+  Bing app登录,搜索 'testt'
+
 [rewrite local]
+外区: 也可以用于获取国区cookie,执行任务无效请打开"强制国区"开关
 ^https\:\/\/www\.bing\.com\/search\?q=pc&.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js
 ^https\:\/\/www\.bing\.com\/search\?q=testt&.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js
+国区
+^https\:\/\/cn\.bing\.com\/search\?q=pc&.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js
+^https\:\/\/cn\.bing\.com\/search\?q=testt&.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js
+
 [MITM]
-hostname = www.bing.com
+hostname = www.bing.com, cn.bing.com
 */
 
-const $ = new Env("bingSearch");
+const $ = new Env("bingSearchCookie");
 
 if ($request.url.search(/q=testt/) != -1) {
   const ck = $request.headers["Cookie"];
-  $.msg("bingSearch", "🎉MobileCookie获取成功!");
+  $.msg($.name, "🎉MobileCookie获取成功!");
   $.log("🎉MobileCookie获取成功!");
   $.log(ck);
   $.setval(ck, "bingSearchCookieMobileKey");
@@ -25,7 +31,7 @@ if ($request.url.search(/q=testt/) != -1) {
 
 if ($request.url.search(/q=pc/) != -1) {
   const ck = $request.headers["Cookie"];
-  $.msg("bingSearch", "🎉PC端Cookie获取成功!");
+  $.msg($.name, "🎉PC端Cookie获取成功!");
   $.log("🎉PC端Cookie获取成功!");
   $.log(ck);
   $.setval(ck, "bingSearchCookiePCKey");
