@@ -1,10 +1,13 @@
 /* 
 脚本功能: 获取 bingSearch Cookie
 操作步骤: 
-  Bing web登录,搜索  'pc'
-  Bing app登录,搜索 'testt'
+  mb端Cookie: Bing app登录,搜索 'testt'
+  pc端Cookie: Bing web登录,搜索 'pc' 
+         或者 ipad app登录,搜索 'pc' 
+BoxJs订阅地址:
+    https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 
-[rewrite local]
+[rewrite_local]
 外区: 也可以用于获取国区cookie,执行任务无效请打开"强制国区"开关
 ^https\:\/\/www\.bing\.com\/search\?q=pc&.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js
 ^https\:\/\/www\.bing\.com\/search\?q=testt&.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js
@@ -12,7 +15,7 @@
 ^https\:\/\/cn\.bing\.com\/search\?q=pc&.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js
 ^https\:\/\/cn\.bing\.com\/search\?q=testt&.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js
 
-[MITM]
+[mitm]
 hostname = www.bing.com, cn.bing.com
 */
 
