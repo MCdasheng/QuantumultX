@@ -1,9 +1,9 @@
 /* 
 脚本功能: 获取 bingSearch Cookie
 操作步骤: 
-  mb端Cookie: Bing app登录,搜索 'testt'
-  pc端Cookie: Bing web登录,搜索 'pc' 
-         或者 ipad app登录,搜索 'pc' 
+  pc_Cookie: Bing web登录,搜索 'pc' 
+         or  ipad app登录,搜索 'pc' 
+  mb_Cookie: Bing app登录,搜索 'testt'
 BoxJs订阅地址:
     https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 
