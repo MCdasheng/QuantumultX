@@ -5,6 +5,7 @@
 geoip, cn, direct
 
 # 📍IP
+host, ipinfo.io, proxy
 host, ip-api.com, proxy
 
 # 🤖️ChatGPT
