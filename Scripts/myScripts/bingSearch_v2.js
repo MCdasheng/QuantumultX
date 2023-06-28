@@ -1,9 +1,12 @@
 /* 
 脚本功能: 🏆BingSearch Task v2.0
 36 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch_v2.js, tag=🏆BingSearch Task, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png, enabled=false
-v1版本用于单账号快速执行
-v2版本支持多账号,以严格JSON格式填入
-    推荐在RuneStone中配置,后续尝试重写适配(挖坑)
+脚本说明:
+    v1版本用于单账号快速执行
+    v2版本支持多账号,以严格JSON格式填入
+        推荐在RuneStone中配置,后续尝试重写适配(挖坑)
+注意事项 & 区域选择:
+    详见v1版本中注释: https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.js
 @params
     bing_cn:        强制国区开关,开启后强制以国区域名cn.bing.com进行搜索
     bing_times:     执行次数,不要设置太多,默认10次
