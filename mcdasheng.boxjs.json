@@ -153,9 +153,11 @@
       ]
     }, {
       "id": "bingSearch_v2",
-      "name": "BingSearch_v2",
+      "name": "Bing_v2",
       "keys": [
         "bingPointCookieKey",
+        "bing_times",
+        "bing_timeout"
         "bing_cookies",
         "bing_cn"
       ],
@@ -168,7 +170,22 @@
           "placeholder": "",
           "desc": "通用lowking脚本(面板cookie), Alook或QX重写抓cookie"
         },
-
+        {
+          "id": "bing_times",
+          "name": "执行任务次数",
+          "val": "10",
+          "type": "text",
+          "placeholder": "",
+          "desc": "默认10次"
+        },
+        {
+          "id": "bing_timeout",
+          "name": "执行任务时间(ms)",
+          "val": "15000",
+          "type": "text",
+          "placeholder": "",
+          "desc": "超时自动结束任务,默认15s"
+        },
         {
           "id": "bing_cookies",
           "name": "Bing多账号Cookies",
