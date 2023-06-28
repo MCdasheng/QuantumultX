@@ -1,6 +1,9 @@
 /*
-脚本功能: 🏆BingSearch Task v2.1
+脚本功能: 🏆BingSearch Task v1.2
 脚本地址: https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.js
+脚本说明:
+  v1版本用于单账号快速执行
+  v2版本支持多账号: https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch_v2.js
 操作步骤: 
   1.先获取 Cookie
       Dashboard Cookie:  
