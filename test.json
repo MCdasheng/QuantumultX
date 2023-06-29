@@ -111,7 +111,7 @@
         "bingSearchCookiePCKey",
         "bing_cn"
       ],
-      "desc": "<h4 align=\"center\">获取Cookie以及脚本配置详见<a href=\"https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js\">脚本注释</a></h4>",
+      "desc_html": "<h4 align=\"center\">获取Cookie以及脚本配置详见<a href=\"https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js\">脚本注释</a></h4>",
       "settings": [{
           "id": "bingPointCookieKey",
           "name": "Bing面板Cookie",
@@ -151,8 +151,65 @@
         "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png",
         "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png"
       ]
-    }, 
-    
+    }, {
+      "id": "bingSearch_v2",
+      "name": "Bing搜索v2",
+      "keys": [
+        "bingPointCookieKey",
+        "bing_times",
+        "bing_timeout",
+        "bing_cookies",
+        "bing_cn"
+      ],
+      "desc_html": "<h4 align=\"center\">获取Cookie以及脚本配置详见<a href=\"https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js\">脚本注释</a></h4>",
+      "settings": [{
+          "id": "bingPointCookieKey",
+          "name": "Bing面板Cookie",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "通用lowking脚本(面板cookie), Alook或QX重写抓cookie"
+        },
+        {
+          "id": "bing_times",
+          "name": "执行任务次数",
+          "val": "10",
+          "type": "text",
+          "placeholder": "",
+          "desc": "默认10次"
+        },
+        {
+          "id": "bing_timeout",
+          "name": "执行任务时间(ms)",
+          "val": "15000",
+          "type": "text",
+          "placeholder": "",
+          "desc": "超时自动结束任务,默认15s"
+        },
+        {
+          "id": "bing_cookies",
+          "name": "Bing多账号Cookies",
+          "val": "",
+          "type": "textarea",
+          "placeholder": "",
+          "desc": "严格JSON格式"
+        },
+        {
+          "id": "bing_cn",
+          "name": "强制国区",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后将强制在国区执行搜索任务"
+        }
+      ],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch_v2.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png",
+        "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png"
+      ]
+    },
     {
       "id": "wuai",
       "name": "52appleid",
