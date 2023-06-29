@@ -104,14 +104,14 @@
     },
     {
       "id": "bingSearch",
-      "name": "BingSearch",
+      "name": "Bing搜索",
       "keys": [
         "bingPointCookieKey",
         "bingSearchCookieMobileKey",
         "bingSearchCookiePCKey",
         "bing_cn"
       ],
-      "desc": "<h4 align=\"center\">获取Cookie以及脚本配置详见<a href=\"https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js\">脚本注释</a></h4>",
+      "desc_html": ["<h4 align=\"center\">获取Cookie以及脚本配置详见<a href=\"https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js\">脚本注释</a></h4>"],
       "settings": [{
           "id": "bingPointCookieKey",
           "name": "Bing面板Cookie",
@@ -153,15 +153,15 @@
       ]
     }, {
       "id": "bingSearch_v2",
-      "name": "Bing_v2",
+      "name": "Bing搜索v2",
       "keys": [
         "bingPointCookieKey",
         "bing_times",
-        "bing_timeout"
+        "bing_timeout",
         "bing_cookies",
         "bing_cn"
       ],
-      "desc": "",
+      "desc_html": ["<h4 align=\"center\">获取Cookie以及脚本配置详见<a href=\"https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js\">脚本注释</a></h4>"],
       "settings": [{
           "id": "bingPointCookieKey",
           "name": "Bing面板Cookie",
