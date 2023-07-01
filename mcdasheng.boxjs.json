@@ -163,9 +163,7 @@
                 "bing_cookies",
                 "bing_cn"
             ],
-            "desc_html": ["<h4 align=\"center\">获取Cookie以及脚本配置详见<a href=\"https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js\">脚本注释</a></h4>",
-                "<h4 align=\"center\">如需修改Cookie列表请严格按照<a href=\"https://www.bejson.com/json/format\">JSON格式</a>修改</h4>"
-            ],
+            "desc": "获取Cookie以及脚本配置详见脚本注释,如需修改Cookie列表请严格按照JSON格式",
             "settings": [{
                     "id": "bingPointCookieKey",
                     "name": "Bing面板Cookie",
@@ -177,16 +175,16 @@
                 {
                     "id": "bing_times",
                     "name": "执行任务次数",
-                    "val": "10",
-                    "type": "text",
+                    "val": 10,
+                    "type": "number",
                     "placeholder": "",
                     "desc": "默认10次"
                 },
                 {
                     "id": "bing_timeout",
                     "name": "执行任务时间(ms)",
-                    "val": "15000",
-                    "type": "text",
+                    "val": 15000,
+                    "type": "number",
                     "placeholder": "",
                     "desc": "超时自动结束任务,默认15s"
                 },
