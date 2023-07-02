@@ -182,8 +182,8 @@
                 },
                 {
                     "id": "bing_timeout",
-                    "name": "执行任务时间(ms)",
-                    "val": 15000,
+                    "name": "执行任务时间(s)",
+                    "val": 15,
                     "type": "number",
                     "placeholder": "",
                     "desc": "超时自动结束任务,默认15s"
@@ -199,7 +199,7 @@
                 {
                     "id": "bing_cn",
                     "name": "强制国区",
-                    "val": false,
+                    "val": true,
                     "type": "boolean",
                     "desc": "开启后将强制在国区执行搜索任务"
                 }
