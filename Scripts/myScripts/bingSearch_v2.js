@@ -83,13 +83,11 @@ for (var k = 0; k < cookies.length; k++) {
 }
 
 // 定时结束任务
-while (1) {
-  if (new Date().getTime() - $.startTime > `${$.timeout}` * 1000) {
-    $.log(`🎉BingSearch已自动结束,请检查是否完成全部任务!`);
-    $.msg($.name, `🎉BingSearch已自动结束,请检查是否完成全部任务!`);
-    $.done();
-  }
-}
+setTimeout(() => {
+  $.log(`🎉BingSearch已自动结束,请检查是否完成全部任务!`);
+  $.msg($.name, `🎉BingSearch已自动结束,请检查是否完成全部任务!`);
+  $.done();
+}, `${$.timeout}` * 1000);
 
 // mcdasheng
 async function bingSearch(mb_cookie, pc_cookie) {
