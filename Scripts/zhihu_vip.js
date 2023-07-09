@@ -1,7 +1,7 @@
 /*
 脚本功能：知乎 盐故事+知识+书刊+去部分广告
 脚本作者：PayNe(原作者伟人)
-url =  https://raw.githubusercontent.com/MCdasheng/Module/main/Scripts/zhihu_vip.js
+url =  https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/zhihu_vip.js
 
 [rewrite_local]
 ^http[s]?:\/\/api\.zhihu\.com\/commercial_api\/launch_v2 url reject-dict
