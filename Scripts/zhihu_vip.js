@@ -7,8 +7,8 @@ url =  https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/zhih
 ^http[s]?:\/\/api\.zhihu\.com\/commercial_api\/launch_v2 url reject-dict
 ^http[s]?:\/\/api\.zhihu\.com\/commercial_api\/real_time_launch_v2 url reject-dict
 ^http[s]?:\/\/datahub\.zhihu\.com\/collector\/lastn-realtime url reject-dict
-^http[s]?:\/\/api\.zhihu\.com\/(people\/self|unlimited\/go\/my_card|sku\/reversion_sku_ext).*$ url script-response-body https://raw.githubusercontent.com/paynexss/Scripts/main/Scripts/ZhiHu.js
-http[s]?:\/\/.*zhihu\.(com|cn)\/(appview\/v2\/answer|remix-web\/paid_columns.*manuscript|market\/paid_column|appview\/p|api\/v3\/books|books|market\/paid_magazine).*$ url script-response-body https://raw.githubusercontent.com/paynexss/Scripts/main/Scripts/ZhiHu.js
+^http[s]?:\/\/api\.zhihu\.com\/(people\/self|unlimited\/go\/my_card|sku\/reversion_sku_ext).*$ url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/zhihu_vip.js
+http[s]?:\/\/.*zhihu\.(com|cn)\/(appview\/v2\/answer|remix-web\/paid_columns.*manuscript|market\/paid_column|appview\/p|api\/v3\/books|books|market\/paid_magazine).*$ url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/zhihu_vip.js
 
 [mitm]
 hostname = 116.136.170*,116.136.15*,123.138.13*,123.138.13*,125.72.138*,116.177.244*,221.178.19.*,218.201.95*,117.187.144*,112.19.1*,58.216.107*,58.221.31*,61.243.13*,58.144.248*,120.92.107*,125.77.176*,27.148*,183.204*,122.224*,60.188.72*,120.220*,120.222*,150.109.91*,*zhihu*,103.41.167*,112.194.67*,119.39.203*,101.207.252*,58.223.164*,27.152.187*,157.255.135*,124.227.186*,113.16.214*,113.96.150*,113.96.181*
