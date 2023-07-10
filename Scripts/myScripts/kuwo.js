@@ -153,7 +153,7 @@ async function video() {
 
 async function lottery_free() {
   let options = {
-    url: `https://integralapi.kuwo.cn/api/v1/online/sign/loterry/getLucky?loginUid=587513271&loginSid=1620984843&type=free`,
+    url: `https://integralapi.kuwo.cn/api/v1/online/sign/loterry/getLucky?loginUid=${loginUid}&loginSid=${loginSid}&type=free`,
     headers: kw_headers,
   };
 
@@ -166,7 +166,7 @@ async function lottery_free() {
       desc = obj.data.lotteryname;
       if (desc.search(/金币/) != -1) desc = `🎉免费抽奖: ${desc}`;
       else if (desc == "今天已完成任务") desc = `🟢免费抽奖: ${desc}`;
-      //   else if (desc == "用户未登录") desc = `🔴免费抽奖: ${desc}`;
+        else if (desc == "用户未登录") desc = `🔴免费抽奖: ${desc}`;
     } else {
       desc = obj.msg ? `🔴免费抽奖: ${obj.msg}` : `❌免费抽奖: 错误!`;
       $.log(resp.body);
@@ -178,7 +178,7 @@ async function lottery_free() {
 
 async function lottery_video() {
   let options = {
-    url: `https://integralapi.kuwo.cn/api/v1/online/sign/loterry/getLucky?loginUid=587513271&loginSid=1620984843&type=video`,
+    url: `https://integralapi.kuwo.cn/api/v1/online/sign/loterry/getLucky?loginUid=${loginUid}&loginSid=${loginSid}&type=video`,
     headers: kw_headers,
   };
 
@@ -190,8 +190,8 @@ async function lottery_video() {
     if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
       desc = obj.data.lotteryname;
       if (desc.search(/金币/) != -1) desc = `🎉视频抽奖: ${desc}`;
-      //   else if (desc == "今天已完成任务") desc = `🟢视频抽奖: ${desc}`;
-      //   else if (desc == "用户未登录") desc = `🔴视频抽奖: ${desc}`;
+        else if (desc == "今天已完成任务") desc = `🟢视频抽奖: ${desc}`;
+        else if (desc == "用户未登录") desc = `🔴视频抽奖: ${desc}`;
     } else {
       desc = obj.msg ? `🔴视频抽奖: ${obj.msg}` : `❌视频抽奖: 错误!`;
       $.log(resp.body);
