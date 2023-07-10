@@ -1,300 +1,327 @@
 {
-    "id": "mcdasheng.app.sub",
-    "name": "mcdasheng 脚本订阅",
-    "description": "@mcdasheng",
-    "author": "@mcdasheng",
-    "icon": "https://avatars.githubusercontent.com/u/92009557",
-    "repo": "https://github.com/mcdasheng",
-    "apps": [{
-            "id": "waha",
-            "name": "哇哈体育",
-            "keys": ["waha_cookie"],
-            "desc": "",
-            "settings": [{
-                "id": "waha_cookie",
-                "name": "waha_cookie",
-                "val": "",
-                "type": "text",
-                "placeholder": "",
-                "desc": ""
-            }],
-            "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/waha.js",
-            "author": "@mcdasheng",
-            "repo": "https://github.com/mcdasheng",
-            "icons": []
+  "id": "mcdasheng.app.sub",
+  "name": "mcdasheng 脚本订阅",
+  "description": "@mcdasheng",
+  "author": "@mcdasheng",
+  "icon": "https://avatars.githubusercontent.com/u/92009557",
+  "repo": "https://github.com/mcdasheng",
+  "apps": [{
+      "id": "waha",
+      "name": "哇哈体育",
+      "keys": ["waha_cookie"],
+      "desc": "",
+      "settings": [{
+        "id": "waha_cookie",
+        "name": "waha_cookie",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/waha.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": []
+    },
+    {
+      "id": "macat",
+      "name": "macat",
+      "keys": ["macat_loginBody"],
+      "desc": "",
+      "settings": [{
+        "id": "macat_loginBody",
+        "name": "macat_loginBody",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": "登录请求体(自行填入,包括账号密码等)"
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/macat.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Skicat.png",
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Skicat.png"
+      ]
+    },
+    {
+      "id": "mmy",
+      "name": "漫漫游",
+      "keys": ["mmy_cookie"],
+      "desc": "",
+      "settings": [{
+        "id": "mmy_cookie",
+        "name": "mmy_cookie",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/mmy.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": []
+    },
+    {
+      "id": "legym",
+      "name": "乐健体育",
+      "keys": [
+        "legym_auth",
+        "legym_activityId",
+        "legym_loginBody",
+        "legym_signBody"
+      ],
+      "desc": "自动报名,手动签到,自动签退",
+      "settings": [{
+          "id": "legym_auth",
+          "name": "legym_auth",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "登录用户鉴权(日更)"
         },
         {
-            "id": "macat",
-            "name": "macat",
-            "keys": ["macat_loginBody"],
-            "desc": "",
-            "settings": [{
-                "id": "macat_loginBody",
-                "name": "macat_loginBody",
-                "val": "",
-                "type": "text",
-                "placeholder": "",
-                "desc": "登录请求体(自行填入,包括账号密码等)"
-            }],
-            "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/macat.js",
-            "author": "@mcdasheng",
-            "repo": "https://github.com/mcdasheng",
-            "icons": [
-                "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Skicat.png",
-                "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Skicat.png"
-            ]
+          "id": "legym_loginBody",
+          "name": "legym_loginBody",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "登录请求体(自行填入,包括密码学校等)"
         },
         {
-            "id": "mmy",
-            "name": "漫漫游",
-            "keys": ["mmy_cookie"],
-            "desc": "",
-            "settings": [{
-                "id": "mmy_cookie",
-                "name": "mmy_cookie",
-                "val": "",
-                "type": "text",
-                "placeholder": "",
-                "desc": ""
-            }],
-            "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/mmy.js",
-            "author": "@mcdasheng",
-            "repo": "https://github.com/mcdasheng",
-            "icons": []
-        },
-        {
-            "id": "legym",
-            "name": "乐健体育",
-            "keys": [
-                "legym_auth",
-                "legym_activityId",
-                "legym_loginBody",
-                "legym_signBody"
-            ],
-            "desc": "自动报名,手动签到,自动签退",
-            "settings": [{
-                    "id": "legym_auth",
-                    "name": "legym_auth",
-                    "val": "",
-                    "type": "text",
-                    "placeholder": "",
-                    "desc": "登录用户鉴权(日更)"
-                },
-                {
-                    "id": "legym_loginBody",
-                    "name": "legym_loginBody",
-                    "val": "",
-                    "type": "text",
-                    "placeholder": "",
-                    "desc": "登录请求体(自行填入,包括密码学校等)"
-                },
-                {
-                    "id": "legym_signBody",
-                    "name": "legym_signBody",
-                    "val": "",
-                    "type": "text",
-                    "placeholder": "",
-                    "desc": "手动签到时自动获取"
-                }
-            ],
-            "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js",
-            "author": "@mcdasheng",
-            "repo": "https://github.com/mcdasheng",
-            "icons": []
-        },
-        {
-            "id": "bingSearch",
-            "name": "Bing搜索",
-            "keys": [
-                "bingPointCookieKey",
-                "bingSearchCookieMobileKey",
-                "bingSearchCookiePCKey",
-                "bing_cn"
-            ],
-            "desc_html": ["<h4 align=\"center\">获取Cookie以及脚本配置详见<a href=\"https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js\">脚本注释</a></h4>",
-                "<h4 align=\"center\">如需修改Cookie列表请严格按照<a href=\"https://www.bejson.com/json/format\">JSON格式</a>修改</h4>"
-            ],
-            "settings": [{
-                    "id": "bingPointCookieKey",
-                    "name": "Bing面板Cookie",
-                    "val": "",
-                    "type": "text",
-                    "placeholder": "",
-                    "desc": "通用lowking脚本(面板cookie), Alook或QX重写抓cookie"
-                },
-                {
-                    "id": "bingSearchCookieMobileKey",
-                    "name": "Bing移动端搜索Cookie",
-                    "val": "",
-                    "type": "text",
-                    "placeholder": "",
-                    "desc": "QX重写抓cookie"
-                },
-                {
-                    "id": "bingSearchCookiePCKey",
-                    "name": "Bing电脑端搜索Cookie",
-                    "val": "",
-                    "type": "text",
-                    "placeholder": "",
-                    "desc": "QX重写or电脑抓cookie"
-                },
-                {
-                    "id": "bing_cn",
-                    "name": "强制国区",
-                    "val": false,
-                    "type": "boolean",
-                    "desc": "开启后将强制在国区执行搜索任务"
-                }
-            ],
-            "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.js",
-            "author": "@mcdasheng",
-            "repo": "https://github.com/mcdasheng",
-            "icons": [
-                "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png",
-                "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png"
-            ]
-        }, {
-            "id": "bingSearch_v2",
-            "name": "Bing搜索v2",
-            "keys": [
-                "bingPointCookieKey",
-                "bing_times",
-                "bing_timeout",
-                "bing_cookies",
-                "bing_cn"
-            ],
-            "desc": "获取Cookie以及脚本配置详见脚本注释,如需修改Cookie列表请严格按照JSON格式",
-            "settings": [{
-                    "id": "bingPointCookieKey",
-                    "name": "Bing面板Cookie",
-                    "val": "",
-                    "type": "text",
-                    "placeholder": "",
-                    "desc": "通用lowking脚本(面板cookie), Alook或QX重写抓cookie"
-                },
-                {
-                    "id": "bing_times",
-                    "name": "执行任务次数",
-                    "val": 10,
-                    "type": "number",
-                    "placeholder": "",
-                    "desc": "默认10次"
-                },
-                {
-                    "id": "bing_timeout",
-                    "name": "执行任务时间(s)",
-                    "val": 15,
-                    "type": "number",
-                    "placeholder": "",
-                    "desc": "超时自动结束任务,默认15s"
-                },
-                {
-                    "id": "bing_cookies",
-                    "name": "Bing多账号Cookies",
-                    "val": "",
-                    "type": "textarea",
-                    "placeholder": "",
-                    "desc": "严格JSON格式"
-                },
-                {
-                    "id": "bing_cn",
-                    "name": "强制国区",
-                    "val": true,
-                    "type": "boolean",
-                    "desc": "开启后将强制在国区执行搜索任务"
-                }
-            ],
-            "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch_v2.js",
-            "author": "@mcdasheng",
-            "repo": "https://github.com/mcdasheng",
-            "icons": [
-                "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png",
-                "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png"
-            ]
-        },
-        {
-            "id": "wuai",
-            "name": "52appleid",
-            "keys": ["wuai_cookie"],
-            "desc": "cookie过期太快,挖坑",
-            "settings": [{
-                "id": "wuai_cookie",
-                "name": "wuai_cookie",
-                "val": "",
-                "type": "text",
-                "placeholder": "",
-                "desc": ""
-            }],
-            "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/wuai.js",
-            "author": "@mcdasheng",
-            "repo": "https://github.com/mcdasheng",
-            "icons": [
-                "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png",
-                "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"
-            ]
-        },
-        {
-            "id": "acfun",
-            "name": "acfun",
-            "keys": ["acfun_cookie"],
-            "desc": "",
-            "settings": [{
-                "id": "acfun_cookie",
-                "name": "acfun_cookie",
-                "val": "",
-                "type": "text",
-                "placeholder": "",
-                "desc": ""
-            }],
-            "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js",
-            "author": "@mcdasheng",
-            "repo": "https://github.com/mcdasheng",
-            "icons": [
-                "https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png",
-                "https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png"
-            ]
-        },
-        {
-            "id": "Esign",
-            "name": "轻松签",
-            "keys": ["currentVersion"],
-            "desc": "版本监控",
-            "settings": [{
-                "id": "currentVersion",
-                "name": "currentVersion",
-                "val": "",
-                "type": "text",
-                "placeholder": "",
-                "desc": "轻松签当前版本"
-            }],
-            "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Esign.js",
-            "author": "@mcdasheng",
-            "repo": "https://github.com/mcdasheng",
-            "icons": [
-                "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png",
-                "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png"
-            ]
-        },
-        {
-            "id": "GoFans",
-            "name": "GoFans",
-            "keys": ["GoFans_auth"],
-            "desc": "今日限免",
-            "settings": [{
-                "id": "GoFans_auth",
-                "name": "GoFans_auth",
-                "val": "",
-                "type": "text",
-                "placeholder": "",
-                "desc": "'Bearer '+ token 形式"
-            }],
-            "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/GoFans.js",
-            "author": "@mcdasheng",
-            "repo": "https://github.com/mcdasheng",
-            "icons": [
-                "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png",
-                "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"
-            ]
+          "id": "legym_signBody",
+          "name": "legym_signBody",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "手动签到时自动获取"
         }
-    ]
+      ],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": []
+    },
+    {
+      "id": "bingSearch",
+      "name": "Bing搜索",
+      "keys": [
+        "bingPointCookieKey",
+        "bingSearchCookieMobileKey",
+        "bingSearchCookiePCKey",
+        "bing_cn"
+      ],
+      "desc_html": ["<h4 align=\"center\">获取Cookie以及脚本配置详见<a href=\"https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js\">脚本注释</a></h4>",
+        "<h4 align=\"center\">如需修改Cookie列表请严格按照<a href=\"https://www.bejson.com/json/format\">JSON格式</a>修改</h4>"
+      ],
+      "settings": [{
+          "id": "bingPointCookieKey",
+          "name": "Bing面板Cookie",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "通用lowking脚本(面板cookie), Alook或QX重写抓cookie"
+        },
+        {
+          "id": "bingSearchCookieMobileKey",
+          "name": "Bing移动端搜索Cookie",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "QX重写抓cookie"
+        },
+        {
+          "id": "bingSearchCookiePCKey",
+          "name": "Bing电脑端搜索Cookie",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "QX重写or电脑抓cookie"
+        },
+        {
+          "id": "bing_cn",
+          "name": "强制国区",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后将强制在国区执行搜索任务"
+        }
+      ],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png",
+        "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png"
+      ]
+    }, {
+      "id": "bingSearch_v2",
+      "name": "Bing搜索v2",
+      "keys": [
+        "bingPointCookieKey",
+        "bing_times",
+        "bing_timeout",
+        "bing_cookies",
+        "bing_cn"
+      ],
+      "desc": "获取Cookie以及脚本配置详见脚本注释,如需修改Cookie列表请严格按照JSON格式",
+      "settings": [{
+          "id": "bingPointCookieKey",
+          "name": "Bing面板Cookie",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "通用lowking脚本(面板cookie), Alook或QX重写抓cookie"
+        },
+        {
+          "id": "bing_times",
+          "name": "执行任务次数",
+          "val": 10,
+          "type": "number",
+          "placeholder": "",
+          "desc": "默认10次"
+        },
+        {
+          "id": "bing_timeout",
+          "name": "执行任务时间(s)",
+          "val": 15,
+          "type": "number",
+          "placeholder": "",
+          "desc": "超时自动结束任务,默认15s"
+        },
+        {
+          "id": "bing_cookies",
+          "name": "Bing多账号Cookies",
+          "val": "",
+          "type": "textarea",
+          "placeholder": "",
+          "desc": "严格JSON格式"
+        },
+        {
+          "id": "bing_cn",
+          "name": "强制国区",
+          "val": true,
+          "type": "boolean",
+          "desc": "开启后将强制在国区执行搜索任务"
+        }
+      ],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch_v2.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png",
+        "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png"
+      ]
+    },
+    {
+      "id": "kuwo",
+      "name": "酷我音乐",
+      "keys": ["kw_loginUid", "kw_loginSid"],
+      "desc": "loginSid好像过期很快,挖坑",
+      "settings": [{
+        "id": "kw_loginUid",
+        "name": "kw_loginUid",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "kw_loginSid",
+        "name": "kw_loginSid",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png",
+        "https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png"
+      ]
+    }, {
+      "id": "wuai",
+      "name": "52appleid",
+      "keys": ["wuai_cookie"],
+      "desc": "cookie过期太快,挖坑",
+      "settings": [{
+        "id": "wuai_cookie",
+        "name": "wuai_cookie",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/wuai.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png",
+        "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"
+      ]
+    },
+    {
+      "id": "acfun",
+      "name": "acfun",
+      "keys": ["acfun_cookie"],
+      "desc": "",
+      "settings": [{
+        "id": "acfun_cookie",
+        "name": "acfun_cookie",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png",
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png"
+      ]
+    },
+    {
+      "id": "Esign",
+      "name": "轻松签",
+      "keys": ["currentVersion"],
+      "desc": "版本监控",
+      "settings": [{
+        "id": "currentVersion",
+        "name": "currentVersion",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": "轻松签当前版本"
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Esign.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png",
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png"
+      ]
+    },
+    {
+      "id": "GoFans",
+      "name": "GoFans",
+      "keys": ["GoFans_auth"],
+      "desc": "今日限免",
+      "settings": [{
+        "id": "GoFans_auth",
+        "name": "GoFans_auth",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": "'Bearer '+ token 形式"
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/GoFans.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png",
+        "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"
+      ]
+    }
+  ]
 }
