@@ -1,7 +1,7 @@
 /* 
 🎵酷我音乐 v1.0
 [task_local]
-30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.js, tag=酷我音乐, https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png, enabled=true
+30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.js, tag=🎵酷我音乐, img-url = https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png, enabled=true
 🥳脚本功能: 酷我音乐 每日任务
 🔍抓包方式: 
     开启抓包,进入任务界面
