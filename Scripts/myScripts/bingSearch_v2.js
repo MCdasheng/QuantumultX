@@ -15,6 +15,8 @@
     ❎每日积分变动      (挖坑)
 📍地区选择:
     详见v1版本中注释: https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.js
+📦BoxJs地址:
+    https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 @thanks
     @Chavy's Env.js
     @lowking's bingPoint.js 
