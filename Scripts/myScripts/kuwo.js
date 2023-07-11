@@ -12,6 +12,9 @@
 @params: 
   "kw_loginUid" 
   "kw_loginSid" (过期时间不清楚,抓包写一个月,但是失效可能也很快,待解决?)
+@tips:
+  kw程序员把 lottery 写成 loterry 了,我说怎么报错呢😅
+  有空弄一下重写获取 loginSid (挖坑)
 */
 
 const $ = new Env("酷我音乐");
@@ -37,11 +40,12 @@ $.notifyMsg = [];
 
 (async () => {
   await novel(); // 1次
+  await sign(); // 2次
   await mobile(); // 1次
   await collect(); // 1次
   await video(); // 10次
-  await lottery_free(); // 2次
-  await lottery_video(); // 8次
+  await loterry_free(); // 2次
+  await loterry_video(); // 8次
   await ad_poster();
   await box();
 })()
@@ -67,6 +71,7 @@ async function novel() {
       if (desc == "成功") desc = `🎉听小说: ${desc}`;
       else if (desc == "今天已完成任务") desc = `🟢听小说: ${desc}`;
       else if (desc == "用户未登录") desc = `🔴听小说: ${desc}`;
+      else desc = `⚠️听小说: ${desc}`;
     } else {
       desc = `❌听小说: 错误!`;
       $.log(resp.body);
@@ -92,6 +97,7 @@ async function mobile() {
       if (desc == "成功") desc = `🎉每日听歌: ${desc}`;
       else if (desc == "今天已完成任务") desc = `🟢每日听歌: ${desc}`;
       else if (desc == "用户未登录") desc = `🔴每日听歌: ${desc}`;
+      else desc = `⚠️每日听歌: ${desc}`;
     } else {
       desc = `❌每日听歌: 错误!`;
       $.log(resp.body);
@@ -117,6 +123,7 @@ async function collect() {
       if (desc == "成功") desc = `🎉每日收藏: ${desc}`;
       else if (desc == "今天已完成任务") desc = `🟢每日收藏: ${desc}`;
       else if (desc == "用户未登录") desc = `🔴每日收藏: ${desc}`;
+      else desc = `⚠️每日收藏: ${desc}`;
     } else {
       desc = `❌每日收藏: 错误!`;
       $.log(resp.body);
@@ -142,6 +149,7 @@ async function video() {
       if (desc == "成功") desc = `🎉创意视频: ${desc}`;
       else if (desc == "今天已完成任务") desc = `🟢创意视频: ${desc}`;
       else if (desc == "用户未登录") desc = `🔴创意视频: ${desc}`;
+      else desc = `⚠️创意视频: ${desc}`;
     } else {
       desc = `❌创意视频: 错误!`;
       $.log(resp.body);
@@ -151,7 +159,35 @@ async function video() {
   });
 }
 
-async function lottery_free() {
+async function sign() {
+  let options = {
+    url: `https://integralapi.kuwo.cn/api/v1/online/sign/v1/earningSignIn/everydaymusic/doListen?loginUid=${loginUid}&loginSid=${loginSid}&from=sign&extraGoldNum=110`,
+    headers: kw_headers,
+  };
+
+  return $.http.get(options).then((resp) => {
+    $.log("🟡正在执行每日签到任务...");
+    // $.log(resp.body);
+    var desc;
+    var obj = JSON.parse(resp.body);
+    if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
+      desc = obj.data.description;
+      if (desc == "成功") desc = `🎉每日签到: ${desc}`;
+      else if (desc == "今天已完成任务") desc = `🟢每日签到: ${desc}`;
+      else if (desc == "用户未登录") desc = `🔴每日签到: ${desc}`;
+      else if (desc == "已达到当日观看额外视频次数")
+        desc = `🟢每日签到: ${desc}`;
+      else desc = `⚠️每日签到: ${desc}`;
+    } else {
+      desc = `❌每日签到: 错误!`;
+      $.log(resp.body);
+    }
+    $.log(desc);
+    $.notifyMsg.push(desc);
+  });
+}
+
+async function loterry_free() {
   let options = {
     url: `https://integralapi.kuwo.cn/api/v1/online/sign/loterry/getLucky?loginUid=${loginUid}&loginSid=${loginSid}&type=free`,
     headers: kw_headers,
@@ -163,12 +199,11 @@ async function lottery_free() {
     var desc;
     var obj = JSON.parse(resp.body);
     if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
-      desc = obj.data.lotteryname;
-      if (desc.search(/金币/) != -1) desc = `🎉免费抽奖: ${desc}`;
-      else if (desc == "今天已完成任务") desc = `🟢免费抽奖: ${desc}`;
-        else if (desc == "用户未登录") desc = `🔴免费抽奖: ${desc}`;
-    } else {
-      desc = obj.msg ? `🔴免费抽奖: ${obj.msg}` : `❌免费抽奖: 错误!`;
+      desc = obj.data.loterryname
+        ? `🎉免费抽奖: ${obj.data.loterryname}`
+        : `❌免费抽奖: 错误!`;
+    } else desc = obj.msg ? `🔴免费抽奖: ${obj.msg}` : `❌免费抽奖: 错误!`;
+    if (desc == `❌免费抽奖: 错误!`) {
       $.log(resp.body);
     }
     $.log(desc);
@@ -176,7 +211,7 @@ async function lottery_free() {
   });
 }
 
-async function lottery_video() {
+async function loterry_video() {
   let options = {
     url: `https://integralapi.kuwo.cn/api/v1/online/sign/loterry/getLucky?loginUid=${loginUid}&loginSid=${loginSid}&type=video`,
     headers: kw_headers,
@@ -188,12 +223,11 @@ async function lottery_video() {
     var desc;
     var obj = JSON.parse(resp.body);
     if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
-      desc = obj.data.lotteryname;
-      if (desc.search(/金币/) != -1) desc = `🎉视频抽奖: ${desc}`;
-        else if (desc == "今天已完成任务") desc = `🟢视频抽奖: ${desc}`;
-        else if (desc == "用户未登录") desc = `🔴视频抽奖: ${desc}`;
-    } else {
-      desc = obj.msg ? `🔴视频抽奖: ${obj.msg}` : `❌视频抽奖: 错误!`;
+      desc = obj.data.loterryname
+        ? `🎉视频抽奖: ${obj.data.loterryname}`
+        : `❌视频抽奖: 错误!`;
+    } else desc = obj.msg ? `🔴视频抽奖: ${obj.msg}` : `❌视频抽奖: 错误!`;
+    if (desc == `❌视频抽奖: 错误!`) {
       $.log(resp.body);
     }
     $.log(desc);
@@ -219,6 +253,7 @@ async function ad_poster() {
       if (desc == "成功") desc = `🎉海报广告: ${desc}`;
       else if (desc == "今天已完成任务") desc = `🟢海报广告: ${desc}`;
       else if (desc == "用户未登录") desc = `🔴海报广告: ${desc}`;
+      else desc = `⚠️海报广告: ${desc}`;
     } else {
       desc = `❌海报广告: 错误!`;
       $.log(resp.body);
@@ -264,6 +299,7 @@ async function box() {
       if (desc == "成功") desc = `🎉定时宝箱: ${desc}`;
       else if (desc == "今天已完成任务") desc = `🟢定时宝箱: ${desc}`;
       else if (desc == "用户未登录") desc = `🔴定时宝箱: ${desc}`;
+      else desc = `⚠️定时宝箱: ${desc}`;
     } else {
       desc = `❌定时宝箱: 错误!`;
       $.log(resp.body);
