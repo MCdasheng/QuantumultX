@@ -11,16 +11,16 @@ hostname = integralapi.kuwo.cn
 
 */
 
-const $ = new Env("kw_cookie");
+const $ = new Env("酷我音乐");
 const url = $request.url;
 const uid = $.getdata("kw_loginUid") ? $.getdata("kw_loginUid") : "";
 const regex = /[?&]loginUid=(\d+).*?[?&]loginSid=(\d+)/;
 const matches = url.match(regex);
-var notice;
+var notice = "";
 if (matches && matches.length === 3) {
   const loginUid = matches[1];
   const loginSid = matches[2];
-  if (uid != loginUid) {
+  if (uid && uid != loginUid) {
     notice += "⚠️请注意: Uid有变!\n";
   }
   $.log(`loginUid: ${loginUid}`);
@@ -31,6 +31,7 @@ if (matches && matches.length === 3) {
 } else {
   notice += "🔴登录信息更新失败!\n";
 }
+$.log(notice);
 $.msg($.name, notice);
 $.done();
 
