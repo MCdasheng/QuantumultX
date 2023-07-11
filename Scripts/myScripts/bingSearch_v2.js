@@ -1,5 +1,5 @@
 /* 
-🏆BingSearch Task v2.1
+🏆Bing Task v2.2
 [task_local]
 36 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch_v2.js, tag=🏆BingSearch Task, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png, enabled=false
 ⚠️注意事项:
@@ -39,9 +39,9 @@ Cookies格式:
     }]
 */
 
-const $ = new Env("bingSearch_v2");
+const $ = new Env("🔍Bing搜索");
 
-const lk = new ToolKit(`🔍Bing积分`, `BingPoint`);
+const lk = new ToolKit(`🏆Bing积分`, `BingPoint`);
 
 // lowking
 let bingPointHeader;
@@ -59,6 +59,7 @@ $.log(`共找到${cookies.length}个账号`);
 $.log(`当前搜索域名: ${$.host}`);
 $.log(`当前搜索次数: ${$.times}`);
 $.log(`预计在${$.timeout}s后结束任务`);
+$.log(`-------------------------------------------`);
 
 // 开始任务
 for (var i = 0; i < cookies.length; i++) {
@@ -78,7 +79,7 @@ for (var k = 0; k < cookies.length; k++) {
   var mc_bingPointCookieKey = cookies[k].bingPointCookieKey; // bingPoint Cookie
   if (mc_bingPointCookieKey != "") {
     $.log(`🟢账号${k + 1}: 正在执行积分任务`);
-    lowking(mc_bingPointCookieKey);
+    // lowking(mc_bingPointCookieKey);
   } else {
     $.log(`🔴账号${k + 1}: 面板Cookie为空,跳过积分任务!`);
   }
@@ -95,10 +96,11 @@ setTimeout(() => {
 async function bingSearch(mb_cookie, pc_cookie) {
   await mbSearch(mb_cookie);
   await pcSearch(pc_cookie);
+  await pcSearch(pc_cookie);
 }
 
 async function mbSearch(mb_cookie) {
-  $.log("mbSearching...");
+  // $.log("mbSearching...");
   if (!mb_cookie) {
     $.log("🟡mobile Cookie为空,跳过移动端搜索任务!");
     return 0;
@@ -130,7 +132,7 @@ async function mbSearch(mb_cookie) {
 }
 
 async function pcSearch(pc_cookie) {
-  $.log("pcSearching...");
+  // $.log("pcSearching...");
   if (!pc_cookie) {
     $.log("🟡pc Cookie为空,跳过pc端搜索任务!");
     return 0;
@@ -176,7 +178,7 @@ async function dealMsg(dashBoard, newPoint) {
       lk.setVal(bingCachePointKey, JSON.stringify(availablePoints));
       let increaseAmount = availablePoints - cachePoint;
       lk.prependNotifyInfo(
-        `本次执行：${
+        `本次执行:${
           increaseAmount >= 0 ? "+" + increaseAmount : increaseAmount
         }`
       );
@@ -186,9 +188,9 @@ async function dealMsg(dashBoard, newPoint) {
       );
     }
     resolve(
-      `当前积分：${availablePoints}${
+      `当前积分:${availablePoints}${
         newPoint > 0 ? "+" + newPoint : ""
-      }   日常获得：${
+      }   日常获得:${
         dashBoard?.dashboard?.userStatus?.counters?.dailyPoint[0]
           ?.pointProgress || "-"
       }/${
@@ -244,7 +246,7 @@ async function lowking(bingPointCookie) {
 
 function doReportActForUrlreward(title, item, rvt) {
   return new Promise((resolve, _reject) => {
-    const t = "做url奖励任务：" + title;
+    const t = "做url奖励任务:" + title;
     lk.log(t);
     let ret = 0;
     let url = {
@@ -252,14 +254,14 @@ function doReportActForUrlreward(title, item, rvt) {
       headers: bingPointHeader,
       body: `id=${item.name}&hash=${item.hash}&timeZone=480&activityAmount=1&__RequestVerificationToken=${rvt}`,
     };
-    lk.log(JSON.stringify(url));
-    lk.log(JSON.stringify(item));
+    // lk.log(JSON.stringify(url));
+    // lk.log(JSON.stringify(item));
     lk.post(url, (error, _response, data) => {
       try {
         if (error) {
           lk.execFail();
           lk.log(error);
-          lk.appendNotifyInfo(`❌${t}失败，请稍后再试`);
+          lk.appendNotifyInfo(`🔴${t}失败,请稍后再试`);
         } else {
           // {"activity":{"id":"3484a93d-db98-490f-998e-10e64e481de7","points":10,"quantity":1,"timestamp":"2023-03-01T22:22:39.5968778+08:00","activityType":11,"channel":"","activitySubtype":"","currencyCode":"","purchasePrice":0.0,"orderId":""},"balance":157}
           lk.log(data);
@@ -270,9 +272,9 @@ function doReportActForUrlreward(title, item, rvt) {
         }
       } catch (e) {
         lk.logErr(e);
-        lk.log(`bing返回数据：${data}`);
+        // lk.log(`bing返回数据:${data}`);
         lk.execFail();
-        lk.appendNotifyInfo(`❌${t}错误，请稍后再试`);
+        lk.appendNotifyInfo(`🔴${t}错误,请稍后再试`);
       } finally {
         resolve(ret);
       }
@@ -304,7 +306,7 @@ function reportAct(dashBoard) {
             if (point > 0) {
               let ret = 0;
               let b = true || title == "Rewa rds 挑戰";
-              lk.log(`开始任务：${title}【${point}】\n${type}\n${b}`);
+              lk.log(`开始任务:${title}【${point}】\n${type}\n${b}`);
               if (b) {
                 if (type === "urlreward") {
                   ret = await doReportActForUrlreward(
@@ -351,13 +353,13 @@ function reportAct(dashBoard) {
           `total: ${morePromotions.length}, suc: ${sucCount}, fail: ${failCount}, complete: ${completeCount}, todo:${todoCount}`
         );
         if (todoCount + completeCount >= morePromotions.length) {
-          lk.log(`任务都做完了，退出`);
-          err = `🎉任务都做完啦，共获得${completePoint}积分`;
+          lk.log(`任务都做完了,退出`);
+          err = `🎉任务都做完啦,共获得${completePoint}积分`;
           break;
         }
         if (new Date().getTime() - lk.startTime > scriptTimeout * 1000) {
-          lk.log(`执行超时，强制退出`);
-          err = "❌执行超时，强制退出（请添加分流切换节点）";
+          lk.log(`执行超时,强制退出`);
+          err = "❌执行超时,强制退出（请添加分流切换节点）";
           break;
         }
         await lk.sleep(100);
@@ -366,14 +368,14 @@ function reportAct(dashBoard) {
       if (!err) {
         if (totalCount > 0) {
           lk.execFail();
-          lk.prependNotifyInfo(`🎉成功：${sucCount}个，❌失败：${failCount}个`);
+          lk.prependNotifyInfo(`🎉成功:${sucCount}个,❌失败:${failCount}个`);
         } else {
           lk.appendNotifyInfo(`🎉今天的任务都做完啦`);
         }
       } else {
         lk.prependNotifyInfo(err);
         lk.prependNotifyInfo(
-          `🎉：${sucCount}个，❌：${failCount}个，今日已完成：${completeCount}个`
+          `🎉:${sucCount}个,❌:${failCount}个,今日已完成:${completeCount}个`
         );
       }
       resolve(newPoint);
@@ -397,7 +399,7 @@ function getDashBoard() {
       try {
         if (error) {
           lk.execFail();
-          lk.appendNotifyInfo(`❌${t}失败，请稍后再试`);
+          lk.appendNotifyInfo(`❌${t}失败,请稍后再试`);
           resolve({});
         } else {
           let rvt = data
@@ -412,7 +414,7 @@ function getDashBoard() {
           // lk.get(url, (error, _response, data) => {
           //     if (error) {
           //         lk.execFail()
-          //         lk.appendNotifyInfo(`❌${t}失败，请稍后再试`)
+          //         lk.appendNotifyInfo(`❌${t}失败,请稍后再试`)
           //         resolve({})
           //     } else {
           //         lk.log(JSON.stringify(dashboard))
@@ -433,11 +435,9 @@ function getDashBoard() {
         }
       } catch (e) {
         lk.logErr(e);
-        lk.log(`bing返回数据：${data}\n${error}\n${JSON.stringify(_response)}`);
+        lk.log(`bing返回数据:${data}\n${error}\n${JSON.stringify(_response)}`);
         lk.execFail();
-        lk.appendNotifyInfo(
-          `❌${t}错误，请稍后再试，或者cookie过期，请重新抓取`
-        );
+        lk.appendNotifyInfo(`❌${t}错误,请稍后再试,或者cookie过期,请重新抓取`);
         resolve({});
       }
     });
@@ -523,12 +523,12 @@ function ToolKit(t, s, i) {
         let t = false;
         if (this.comm[1] == "p") {
           this.isExecComm = true;
-          this.log(`开始执行指令【${this.comm[1]}】=> 发送到手机测试脚本！`);
+          this.log(`开始执行指令【${this.comm[1]}】=> 发送到手机测试脚本!`);
           if (
             this.isEmpty(this.options) ||
             this.isEmpty(this.options.httpApi)
           ) {
-            this.log(`未设置options，使用默认值`);
+            this.log(`未设置options,使用默认值`);
             if (this.isEmpty(this.options)) {
               this.options = {};
             }
@@ -536,7 +536,7 @@ function ToolKit(t, s, i) {
           } else {
             if (!/.*?@.*?:[0-9]+/.test(this.options.httpApi)) {
               t = true;
-              this.log(`❌httpApi格式错误！格式：ffff@3.3.3.18:6166`);
+              this.log(`❌httpApi格式错误!格式:ffff@3.3.3.18:6166`);
               this.done();
             }
           }
@@ -579,7 +579,7 @@ function ToolKit(t, s, i) {
         json: true,
       };
       this.post(n, (t, i, e) => {
-        this.log(`已将脚本【${s}】发给手机！`);
+        this.log(`已将脚本【${s}】发给手机!`);
         this.done();
       });
     }
@@ -620,7 +620,7 @@ function ToolKit(t, s, i) {
           return;
         }
         if (!this.isJsonObject(t) || !this.isJsonObject(s)) {
-          this.log("构建BoxJsJson传入参数格式错误，请传入json对象");
+          this.log("构建BoxJsJson传入参数格式错误,请传入json对象");
           return;
         }
         this.log("using node");
@@ -668,7 +668,7 @@ function ToolKit(t, s, i) {
             name: "Telegram通知地址",
             val: "",
             type: "text",
-            desc: "Tg的通知地址，如：https://api.telegram.org/bot-token/sendMessage?chat_id=-100140&parse_mode=Markdown&text=",
+            desc: "Tg的通知地址,如:https://api.telegram.org/bot-token/sendMessage?chat_id=-100140&parse_mode=Markdown&text=",
           },
         ];
         h.author = "#lk{author}";
@@ -745,7 +745,7 @@ function ToolKit(t, s, i) {
             let n = r.exec(o);
             if (n !== null) {
               this.log(
-                `生成BoxJs还有未配置的参数，请参考https://github.com/lowking/Scripts/blob/master/util/example/ToolKitDemo.js#L17-L18传入参数：\n`
+                `生成BoxJs还有未配置的参数,请参考https://github.com/lowking/Scripts/blob/master/util/example/ToolKitDemo.js#L17-L18传入参数:\n`
               );
             }
             let l = new Set();
@@ -813,7 +813,7 @@ function ToolKit(t, s, i) {
     logErr(t) {
       this.execStatus = true;
       if (this.isEnableLog) {
-        console.log(`${this.logSeparator}${this.name}执行异常:`);
+        // console.log(`${this.logSeparator}${this.name}执行异常:`);
         console.log(t);
         console.log(`\n${t.message}`);
       }
@@ -1042,9 +1042,9 @@ function ToolKit(t, s, i) {
       }
     }
     costTime() {
-      let t = `${this.name}执行完毕！`;
+      let t = `${this.name}执行完毕!`;
       if (this.isNode() && this.isExecComm) {
-        t = `指令【${this.comm[1]}】执行完毕！`;
+        t = `指令【${this.comm[1]}】执行完毕!`;
       }
       const s = new Date().getTime();
       const i = s - this.startTime;
@@ -1052,7 +1052,7 @@ function ToolKit(t, s, i) {
       this.execCount++;
       this.costTotalMs += i;
       this.log(
-        `${t}耗时【${e}】秒\n总共执行【${this.execCount}】次，平均耗时【${(
+        `${t}耗时【${e}】秒\n总共执行【${this.execCount}】次,平均耗时【${(
           this.costTotalMs /
           this.execCount /
           1e3
