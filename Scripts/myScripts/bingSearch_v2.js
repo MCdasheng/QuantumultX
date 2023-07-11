@@ -39,7 +39,7 @@ Cookies格式:
     }]
 */
 
-const $ = new Env("🔍Bing搜索");
+const $ = new Env("Bing任务");
 
 const lk = new ToolKit(`🏆Bing积分`, `BingPoint`);
 
@@ -79,7 +79,7 @@ for (var k = 0; k < cookies.length; k++) {
   var mc_bingPointCookieKey = cookies[k].bingPointCookieKey; // bingPoint Cookie
   if (mc_bingPointCookieKey != "") {
     $.log(`🟢账号${k + 1}: 正在执行积分任务`);
-    // lowking(mc_bingPointCookieKey);
+    lowking(mc_bingPointCookieKey);
   } else {
     $.log(`🔴账号${k + 1}: 面板Cookie为空,跳过积分任务!`);
   }
@@ -88,7 +88,7 @@ for (var k = 0; k < cookies.length; k++) {
 // 定时结束任务
 setTimeout(() => {
   $.log(`🎉BingSearch已自动结束,请检查是否完成全部任务!`);
-  $.msg($.name, `🎉BingSearch已自动结束,请检查是否完成全部任务!`);
+  $.msg($.name, `🎉BingSearch已自动结束`, `请检查是否完成全部任务!`);
   $.done();
 }, `${$.timeout}` * 1000);
 
