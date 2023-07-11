@@ -1,26 +1,46 @@
 /* 
-🎵酷我音乐 v1.0
+🎵酷我音乐 v1.1
+🥳脚本功能:  
+  ✅每日小说
+  ✅每日签到
+  ✅每日听歌
+  ✅每日收藏
+  ✅创意视频
+  ✅免费抽奖
+  ✅视频抽奖
+  ✅海报广告
+  ✅定时宝箱
+  ❎金币变动  (挖坑)
+🎯重写脚本:
+[rewrite local]
+https\:\/\/integralapi\.kuwo\.cn\/api\/v1\/online\/sign\/v1\/earningSignIn\/.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.cookie.js
+[MITM]
+hostname = integralapi.kuwo.cn
+⏰定时任务:
 [task_local]
-30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.js, tag=🎵酷我音乐, img-url = https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png, enabled=true
-🥳脚本功能: 酷我音乐 每日任务
-🔍抓包方式: 
+30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.js, tag=🎵酷我音乐, img-url=https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png, enabled=true
+🔍手动抓包: 
     开启抓包,进入任务界面
-    直接搜索请求🔗url中的 loginUid loginSid
-    🔗url:  https://integralapi.kuwo.cn/api/v1/online/sign/v1/earningSignIn/..loginUid=xxx & loginSid=xxx...
+    直接搜索请求🔗url中的 loginUid loginSid 填入BoxJs
+    🔗url: https://integralapi.kuwo.cn/api/v1/online/sign/v1/earningSignIn/..loginUid=xxx & loginSid=xxx...
 📦BoxJs地址:
     https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 @params: 
   "kw_loginUid" 
   "kw_loginSid" (过期时间不清楚,抓包写一个月,但是失效可能也很快,待解决?)
 @tips:
-  kw程序员把 lottery 写成 loterry 了,我说怎么报错呢😅
-  有空弄一下重写获取 loginSid (挖坑)
+  酷我程序员把 lottery 写成 loterry 了,我说怎么报错呢😅
 */
 
 const $ = new Env("酷我音乐");
 
 const loginUid = $.getdata("kw_loginUid");
 const loginSid = $.getdata("kw_loginSid");
+if (loginUid == "" || loginSid == "") {
+  $.log("⚠️用户信息不全,请获取或填入信息!");
+  $.msg($.name, "⚠️用户信息不全,请获取或填入信息!");
+  $.done();
+}
 
 const kw_headers = {
   Host: "integralapi.kuwo.cn",
@@ -62,18 +82,18 @@ async function novel() {
   };
 
   return $.http.get(options).then((resp) => {
-    $.log("🟡正在执行听小说任务...");
+    $.log("🟡正在执行每日小说任务...");
     // $.log(resp.body);
     var desc;
     var obj = JSON.parse(resp.body);
     if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
       desc = obj.data.description;
-      if (desc == "成功") desc = `🎉听小说: ${desc}`;
-      else if (desc == "今天已完成任务") desc = `🟢听小说: ${desc}`;
-      else if (desc == "用户未登录") desc = `🔴听小说: ${desc}`;
-      else desc = `⚠️听小说: ${desc}`;
+      if (desc == "成功") desc = `🎉每日小说: ${desc}`;
+      else if (desc == "今天已完成任务") desc = `🟢每日小说: ${desc}`;
+      else if (desc == "用户未登录") desc = `🔴每日小说: ${desc}`;
+      else desc = `⚠️每日小说: ${desc}`;
     } else {
-      desc = `❌听小说: 错误!`;
+      desc = `❌每日小说: 错误!`;
       $.log(resp.body);
     }
     $.log(desc);
@@ -203,6 +223,9 @@ async function loterry_free() {
         ? `🎉免费抽奖: ${obj.data.loterryname}`
         : `❌免费抽奖: 错误!`;
     } else desc = obj.msg ? `🔴免费抽奖: ${obj.msg}` : `❌免费抽奖: 错误!`;
+    if (desc == `🔴免费抽奖: 免费次数用完了`) {
+      desc = `🟢免费抽奖: 免费次数用完了`;
+    }
     if (desc == `❌免费抽奖: 错误!`) {
       $.log(resp.body);
     }
@@ -227,6 +250,9 @@ async function loterry_video() {
         ? `🎉视频抽奖: ${obj.data.loterryname}`
         : `❌视频抽奖: 错误!`;
     } else desc = obj.msg ? `🔴视频抽奖: ${obj.msg}` : `❌视频抽奖: 错误!`;
+    if (desc == `🔴视频抽奖: 视频次数用完了`) {
+      desc = `🟢视频抽奖: 视频次数用完了`;
+    }
     if (desc == `❌视频抽奖: 错误!`) {
       $.log(resp.body);
     }
@@ -264,6 +290,7 @@ async function ad_poster() {
 }
 
 async function box() {
+  // 定时宝箱,可以强制领取,但不推荐!
   var time;
   var hour = new Date().getUTCHours() + 8;
   if (hour >= 0 && hour < 8) {
