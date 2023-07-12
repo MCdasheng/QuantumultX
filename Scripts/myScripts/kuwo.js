@@ -1,5 +1,5 @@
 /* 
-🎵酷我音乐 v1.1
+🎵酷我音乐 v1.2
 🥳脚本功能:  
   ✅每日小说
   ✅每日签到
@@ -10,7 +10,7 @@
   ✅视频抽奖
   ✅海报广告
   ✅定时宝箱
-  ❎金币变动  (挖坑)
+  ✅资产查询
 🎯重写脚本:
 [rewrite local]
 https\:\/\/integralapi\.kuwo\.cn\/api\/v1\/online\/sign\/v1\/earningSignIn\/.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.cookie.js
@@ -36,6 +36,7 @@ const $ = new Env("酷我音乐");
 
 const loginUid = $.getdata("kw_loginUid");
 const loginSid = $.getdata("kw_loginSid");
+
 if (loginUid == "" || loginSid == "") {
   $.log("⚠️用户信息不全,请获取或填入信息!");
   $.msg($.name, "⚠️用户信息不全,请获取或填入信息!");
@@ -60,17 +61,23 @@ $.notifyMsg = [];
 
 (async () => {
   await novel(); // 1次
-  await sign(); // 2次
   await mobile(); // 1次
   await collect(); // 1次
-  await video(); // 10次
+  await box(); // 1次
   await loterry_free(); // 2次
-  await loterry_video(); // 8次
-  await ad_poster();
-  await box();
+  await loterry_free();
+  await sign(); // 3次
+  await sign();
+  await sign();
+  for (var i = 0; i < 10; i++) {
+    await video(); // 10次
+    await ad_poster(); //10次
+    await loterry_video(); // 8次
+  }
 })()
   .catch((e) => $.logErr(e))
   .finally(async () => {
+    await getAsset();
     $.msg($.name, ``, $.notifyMsg.join("\n"));
     $.done();
   });
@@ -329,6 +336,32 @@ async function box() {
       else desc = `⚠️定时宝箱: ${desc}`;
     } else {
       desc = `❌定时宝箱: 错误!`;
+      $.log(resp.body);
+    }
+    $.log(desc);
+    $.notifyMsg.push(desc);
+  });
+}
+
+async function getAsset() {
+  let options = {
+    url: `https://integralapi.kuwo.cn/api/v1/online/sign/v1/earningSignIn/earningUserSignList?loginUid=${loginUid}&loginSid=${loginSid}`,
+    headers: kw_headers,
+  };
+
+  return $.http.get(options).then((resp) => {
+    $.log("🟡正在查询资产...");
+    // $.log(resp.body);
+    var score;
+    var obj = JSON.parse(resp.body);
+    if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
+      score = obj.data.remainScore ? obj.data.remainScore : 0;
+      if (score != 0) {
+        var money = (score / 10000).toFixed(2);
+        desc = `💰${score} --> 💴${money} CNY`;
+      } else desc = `🔴资产查询失败!`;
+    } else {
+      desc = `❌资产查询: 错误!`;
       $.log(resp.body);
     }
     $.log(desc);
