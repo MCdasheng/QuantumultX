@@ -1,5 +1,5 @@
 /* 
-🎵酷我音乐 v1.2
+🎵酷我音乐 v1.3
 🥳脚本功能:  
   ✅每日小说
   ✅每日签到
@@ -77,8 +77,8 @@ $.notifyMsg = [];
 })()
   .catch((e) => $.logErr(e))
   .finally(async () => {
-    await getAsset();
-    $.msg($.name, ``, $.notifyMsg.join("\n"));
+    var asset = await getAsset();
+    $.msg($.name, asset, $.notifyMsg.join("\n"));
     $.done();
   });
 
@@ -366,6 +366,7 @@ async function getAsset() {
     }
     $.log(desc);
     $.notifyMsg.push(desc);
+    return desc;
   });
 }
 
