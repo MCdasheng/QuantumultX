@@ -18,7 +18,7 @@ https\:\/\/integralapi\.kuwo\.cn\/api\/v1\/online\/sign\/v1\/earningSignIn\/.* u
 hostname = integralapi.kuwo.cn
 ⏰定时任务:
 [task_local]
-30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.js, tag=🎵酷我音乐, img-url=https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png, enabled=true
+30 0,8,10,12,14,16,18,20 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.js, tag=🎵酷我音乐, img-url=https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png, enabled=true
 🔍手动抓包: 
     开启抓包,进入任务界面
     直接搜索请求🔗url中的 loginUid loginSid 填入BoxJs
@@ -302,7 +302,7 @@ async function box() {
   var hour = new Date().getUTCHours() + 8;
   if (hour >= 0 && hour < 8) {
     time = "0-8";
-  } else if (hour >= 18 && hour < 10) {
+  } else if (hour >= 8 && hour < 10) {
     time = "8-10";
   } else if (hour >= 10 && hour < 12) {
     time = "10-12";
