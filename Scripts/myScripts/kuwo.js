@@ -1,5 +1,5 @@
 /* 
-🎵酷我音乐 v1.4
+🎵酷我音乐 v1.5
 🥳脚本功能:  
   ✅每日小说
   ✅每日签到
@@ -10,21 +10,22 @@
   ✅视频抽奖
   ✅海报广告
   ✅定时宝箱
+  ✅补领宝箱
   ✅资产查询
 🎯重写脚本:
-[rewrite local]
-https\:\/\/integralapi\.kuwo\.cn\/api\/v1\/online\/sign\/v1\/earningSignIn\/.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.cookie.js
-[MITM]
-hostname = integralapi.kuwo.cn
+  [rewrite local]
+  https\:\/\/integralapi\.kuwo\.cn\/api\/v1\/online\/sign\/v1\/earningSignIn\/.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.cookie.js
+  [MITM]
+  hostname = integralapi.kuwo.cn
 ⏰定时任务:
-[task_local]
-30 0,8,10,12,14,16,18,20 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.js, tag=🎵酷我音乐, img-url=https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png, enabled=true
+  [task_local]
+  30 10,20 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.js, tag=🎵酷我音乐, img-url=https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png, enabled=true
 🔍手动抓包: 
-    开启抓包,进入任务界面
-    直接搜索请求🔗url中的 loginUid loginSid 填入BoxJs
-    🔗url: https://integralapi.kuwo.cn/api/v1/online/sign/v1/earningSignIn/..loginUid=xxx & loginSid=xxx...
+  开启抓包,进入任务界面
+  直接搜索请求🔗url中的 loginUid loginSid 填入BoxJs
+  🔗url: https://integralapi.kuwo.cn/api/v1/online/sign/v1/earningSignIn/..loginUid=xxx & loginSid=xxx...
 📦BoxJs地址:
-    https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
+  https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 @params: 
   "kw_loginUid" 
   "kw_loginSid" (过期时间不清楚,抓包写一个月,但是失效可能也很快,待解决?)
@@ -298,28 +299,49 @@ async function ad_poster() {
 
 async function box() {
   // 定时宝箱,可以强制领取,但不推荐!
-  var time;
+  var time = [];
   var hour = new Date().getUTCHours() + 8;
-  if (hour >= 0 && hour < 8) {
-    time = "0-8";
-  } else if (hour >= 8 && hour < 10) {
-    time = "8-10";
-  } else if (hour >= 10 && hour < 12) {
-    time = "10-12";
-  } else if (hour >= 12 && hour < 14) {
-    time = "12-14";
-  } else if (hour >= 14 && hour < 16) {
-    time = "14-16";
-  } else if (hour >= 16 && hour < 18) {
-    time = "16-18";
-  } else if (hour >= 18 && hour < 20) {
-    time = "18-20";
-  } else if (hour >= 20 && hour < 24) {
-    time = "20-24";
+
+  if (hour >= 0) {
+    time.push("00-08");
+  }
+  if (hour >= 8) {
+    time.push("08-10");
+  }
+  if (hour >= 10) {
+    time.push("10-12");
+  }
+  if (hour >= 12) {
+    time.push("12-14");
+  }
+  if (hour >= 14) {
+    time.push("14-16");
+  }
+  if (hour >= 16) {
+    time.push("16-18");
+  }
+  if (hour >= 18) {
+    time.push("18-20");
+  }
+  if (hour >= 20) {
+    time.push("20-24");
   }
 
+  var len = time.length;
+
+  await box_new(time[len - 1]);
+
+  for (var i = 0; i < len - 1; i++) {
+    // console.log(time[i]);
+    await box_old(time[i]);
+  }
+}
+
+async function box_new(time) {
+  var rand = Math.random() < 0.3 ? 48 : Math.random() < 0.6 ? 49 : 50;
+
   let options = {
-    url: `https://integralapi.kuwo.cn/api/v1/online/sign/new/boxRenew?loginUid=${loginUid}&loginSid=${loginSid}&action=new&time=${time}&goldNum=50`,
+    url: `https://integralapi.kuwo.cn/api/v1/online/sign/new/boxRenew?loginUid=${loginUid}&loginSid=${loginSid}&action=new&time=${time}&goldNum=${rand}`,
     headers: kw_headers,
   };
 
@@ -336,6 +358,34 @@ async function box() {
       else desc = `⚠️定时宝箱: ${desc}`;
     } else {
       desc = `❌定时宝箱: 错误!`;
+      $.log(resp.body);
+    }
+    $.log(desc);
+    $.notifyMsg.push(desc);
+  });
+}
+
+async function box_old(time) {
+  var rand = Math.random() < 0.3 ? 48 : Math.random() < 0.6 ? 49 : 50;
+
+  let options = {
+    url: `https://integralapi.kuwo.cn/api/v1/online/sign/new/boxRenew?loginUid=${loginUid}&loginSid=${loginSid}&action=old&time=${time}&goldNum=${rand}`,
+    headers: kw_headers,
+  };
+
+  return $.http.get(options).then((resp) => {
+    $.log("🟡正在执行补领宝箱任务...");
+    // $.log(resp.body);
+    var desc;
+    var obj = JSON.parse(resp.body);
+    if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
+      desc = obj.data.description;
+      if (desc == "成功") desc = `🎉补领宝箱: ${desc}`;
+      else if (desc == "今天已完成任务") desc = `🟢补领宝箱: ${desc}`;
+      else if (desc == "用户未登录") desc = `🔴补领宝箱: ${desc}`;
+      else desc = `⚠️补领宝箱: ${desc}`;
+    } else {
+      desc = `❌补领宝箱: 错误!`;
       $.log(resp.body);
     }
     $.log(desc);
