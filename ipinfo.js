@@ -1,6 +1,6 @@
 /*
 [task_local]
-event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js, tag=IPInfo查询, img-url=location.fill.system
+event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js, tag=ipInfo查询, img-url=location.fill.system
 */
 
 var url = "https://ipinfo.io/json";
@@ -24,7 +24,7 @@ $task.fetch(myRequest).then(
     console.log(message);
     console.log(result2);
     $done({
-      title: "    🔎 IP.SB 查询结果",
+      title: "    🔎 IP Info 查询结果",
       htmlMessage: message,
     });
   },
@@ -36,7 +36,7 @@ $task.fetch(myRequest).then(
       `</p>`;
     console.log(reason);
     $done({
-      title: "🔎 IPInfo 查询结果",
+      title: "🔎 IP Info 查询结果",
       htmlMessage: message,
     });
   }
