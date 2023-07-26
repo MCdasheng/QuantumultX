@@ -1,6 +1,6 @@
 /*
 [task_local]
-event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/geo_ip.js, tag=GeoIP查询, img-url=location.fill.viewfinder.system
+event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/api.ip_ip.js, tag=Api_IP查询, img-url=location.fill.viewfinder.system
 */
 
 var url = "https://api.ip.sb/geoip";
