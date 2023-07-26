@@ -1,9 +1,136 @@
-/* 
-geo_location_checker=https://ipinfo.io/json, https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js
+/*
+[task_local]
+event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js, tag=GeoIP查询, img-url=location.fill.system
 */
 
-if ($response.statusCode != 200) {
-  $done("检测失败!");
+var url = "https://ipinfo.io/json";
+var opts = {
+  policy: $environment.params,
+};
+var myRequest = {
+  url: url,
+  opts: opts,
+  timeout: 4000,
+};
+
+var message = "";
+
+$task.fetch(myRequest).then(
+  (response) => {
+    result = json2info(response.body);
+    result1 = result.result1;
+    result2 = result.result2;
+    message = result1;
+    console.log(message);
+    console.log(result2);
+    $done({
+      title: "    🔎 IP.SB 查询结果",
+      htmlMessage: message,
+    });
+  },
+  (reason) => {
+    message = "</br></br>🛑 查询超时";
+    message =
+      `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: bold;">` +
+      message +
+      `</p>`;
+    console.log(reason);
+    $done({
+      title: "🔎 IP.SB 查询结果",
+      htmlMessage: message,
+    });
+  }
+);
+
+function json2info(a) {
+  // 先画一条虚线
+  var res = "------------------------------";
+
+  // 开始检查参数
+  cnt = JSON.parse(a);
+
+  var res_netWork = $environment.ssid
+    ? "🌐" + $environment.ssid
+    : "📶" + $environment.cellular.carrierName;
+  var res_ip = cnt["ip"];
+  var res_isp = cnt["org"];
+  var flag = flags.get(cnt["country"].toUpperCase())
+    ? flags.get(cnt["country"].toUpperCase())
+    : "🏴‍☠️";
+  var res_city = cnt["city"] ? flag + cnt["city"] : null; // 添加flag
+  var res_country = flag + cnt["country"]; // 添加flag
+
+  // 添加css样式
+  res =
+    res +
+    "</br><b>" +
+    "<font  color=>" +
+    "NetWork" +
+    "</font> : " +
+    "</b>" +
+    "<font  color=>" +
+    res_netWork +
+    "</font></br>";
+
+  res =
+    res +
+    "</br><b>" +
+    "<font  color=>" +
+    "IP" +
+    "</font> : " +
+    "</b>" +
+    "<font  color=>" +
+    res_ip +
+    "</font></br>";
+
+  res =
+    res +
+    "</br><b>" +
+    "<font  color=>" +
+    "ISP" +
+    "</font> : " +
+    "</b>" +
+    "<font  color=>" +
+    res_isp +
+    "</font></br>";
+
+  res =
+    res +
+    "</br><b>" +
+    "<font  color=>" +
+    "Country" +
+    "</font> : " +
+    "</b>" +
+    "<font  color=>" +
+    res_country +
+    "</font></br>";
+
+  res = res_city
+    ? res +
+      "</br><b>" +
+      "<font  color=>" +
+      "City" +
+      "</font> : " +
+      "</b>" +
+      "<font  color=>" +
+      res_city +
+      "</font></br>"
+    : res;
+
+  res =
+    res +
+    "------------------------------" +
+    `</br><font color=#6959CD><b>节点</b> ➟ ${$environment.params} </font>`;
+
+  res =
+    `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` +
+    res +
+    `</p>`;
+
+  return {
+    result1: res,
+    result2: `Network: ${res_netWork}\nIP: ${res_ip}\nISP: ${res_isp}\nCountry: ${res_country}\nCity: ${res_city}\n`,
+  };
 }
 
 var flags = new Map([
@@ -241,18 +368,3 @@ var flags = new Map([
   ["ZM", "🇿🇲"],
   ["ZW", "🇿🇼"],
 ]);
-
-var body = $response.body;
-var obj = JSON.parse(body);
-
-var region = obj.region ? obj.region : "ChinaTown";
-var org = obj.org ? obj.org : "GFW.org";
-var city = obj.city ? obj.city : region;
-var flag = flags.get(obj.country);
-var ip = obj.ip;
-var title = flag + " " + city;
-var subtitle = org;
-var description = `ISP:${org},地区:${city},IP:${ip}`;
-// console.log(description);
-
-$done({ title, subtitle, ip, description });
