@@ -240,6 +240,33 @@
         "https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png"
       ]
     }, {
+      "id": "TimeBlocks",
+      "name": "时间积木",
+      "keys": ["TimeBlocks_key", "TimeBlocks_times"],
+      "desc": "",
+      "settings": [{
+        "id": "TimeBlocks_key",
+        "name": "邀请信息",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "TimeBlocks_times",
+        "name": "执行任务次数",
+        "val": 10,
+        "type": "number",
+        "placeholder": "",
+        "desc": "默认10次"
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TimeBlocks.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "",
+        ""
+      ]
+    }, {
       "id": "wuai",
       "name": "52appleid",
       "keys": ["wuai_cookie"],
