@@ -14,12 +14,16 @@ const $ = new Env("时间积木");
 var obj = JSON.parse($response.body);
 if (obj.err == 0) {
   var key = obj.key;
+  $.log("🎉邀请信息获取成功!");
   $.log(key);
+  $.setdata(key, "TimeBlocks_key");
   $.msg($.name, "🎉邀请信息获取成功!");
   $.done();
 } else {
-    $.log($response.body);
-    $.msg($.name,'🔴邀请信息获取失败!');
+  $.log("🔴邀请信息获取失败!");
+  $.log($response.body);
+  $.msg($.name, "🔴邀请信息获取失败!");
+  $.done();
 }
 
 function Env(t, s) {
