@@ -1,17 +1,18 @@
 /* 
 脚本功能: 时间积木 刷金币
-
 🎯重写脚本:
-[rewrite local]
-https\:\/\/timeblocks\.com\/api\/mem\/users\/getInviteKey url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TimeBlocks.cookie.js
-
-[MITM]
-hostname = timeblocks.com
-
+  [rewrite local]
+  https\:\/\/timeblocks\.com\/api\/mem\/users\/getInviteKey url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TimeBlocks.cookie.js
+  [MITM]
+  hostname = timeblocks.com
 ⏰定时任务:
-[task local]
-30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TimeBlocks.js, tag=时间积木, enabled=true
-
+  [task local]
+  30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TimeBlocks.js, tag=时间积木, enabled=true
+📦BoxJs地址:
+  https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
+@params: 
+  "TimeBlocks_key": 邀请信息
+  "TimeBlocks_times": 执行次数,默认10次
 */
 const $ = new Env("时间积木");
 
@@ -30,7 +31,6 @@ if (!$.key) {
   for (var i = 0; i < $.times; i++) {
     $.log(`🟡任务执行次数: ${i + 1}次`);
     await a();
-    await $.wait(1000);
   }
 })()
   .catch((e) => $.logErr(e))
