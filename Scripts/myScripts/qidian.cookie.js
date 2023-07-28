@@ -12,13 +12,15 @@ hostname = h5.if.qidian.com
 */
 const $ = new Env("起点读书");
 
-if ($request.headers && $request.body) {
+if ($request.headers || $request.body) {
   var headers = $request.headers;
   var body = $request.body;
   $.setdata(headers, "qd_headers");
   $.setdata(body, "qd_body");
   $.log("🎉广告信息获取成功!");
+  $.log("qd_headers");
   $.log(headers);
+  $.log("qd_body");
   $.log(body);
   $.msg($.name, "🎉广告信息获取成功!");
   $.done();
