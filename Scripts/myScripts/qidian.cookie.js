@@ -4,7 +4,6 @@
 
 [rewrite local]
 https\:\/\/h5\.if\.qidian\.com\/argus\/api\/v1\/video\/adv\/finishWatch url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/qidian.cookie.js
-https\:\/\/h5\.if\.qidian\.com\/argus\/api\/v1\/video\/adv\/finishWatch url script-request-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/qidian.cookie.js
 
 [MITM]
 hostname = h5.if.qidian.com
@@ -13,23 +12,20 @@ hostname = h5.if.qidian.com
 const $ = new Env("起点读书");
 
 if ($request.headers || $request.body) {
-  var headers = $request.headers;
-  var body = $request.body;
-  $.setdata(headers, "qd_headers");
-  $.setdata(body, "qd_body");
-  $.log("🎉广告信息获取成功!");
-  $.log("qd_headers");
-  $.log(headers);
-  $.log("qd_body");
-  $.log(body);
-  $.msg($.name, "🎉广告信息获取成功!");
-  $.done();
-} else {
-  $.log("🔴广告信息获取失败!");
-  $.log($request.body);
-  $.msg($.name, "🔴广告信息获取失败!");
-  $.done();
-}
+    var headers = $request.headers;
+    $.setdata(JSON.stringify(headers), "qd_headers");
+    $.log("🎉广告信息获取成功!");
+    $.log("qd_headers");
+    $.log(JSON.stringify(headers));
+    $.msg($.name, "🎉广告信息获取成功!");
+    $.done();
+  } else {
+    $.log("🔴广告信息获取失败!");
+    $.log($request.body);
+    $.msg($.name, "🔴广告信息获取失败!");
+    $.done();
+  }
+  
 
 function Env(t, s) {
   class e {
