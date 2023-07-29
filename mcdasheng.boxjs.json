@@ -240,6 +240,54 @@
         "https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png"
       ]
     }, {
+      "id": "TestFlight",
+      "name": "TestFlight自动加入",
+      "keys": ["tf_appIds", "tf_account_key", "tf_session_id", "tf_request_id", "tf_session_digest"],
+      "desc": "详见脚本注释",
+      "settings": [{
+        "id": "tf_appIds",
+        "name": "tf_appIds",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "tf_account_key",
+        "name": "tf_account_key",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "tf_session_id",
+        "name": "tf_session_id",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "tf_request_id",
+        "name": "tf_request_id",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "tf_session_digest",
+        "name": "tf_session_digest",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TestFlight.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/testflight.png",
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/testflight.png"
+      ]
+    }, {
       "id": "TimeBlocks",
       "name": "时间积木",
       "keys": ["TimeBlocks_key", "TimeBlocks_times"],
