@@ -3,6 +3,7 @@
 🎯重写脚本:
 [rewrite local]
 https\:\/\/h5\.if\.qidian\.com\/argus\/api\/v1\/video\/adv\/finishWatch url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/qidian.cookie.js
+https\:\/\/h5\.if\.qidian\.com\/argus\/api\/v1\/video\/adv\/mainPage url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/qidian.taskId.js
 [MITM]
 hostname = h5.if.qidian.com
 ⏰定时任务:
@@ -12,14 +13,15 @@ hostname = h5.if.qidian.com
 https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 @params: 
   "qd_headers"
+  "qd_taskId"
 */
 const $ = new Env("起点读书");
 
 $.headers = $.getdata("qd_headers");
+$.taskId = $.getdata("qd_taskId");
 // $.body = $.getdata("qd_body");
 
-// 默认执行任务8次
-if (!$.headers ) {
+if (!$.headers || !$.taskId) {
   $.log("⚠️广告信息不全!");
   $.log("请通过重写获取信息");
   $.msg($.name, "⚠️广告信息不全!", "请通过重写获取信息");
@@ -27,7 +29,7 @@ if (!$.headers ) {
 }
 
 (async () => {
-  for (var i = 0; i < 8; i++) {
+  for (var i = 0; i < 1; i++) {
     $.log(`🟡任务执行次数: ${i + 1}次`);
     await a();
   }
@@ -42,7 +44,7 @@ async function a() {
   let options = {
     url: `https://h5.if.qidian.com/argus/api/v1/video/adv/finishWatch`,
     headers: JSON.parse($.headers),
-    body: `taskId=901951766299148291&BanId=0&BanMessage=&CaptchaAId=&CaptchaType=0&CaptchaURL=&Challenge=&Gt=&NewCaptcha=0&Offline=0&PhoneNumber=&SessionKey=`,
+    body: `taskId=${$.taskId}&BanId=0&BanMessage=&CaptchaAId=&CaptchaType=0&CaptchaURL=&Challenge=&Gt=&NewCaptcha=0&Offline=0&PhoneNumber=&SessionKey=`,
   };
 
   return $.http.post(options).then((resp) => {
