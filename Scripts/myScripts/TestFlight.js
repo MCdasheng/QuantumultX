@@ -72,7 +72,7 @@ async function autoPost(id) {
 
   return $.http.get(options).then((resp) => {
     // $.log(resp.statusCode);
-    $.log(resp.body);
+    // $.log(resp.body);
     if (resp.statusCode == 404) {
       $.log(`❌tf链接${id}失效,已自动删除该appId!`);
     } else {
