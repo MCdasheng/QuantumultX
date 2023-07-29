@@ -14,11 +14,15 @@ const $ = new Env("起点读书");
 var obj = JSON.parse($response.body);
 var a = obj.Data.VideoBenefitModule.TaskList[0].TaskId;
 var b = obj.Data.VideoBenefitModule.TaskList[1].TaskId;
-if ((a = b)) {
+var c = obj.Data.CountdownBenefitModule.TaskList[3].TaskId;
+
+if ((a = b) && c) {
   $.setdata(a, "qd_taskId");
+  $.setdata(c, "qd_taskId_2");
   $.log(`🎉任务信息获取成功!`);
   $.log(a);
-  $.msg($.name, `🎉任务信息获取成功!`,`可以禁用脚本`);
+  $.log(c);
+  $.msg($.name, `🎉任务信息获取成功!`, `可以禁用脚本`);
   $.done();
 } else {
   $.log("🔴任务信息获取失败!");
