@@ -23,9 +23,8 @@ https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.jso
 const $ = new Env("TestFlight");
 
 const account_key = $.getdata("tf_account_key");
-let ids = $.getdata("tf_appIds").split(",");
-// let ids = "qqa1Sl22,Xh9VNQoA".split(",");
-// let ids = "qqa1Sl22".split(",");
+let ids = $.getdata("tf_appIds");
+// let ids = "qqa1Sl22,Xh9VNQoA";
 
 let new_ids = "";
 
@@ -40,19 +39,27 @@ if (ids == "") {
   $.done();
 }
 
-if (ids.length == 1) {
+if (ids.split(",").length == 1) {
   ids = [ids];
+} else {
+  ids = ids.split(",");
 }
 
 (async () => {
+  let promises = [];
+
   for (var i = 0; i < ids.length; i++) {
-    await autoPost(ids[i]);
+    const promise = autoPost(ids[i]);
+    promises.push(promise);
   }
+
+  await Promise.all(promises);
 })()
   .catch((e) => $.logErr(e))
   .finally(() => {
     $.setdata(new_ids, "tf_appIds");
     $.log("🎉appId列表更新完成!");
+    $.log($.getdata("tf_appIds"));
     $.done();
   });
 
@@ -64,7 +71,7 @@ async function autoPost(id) {
 
   return $.http.get(options).then((resp) => {
     // $.log(resp.statusCode);
-    //   $.log(resp.body);
+    $.log(resp.body);
     if (resp.statusCode == 404) {
       $.log(`❌tf链接${id}失效,已自动删除该appId!`);
     } else {
@@ -73,21 +80,25 @@ async function autoPost(id) {
         new_ids += `,${id}`;
         $.log(`🔴tf链接${id}人数已满,跳过该tf`);
       } else if (obj.data.status == "OPEN") {
-        tf_join(id);
+        // $.log(1);
+        return tf_join(id);
       } else {
         $.log(resp.body);
+        $.log(`🔴tf链接${id}: 失败!`);
       }
     }
   });
 }
 
-async function tf_join(id) {
+function tf_join(id) {
+  // $.log(2);
   let options = {
     url: `https://testflight.apple.com/v3/accounts/${account_key}/ru/${id}/accept`,
     headers: tf_headers,
   };
 
   return $.http.post(options).then((resp) => {
+    // $.log(resp.body);
     if (resp.statusCode == 200) {
       var name = JSON.parse(resp.body).data.name;
       $.log(`🎉${name} TestFlight加入成功!`);
