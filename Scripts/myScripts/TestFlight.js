@@ -57,6 +57,7 @@ if (ids.split(",").length == 1) {
 })()
   .catch((e) => $.logErr(e))
   .finally(() => {
+    new_ids = new_ids.replace(/^,+/g, "");
     $.setdata(new_ids, "tf_appIds");
     $.log("🎉appId列表更新完成!");
     $.log($.getdata("tf_appIds"));
