@@ -267,6 +267,47 @@
         ""
       ]
     }, {
+      "id": "qidian",
+      "name": "起点读书",
+      "keys": ["qd_headers", "qd_taskId", "qd_taskId_2", "qd_timeout"],
+      "desc": "",
+      "settings": [{
+        "id": "qd_headers",
+        "name": "qd_headers",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "qd_taskId",
+        "name": "qd_taskId",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "qd_taskId_2",
+        "name": "qd_taskId_2",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "qd_timeout",
+        "name": "间隔时间",
+        "val": 20,
+        "type": "number",
+        "placeholder": "",
+        "desc": "默认间隔20s"
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/qidian.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "",
+        ""
+      ]
+    }, {
       "id": "wuai",
       "name": "52appleid",
       "keys": ["wuai_cookie"],
