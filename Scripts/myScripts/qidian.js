@@ -1,5 +1,8 @@
 /* 
-脚本功能: 自动观看 起点读书 广告
+🥳脚本功能: 自动观看 起点读书 广告
+入口: 福利中心 --> 每日视频福利
+默认执行次数: 8次
+默认间隔时间: 20s 
 🎯重写脚本:
 [rewrite local]
 https\:\/\/h5\.if\.qidian\.com\/argus\/api\/v1\/video\/adv\/finishWatch url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/qidian.cookie.js
@@ -12,21 +15,24 @@ hostname = h5.if.qidian.com
 📦BoxJs地址:
 https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 @params: 
-  "qd_headers"
-  "qd_taskId"
+    "qd_headers"
+    "qd_taskId"
+    "qd_timeout": 间隔时间, 默认20s, 可以在BoxJs中修改为0, 不怕黑号可以不间隔
 */
+
 const $ = new Env("起点读书");
 
 $.headers = $.getdata("qd_headers");
 $.taskId = $.getdata("qd_taskId");
+$.timeout = $.getdata("qd_timeout") ? $.getdata("qd_timeout") : 20;
 
-if (!$.headers ) {
+if (!$.headers) {
   $.log("⚠️广告信息不全!");
   $.log("请通过重写获取信息");
   $.msg($.name, "⚠️广告信息不全!", "请通过重写获取信息");
   $.done();
 }
-if (!$.taskId ) {
+if (!$.taskId) {
   $.log("⚠️任务信息不全!");
   $.log("请通过重写获取信息");
   $.msg($.name, "⚠️任务信息不全!", "请通过重写获取信息");
@@ -37,6 +43,7 @@ if (!$.taskId ) {
   for (var i = 0; i < 8; i++) {
     $.log(`🟡任务执行次数: ${i + 1}次`);
     await a();
+    await $.wait($.timeout * 1000);
   }
 })()
   .catch((e) => $.logErr(e))
