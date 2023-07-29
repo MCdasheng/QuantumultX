@@ -14,7 +14,7 @@ hostname = testflight.apple.com
 📦BoxJs地址:
 https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 @tips:
-    无法打开tf商店请禁用mitm
+    无法打开商店请禁用mitm
 */
 
 const $ = new Env("TestFlight");
@@ -35,6 +35,7 @@ if (reg.test($request.url)) {
 
   $.appIds += `,${appId}`;
   $.appIds = [...new Set($.appIds.split(","))].join(",");
+  $.appIds = $.appIds.replace(/^,+/g, "");
 
   $.setdata($.appIds, "tf_appIds");
   $.setdata(session_id, "tf_session_id");
