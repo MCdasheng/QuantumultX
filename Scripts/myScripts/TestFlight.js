@@ -23,8 +23,9 @@ https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.jso
 const $ = new Env("TestFlight");
 
 const account_key = $.getdata("tf_account_key");
-const ids = $.getdata("tf_appIds").split(",");
-// const ids = "qqa1Sl22,Xh9VNQoA".split(",");
+let ids = $.getdata("tf_appIds").split(",");
+// let ids = "qqa1Sl22,Xh9VNQoA".split(",");
+// let ids = "qqa1Sl22".split(",");
 
 let new_ids = "";
 
@@ -39,6 +40,10 @@ if (ids == "") {
   $.done();
 }
 
+if (ids.length == 1) {
+  ids = [ids];
+}
+
 (async () => {
   for (var i = 0; i < ids.length; i++) {
     await autoPost(ids[i]);
@@ -51,7 +56,7 @@ if (ids == "") {
     $.done();
   });
 
-function autoPost(id) {
+async function autoPost(id) {
   let options = {
     url: `https://testflight.apple.com/v3/accounts/${account_key}/ru/${id}`,
     headers: tf_headers,
