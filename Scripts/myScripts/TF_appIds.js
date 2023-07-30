@@ -1,11 +1,11 @@
 /*
 脚本功能: 自动获取 TestFlight appId
 操作步骤: 点开 TestFlight 邀请链接, 等待通知提醒
-热门 tf:  https://congcong0806.github.io/2018/11/19/TestFlight/
+热门 TF:  https://congcong0806.github.io/2018/11/19/TestFlight/
 
 🎯重写脚本:
 [rewrite_local]
-^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/ru\/(.*) url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/tf_appIds.js
+^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/ru\/(.*)$ url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TF_appIds.js
 [mitm]
 hostname = testflight.apple.com
 ⏰定时任务:
