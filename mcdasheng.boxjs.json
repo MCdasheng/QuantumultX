@@ -317,11 +317,18 @@
     }, {
       "id": "qidian",
       "name": "起点读书",
-      "keys": ["qd_headers", "qd_taskId", "qd_taskId_2", "qd_timeout"],
+      "keys": ["qd_session", "qd_session_2", "qd_taskId", "qd_taskId_2", "qd_timeout"],
       "desc": "",
       "settings": [{
-        "id": "qd_headers",
-        "name": "qd_headers",
+        "id": "qd_session",
+        "name": "qd_session",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }, {
+        "id": "qd_session_2",
+        "name": "qd_session_2",
         "val": "",
         "type": "text",
         "placeholder": "",
@@ -352,8 +359,8 @@
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": [
-        "",
-        ""
+        "https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/qidian.png",
+        "https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/qidian.png"
       ]
     }, {
       "id": "wuai",
