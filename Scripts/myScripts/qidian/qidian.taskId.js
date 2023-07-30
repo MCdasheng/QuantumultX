@@ -14,14 +14,26 @@ const $ = new Env("起点读书");
 var obj = JSON.parse($response.body);
 var a = obj.Data.VideoBenefitModule.TaskList[0].TaskId;
 var b = obj.Data.VideoBenefitModule.TaskList[1].TaskId;
-var c = obj.Data.CountdownBenefitModule.TaskList[3].TaskId;
+var c;
+
+for (var i = 0; i < obj.Data.CountdownBenefitModule.TaskList.length; i++) {
+  if (
+    obj.Data.CountdownBenefitModule.TaskList[i].Title ==
+    "额外看3次小视频得奖励"
+  ) {
+    c = obj.Data.CountdownBenefitModule.TaskList[i].TaskId;
+    $.setdata(c, "qd_taskId_2");
+    break;
+  } else {
+    continue;
+  }
+}
 
 if ((a = b) && c) {
   $.setdata(a, "qd_taskId");
-  $.setdata(c, "qd_taskId_2");
   $.log(`🎉任务信息获取成功!`);
-  $.log(a);
-  $.log(c);
+  $.log(`taskId_2: ${a}`);
+  $.log(`taskId_2: ${c}`);
   $.msg($.name, `🎉任务信息获取成功!`, `可以禁用脚本`);
   $.done();
 } else {
