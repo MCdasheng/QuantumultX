@@ -2,7 +2,7 @@
 🥳脚本功能: 自动加入 TestFlight
 🎯重写脚本:
 [rewrite_local]
-^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/ru\/(.*) url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/tf_appIds.js
+^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/ru\/(.*)$ url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TF_appIds.js
 [mitm]
 hostname = testflight.apple.com
 ⏰定时任务:
