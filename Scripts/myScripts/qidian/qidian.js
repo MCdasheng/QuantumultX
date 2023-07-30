@@ -73,7 +73,7 @@ if (!$.session_2) {
   });
 
 async function task(session) {
-  let options = session;
+  let options = JSON.parse(session);
 
   return $.http.post(options).then((resp) => {
     // $.log(resp.body);
