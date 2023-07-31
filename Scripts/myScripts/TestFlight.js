@@ -26,6 +26,8 @@ const account_key = $.getdata("tf_account_key");
 let ids = $.getdata("tf_appIds");
 // let ids = "qqa1Sl22,Xh9VNQoA";
 
+$.setdata(ids, "tf_appIds_2"); // 备用
+
 let new_ids = "";
 
 let tf_headers = {
@@ -77,7 +79,10 @@ async function autoPost(id) {
       $.log(`❌tf链接${id}失效,已自动删除该appId!`);
     } else {
       var obj = JSON.parse(resp.body);
-      if (obj.data.status == "FULL") {
+      if (obj.data == null) {
+        new_ids += `,${id}`;
+        $.log(`🔴tf链接${id}不再接受任何新测试人员,跳过该tf`);
+      } else if (obj.data.status == "FULL") {
         new_ids += `,${id}`;
         $.log(`🔴tf链接${id}人数已满,跳过该tf`);
       } else if (obj.data.status == "OPEN") {
