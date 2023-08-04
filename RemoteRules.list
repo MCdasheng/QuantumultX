@@ -10,6 +10,9 @@ host, ip-api.com, proxy
 
 # 🤖️ChatGPT
 host, chat-shared.zhile.io, 节点选择
+host, api.statsig.com, ChatGPT
+host, o33249.ingest.sentry.io, reject
+
 
 # ✈️机场订阅
 host, xunfan.co, 节点选择
@@ -37,7 +40,7 @@ host-keyword, legym, direct
 host-keyword, uestc, direct
 
 # 📺Bilibili 
-host-suffix,cm.bilibili.com,reject
+host-suffix, cm.bilibili.com, reject
 
 # 📺HdoBox
 host-suffix, applovin.com, reject
