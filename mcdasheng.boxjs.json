@@ -426,6 +426,27 @@
       ]
     },
     {
+      "id": "ipInfo",
+      "name": "ipInfo",
+      "keys": ["ipinfo_token"],
+      "desc": "",
+      "settings": [{
+        "id": "ipinfo_token",
+        "name": "ipinfo_token",
+        "val": "",
+        "type": "text",
+        "placeholder": "",
+        "desc": ""
+      }],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "",
+        ""
+      ]
+    },
+    {
       "id": "GoFans",
       "name": "GoFans",
       "keys": ["GoFans_auth"],
