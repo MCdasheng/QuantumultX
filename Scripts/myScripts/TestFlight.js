@@ -57,7 +57,10 @@ if (ids.split(",").length == 1) {
 
   await Promise.all(promises);
 })()
-  .catch((e) => $.logErr(e))
+  .catch((e) => {
+    $.logErr(e);
+    new_ids = $.getdata("tf_appIds");
+  })
   .finally(() => {
     new_ids = new_ids.replace(/^,+/g, "");
     $.setdata(new_ids, "tf_appIds");
