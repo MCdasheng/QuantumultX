@@ -1,13 +1,10 @@
 /*
 [task_local]
 event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js, tag=ipInfo查询, img-url=location.fill.system
-[filter_local]
-  host, ipinfo.io, proxy
-@params
-  "ipinfo_token": 自行注册、申请
 */
 
 const $ = new Env("Ipinfo");
+
 $.token = $.getdata("ipinfo_token") ? $.getdata("ipinfo_token") : "";
 
 getIpinfo()
@@ -42,8 +39,8 @@ async function getIpinfo() {
       // console.log(message);
       console.log(result2);
       $done({
-        title: "🔎 IP Info 查询结果",
-        subtitle: "",
+        title: "    🔎 IP Info 查询结果",
+        htmlMessage: message,
       });
     },
     (reason) => {
