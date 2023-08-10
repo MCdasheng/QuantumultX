@@ -1,9 +1,19 @@
 /*
+脚本功能: ipInfo --> NetWork, IP, ASN, ISP, Type, Country, City
+执行方式:
+  手动执行: 显示分流节点信息
+  事件执行: 显示选中节点信息
 [task_local]
-event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js, tag=ipInfo查询, img-url=location.fill.system
+  event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js, tag=ipInfo查询, img-url=location.fill.system
+[filter_local]
+  host, ipinfo.io, proxy
+@params
+  "ipinfo_token": 自行申请 
+@tips
+  已实现 ipInfo Standard ($249/mon) 查询内容
 */
 
-const $ = new Env("Ipinfo");
+const $ = new Env("ipInfo");
 
 $.token = $.getdata("ipinfo_token") ? $.getdata("ipinfo_token") : "";
 
@@ -68,6 +78,9 @@ async function getIp() {
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
       "Accept-Encoding": "gzip, deflate, br",
     },
+    opts: {
+      policy: $environment.params,
+    },
   };
 
   // 主函数
@@ -91,6 +104,7 @@ function json2info(a) {
   // 开始检查参数
   obj = JSON.parse(a);
 
+  var res_server = $environment.params ? $environment.params : "";
   var res_netWork = $environment.ssid
     ? "🌐" + $environment.ssid
     : "📶" + $environment.cellular.carrierName;
@@ -198,7 +212,7 @@ function json2info(a) {
 
   return {
     result1: res,
-    result2: `Network: ${res_netWork}\nIP: ${res_ip}\nASN: ${res_asn}\nISP: ${res_isp}\nType: ${res_type}\nCountry: ${res_country}\nCity: ${res_city}\n`,
+    result2: `节点 ➟ ${res_server}\nNetWork: ${res_netWork}\nIP: ${res_ip}\nASN: ${res_asn}\nISP: ${res_isp}\nType: ${res_type}\nCountry: ${res_country}\nCity: ${res_city}\n`,
   };
 }
 
