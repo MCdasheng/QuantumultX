@@ -21,6 +21,13 @@
 */
 
 const $ = new Env("Spider Proxy");
+var session = $.getdata("spider_session");
+if (!session) {
+  $.log("⚠️信息不全!");
+  $.log("请通过重写获取信息");
+  $.msg($.name, "⚠️信息不全!", "请通过重写获取信息");
+  $.done();
+}
 
 (async () => {
   for (var i = 0; i < 3; i++) {
