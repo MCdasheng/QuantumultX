@@ -30,10 +30,12 @@ $.log(JSON.stringify(session));
 if ($.setdata(JSON.stringify(session), "spider_session")) {
   $.log("🎉信息获取成功!");
   $.msg($.name, "🎉信息获取成功!");
+  $.done();
 } else {
   $.log("🔴信息获取失败!");
   $.log(session);
   $.msg($.name, "🔴信息获取失败!");
+  $.done();
 }
 
 function Env(t, s) {
