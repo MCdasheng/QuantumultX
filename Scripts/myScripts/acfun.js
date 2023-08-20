@@ -9,7 +9,7 @@
   hostname = api-ipv6.app.acfun.cn
 ⏰定时任务:
 [task local]
-  30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js,  tag=AcFun, enabled=true
+  30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png, tag=AcFun, enabled=true
 📦BoxJs地址:
   https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 @params: 
