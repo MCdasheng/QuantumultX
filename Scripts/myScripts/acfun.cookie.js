@@ -6,7 +6,7 @@
 [rewrite local]
   https\:\/\/api-ipv6\.app\.acfun\.cn\/rest\/app\/user\/signIn\?.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.cookie.js
 [MITM]
-  hostname = api-ipv6.app.acfun.cn
+  hostname = api-ipv6.app.acfun.cn, *.acfun.cn, *
 */
 
 const $ = new Env("AcFun");
@@ -19,7 +19,7 @@ session.headers = $request.headers;
 if ($.setdata(JSON.stringify(session), "acfun_session")) {
   $.log("🎉会话获取成功!");
   $.log(JSON.stringify(session));
-  $.msg($.name, "🎉会话获取成功!");
+  $.msg($.name, "🎉会话获取成功!", "请关闭重写防止不必要的mitm");
   $.done();
 } else {
   $.log("🔴会话获取失败!");
