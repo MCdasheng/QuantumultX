@@ -1,9 +1,10 @@
 /* 
-脚本功能: macat签到
+脚本功能: macat.vip mac破解网站签到
 [task_local]
 30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/macat.js, tag=macat签到, https://raw.githubusercontent.com/Orz-3/mini/master/Color/Skicat.png, enabled=true
 @params: 
   "macat_loginBody" (boxjs自行填入,包含账号密码信息等)
+     格式: `action=user_login&username=xxx%40gmail.com&password=xxx&rememberme=1`
 */
 
 const $ = new Env("macat");
