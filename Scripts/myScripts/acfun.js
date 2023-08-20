@@ -6,7 +6,7 @@
 [rewrite local]
   https\:\/\/api-ipv6\.app\.acfun\.cn\/rest\/app\/user\/signIn\?.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.cookie.js
 [MITM]
-  hostname = api-ipv6.app.acfun.cn
+  hostname = api-ipv6.app.acfun.cn, *.acfun.cn, *
 ⏰定时任务:
 [task local]
   30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png, tag=AcFun, enabled=true
@@ -39,7 +39,7 @@ async function signIn() {
     var msg = obj.msg ? "🎉" + obj.msg : "🔴" + obj.error_msg;
     if (msg) {
       $.log(msg);
-      $.msg($.name, msg);
+      $.msg($.name, msg, resp.body);
     } else {
       $.log(resp.body);
       $.msg($.name, "❌签到失败!", resp.body);
