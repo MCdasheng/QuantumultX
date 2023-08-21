@@ -4,9 +4,10 @@
 
 🎯重写脚本:
 [rewrite local]
-  https\:\/\/api-ipv6\.app\.acfun\.cn\/rest\/app\/user\/signIn\?.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.cookie.js
+^https?:\/\/api-ipv6\.app\.acfun\.cn\/rest\/app\/user\/(signIn|hasSignedIn|getSignInInfos) url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.cookie.js
 [MITM]
-  hostname = api-ipv6.app.acfun.cn, *.acfun.cn, *
+hostname = api-ipv6.app.acfun.cn, *.acfun.cn, *.app.acfun.cn
+
 */
 
 const $ = new Env("AcFun");

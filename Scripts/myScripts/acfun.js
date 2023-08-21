@@ -4,14 +4,15 @@
 
 🎯重写脚本:
 [rewrite local]
-  https\:\/\/api-ipv6\.app\.acfun\.cn\/rest\/app\/user\/signIn\?.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.cookie.js
+^https?:\/\/api-ipv6\.app\.acfun\.cn\/rest\/app\/user\/(signIn|hasSignedIn|getSignInInfos) url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.cookie.js
 [MITM]
-  hostname = api-ipv6.app.acfun.cn, *.acfun.cn, *
+hostname = api-ipv6.app.acfun.cn, *.acfun.cn, *.app.acfun.cn
 ⏰定时任务:
 [task local]
-  30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png, tag=AcFun, enabled=true
+30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png, tag=AcFun, enabled=true
 📦BoxJs地址:
-  https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
+https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
+
 @params: 
   "acfun_session"
 */
@@ -36,9 +37,10 @@ async function signIn() {
   let options = JSON.parse(session);
   return $.http.post(options).then((resp) => {
     var obj = JSON.parse(resp.body);
-    var msg = obj.msg ? "🎉" + obj.msg : "🔴" + obj.error_msg;
+    var msg = obj.msg ? "🎉" + obj.msg : obj.error_msg;
     if (msg) {
       $.log(msg);
+      $.log(resp.body);
       $.msg($.name, msg, resp.body);
     } else {
       $.log(resp.body);
