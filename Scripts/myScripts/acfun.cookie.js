@@ -17,7 +17,7 @@ session.url = $request.url;
 session.body = $request.body;
 session.headers = $request.headers;
 
-if (session.url.search(signIn) != -1) {
+if (session.url.search(/signIn/) != -1) {
   $.log("签到url获取成功!");
   $.setdata(session.url, "acfun_signIn_url");
 }
