@@ -1,7 +1,6 @@
 /* 
 脚本功能: AcFun 签到
 操作步骤: 我的 --> 手动签到一次
-
 🎯重写脚本:
 [rewrite local]
 ^https?:\/\/api-ipv6\.app\.acfun\.cn\/rest\/app\/user\/(signIn|hasSignedIn|getSignInInfos) url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.cookie.js
@@ -12,15 +11,25 @@ hostname = api-ipv6.app.acfun.cn, *.acfun.cn, *.app.acfun.cn
 30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png, tag=AcFun, enabled=true
 📦BoxJs地址:
 https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
-
 @params: 
   "acfun_session"
+  "acfun_signIn_url"
 */
 
 const $ = new Env("AcFun");
+
+var url = $.getdata("acfun_signIn_url");
 var session = $.getdata("acfun_session");
+
+if (!url) {
+  $.log("⚠️url信息不全!");
+  $.log("请通过重写获取信息");
+  $.msg($.name, "⚠️信息不全!", "请通过重写手动签到");
+  $.done();
+}
+
 if (!session) {
-  $.log("⚠️信息不全!");
+  $.log("⚠️会话信息不全!");
   $.log("请通过重写获取信息");
   $.msg($.name, "⚠️信息不全!", "请通过重写获取信息");
   $.done();

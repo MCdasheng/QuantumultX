@@ -17,10 +17,15 @@ session.url = $request.url;
 session.body = $request.body;
 session.headers = $request.headers;
 
+if (session.url.search(signIn) != -1) {
+  $.log("签到url获取成功!");
+  $.setdata(session.url, "acfun_signIn_url");
+}
+
 if ($.setdata(JSON.stringify(session), "acfun_session")) {
   $.log("🎉会话获取成功!");
   $.log(JSON.stringify(session));
-  $.msg($.name, "🎉会话获取成功!", "请关闭重写防止不必要的mitm");
+  $.msg($.name, "🎉会话获取成功!");
   $.done();
 } else {
   $.log("🔴会话获取失败!");
