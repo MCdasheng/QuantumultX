@@ -44,6 +44,7 @@ signIn()
 
 async function signIn() {
   let options = JSON.parse(session);
+  options.url = url;
   return $.http.post(options).then((resp) => {
     var obj = JSON.parse(resp.body);
     var msg = obj.msg ? "🎉" + obj.msg : obj.error_msg;
