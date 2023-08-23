@@ -1,8 +1,9 @@
 /* 
-脚本功能: 📖BingRead 新闻阅读
+脚本作者: @mcdasheng688
+脚本功能: 📖BingRead 新闻阅读 (国区)
 操作步骤: 
-  打开第一个账号,阅读新闻,下拉到底，等待金币提示or重写通知
-  每天任务执行结束后，手动删除ids
+  打开第一个账号,阅读新闻,下拉到底,等待金币提示or重写通知
+  每天任务执行结束后,手动删除ids
 🎯重写脚本:
 [rewrite local]
 ^https:\/\/prod\.rewardsplatform\.microsoft\.com\/dapi\/me\/activities url script-request-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingRead.cookie.js
@@ -25,10 +26,10 @@ https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.jso
 @bingRead_auths格式:
   [{
     "account": "example1@qqq.com",
-    "auth": ""
+    "auth": "Bearer xxx"
   },{
     "account": "example2@qqq.com",
-    "auth": ""
+    "auth": "Bearer xxx"
   }]
 */
 
@@ -54,7 +55,7 @@ async function processAll() {
 
     for (const id of ids.split(",")) {
       promises.push(read(account, auth, id));
-      await $.wait(`${timeout}` * 1000); //interval
+      await $.wait(`${timeout}` * 1000); // interval
     }
   }
   await Promise.all(promises);

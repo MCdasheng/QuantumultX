@@ -1,13 +1,19 @@
 /* 
-脚本功能: 📖BingRead 新闻阅读
+脚本作者: @mcdasheng688
+脚本功能: 📖BingRead 新闻阅读 (国区)
 操作步骤: 
-  打开第一个账号,阅读新闻,下拉到底，等待金币提示or重写通知
-  每天任务执行结束后，手动删除ids
+  打开第一个账号,阅读新闻,下拉到底,等待金币提示or重写通知
+  每天任务执行结束后,手动删除ids
 🎯重写脚本:
 [rewrite local]
 ^https:\/\/prod\.rewardsplatform\.microsoft\.com\/dapi\/me\/activities url script-request-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingRead.cookie.js
 [MITM]
 hostname = prod.rewardsplatform.microsoft.com
+⏰定时任务:
+[task local]
+38 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingRead.js, img-url=book.fill.system, tag=bingRead, enabled=true
+📦BoxJs地址:
+https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 */
 
 const $ = new Env("📖BingRead");
