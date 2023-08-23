@@ -271,7 +271,7 @@
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingRead.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
-      "icons": ["book.fill.system", "book.fill.system"]
+      "icons": ["", ""]
     },
     {
       "id": "kuwo",
