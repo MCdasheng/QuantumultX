@@ -1,6 +1,6 @@
 /* 
 脚本作者: @mcdasheng688
-脚本功能: 📖BingRead 新闻阅读 (国区)
+脚本功能: 📖BingRead 新闻阅读 (国区) v1.0.1
 操作步骤: 
   打开第一个账号,阅读新闻,下拉到底,等待金币提示or重写通知
   每天任务执行结束后,手动删除ids
@@ -42,22 +42,24 @@ var interval = $.getdata("bingRead_interval") || 2;
 
 auths = JSON.parse(auths);
 $.log(`共找到${auths.length}个账号`);
-$.log(`当前阅读次数: ${ids.split(",").length}`);
-$.log(`阅读间隔时间: ${timeout}s`);
+$.log(`当前阅读次数: ${ids.split(",").length}次`);
+$.log(`阅读间隔时间: ${interval}s`);
 $.log(`预计在${timeout}s后结束任务`);
 $.log(`-------------------------------------------`);
 
 async function processAll() {
   var promises = [];
+  
   for (var i = 0; i < auths.length; i++) {
     var account = auths[i].account; // account
     var auth = auths[i].auth; // auth
 
     for (const id of ids.split(",")) {
       promises.push(read(account, auth, id));
-      await $.wait(`${timeout}` * 1000); // interval
+      await $.wait(`${interval}` * 1000); // interval
     }
   }
+
   await Promise.all(promises);
 }
 
