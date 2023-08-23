@@ -171,6 +171,7 @@
         "bingPointCookieKey",
         "bing_times",
         "bing_timeout",
+        "bing_interval",
         "bing_cookies",
         "bing_cn"
       ],
@@ -182,23 +183,31 @@
           "val": "",
           "type": "text",
           "placeholder": "",
-          "desc": "通用lowking脚本(面板cookie), Alook或QX重写抓cookie"
+          "desc": "通用lowking脚本(面板cookie),Alook或QX重写抓cookie"
         },
         {
           "id": "bing_times",
           "name": "执行任务次数",
-          "val": 10,
+          "val": 20,
           "type": "number",
           "placeholder": "",
-          "desc": "默认10次"
+          "desc": "默认20次"
         },
         {
           "id": "bing_timeout",
           "name": "执行任务时间(s)",
-          "val": 15,
+          "val": 50,
           "type": "number",
           "placeholder": "",
-          "desc": "超时自动结束任务,默认15s"
+          "desc": "超时自动结束任务,默认50s"
+        },
+        {
+          "id": "bing_interval",
+          "name": "搜索时间间隔(s)",
+          "val": 2,
+          "type": "number",
+          "placeholder": "",
+          "desc": "默认2s"
         },
         {
           "id": "bing_cookies",
