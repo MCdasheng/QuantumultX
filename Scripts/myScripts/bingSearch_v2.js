@@ -1,5 +1,5 @@
 /* 
-🏆Bing Task v2.2
+🏆Bing Task v2.3
 [task_local]
 36 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch_v2.js, tag=🏆BingSearch Task, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png, enabled=false
 ⚠️注意事项:
@@ -9,10 +9,10 @@
 🥳脚本功能: 
     ✅兼容执行@mcdasheng搜索任务
     ✅兼容执行@lowking积分任务
-    ❎国区每日签到任务   (挖坑)
+    ✅国区每日阅读📖    (新增，半自动,详见bingRead.js)
+    ❎国区每日签到      (不好写)
     ❎外区每日任务      (手做任务都失败,写锤子)
     ❎外区浏览任务      (目前不在外区做任务了,先不写了~)
-    ❎每日积分变动      (挖坑)
 📍地区选择:
     详见v1版本中注释: https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.js
 📦BoxJs地址:
@@ -22,9 +22,10 @@
     @lowking's bingPoint.js 
 @params
     bing_cn:        强制国区开关,开启后强制以国区域名cn.bing.com进行搜索
-    bing_times:     执行次数,不要设置太多,默认10次
+    bing_times:     执行次数,不要设置太多,默认20次
     bing_cookies:   多账号Cookie,严格JSON格式
-    bing_timeout:   执行任务时间,超时自动结束任务,默认15s
+    bing_timeout:   执行任务时间,超时自动结束任务,默认50s
+    bing_interval:  搜索间隔,默认2s
 Cookies格式:
     [{
         "account": "example1@qqq.com",
@@ -51,49 +52,61 @@ let cachePoint = lk.getVal("bingCachePointKey", 0);
 // mcdasheng
 var cookies = $.getdata("bing_cookies");
 $.host = $.getdata("bing_cn") === "true" ? "cn.bing.com" : "www.bing.com";
-$.times = $.getdata("bing_times") ? $.getdata("bing_times") : 10;
-$.timeout = $.getdata("bing_timeout") ? $.getdata("bing_timeout") : 15;
+$.times = $.getdata("bing_times") || 20;
+$.timeout = $.getdata("bing_timeout") || 50;
+$.interval = $.getdata("bing_interval") || 2;
 
 cookies = JSON.parse(cookies);
 $.log(`共找到${cookies.length}个账号`);
 $.log(`当前搜索域名: ${$.host}`);
-$.log(`当前搜索次数: ${$.times}`);
+$.log(`当前搜索次数: ${$.times}次`);
+$.log(`搜索间隔时间: ${$.interval}s`);
 $.log(`预计在${$.timeout}s后结束任务`);
 $.log(`-------------------------------------------`);
 
 // 开始任务
-for (var i = 0; i < cookies.length; i++) {
-  var account = cookies[i].account; // account
-  var pc_cookie = cookies[i].bingSearchCookiePCKey; // bingSearch pc_Cookie
-  var mb_cookie = cookies[i].bingSearchCookieMobileKey; // bingSearch mb_Cookie
+async function processAll() {
+  var promises = [];
 
-  for (var j = 1; j <= $.times; j++) {
-    $.log(`账号${i + 1}: ${account}`);
-    bingSearch(mb_cookie, pc_cookie).then(
-      $.log(`账号${i + 1}: 搜索任务完成${j}次`)
-    );
-  }
-}
+  for (var i = 0; i < cookies.length; i++) {
+    var account = cookies[i].account; // account
+    var pc_cookie = cookies[i].bingSearchCookiePCKey; // bingSearch pc_Cookie
+    var mb_cookie = cookies[i].bingSearchCookieMobileKey; // bingSearch mb_Cookie
 
-for (var k = 0; k < cookies.length; k++) {
-  var mc_bingPointCookieKey = cookies[k].bingPointCookieKey; // bingPoint Cookie
-  if (mc_bingPointCookieKey != "") {
-    $.log(`🟢账号${k + 1}: 正在执行积分任务`);
-    lowking(mc_bingPointCookieKey);
-  } else {
-    $.log(`🔴账号${k + 1}: 面板Cookie为空,跳过积分任务!`);
+    for (var j = 1; j <= $.times; j++) {
+      promises.push(bingSearch(account, mb_cookie, pc_cookie));
+      await $.wait(`${$.interval}` * 1000); // interval
+    }
   }
+
+  for (var k = 0; k < cookies.length; k++) {
+    var mc_bingPointCookieKey = cookies[k].bingPointCookieKey; // bingPoint Cookie
+    if (mc_bingPointCookieKey != "") {
+      promises.push(lowking(mc_bingPointCookieKey));
+    } else {
+      $.log(`🔴账号${k + 1}: 面板Cookie为空,跳过积分任务!`);
+    }
+  }
+
+  await Promise.all(promises);
 }
 
 // 定时结束任务
 setTimeout(() => {
-  $.log(`🎉BingSearch已自动结束,请检查是否完成全部任务!`);
-  $.msg($.name, `🎉BingSearch已自动结束`, `请检查是否完成全部任务!`);
+  $.log("🟡脚本执行超时,强制结束。");
+  $.msg($.name, "🟡脚本执行超时,强制结束。");
   $.done();
 }, `${$.timeout}` * 1000);
 
+processAll().then(() => {
+  $.log(`🎉BingSearch已自动结束,请检查是否完成全部任务!`);
+  $.msg($.name, `🎉BingSearch已自动结束`, `请检查是否完成全部任务!`);
+  $.done();
+});
+
 // mcdasheng
-async function bingSearch(mb_cookie, pc_cookie) {
+async function bingSearch(account, mb_cookie, pc_cookie) {
+  $.log(`🟢当前账号: ${account}`);
   await mbSearch(mb_cookie);
   await pcSearch(pc_cookie);
   await pcSearch(pc_cookie);
