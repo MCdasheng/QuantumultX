@@ -1,9 +1,10 @@
 /* 
 脚本作者: @mcdasheng688
-脚本功能: 📖BingRead 新闻阅读 (国区) v1.0.1
+脚本功能: 📖BingRead 新闻阅读 (国区) v1.0.2
 操作步骤: 
   打开第一个账号,阅读新闻,下拉到底,等待金币提示or重写通知
   每天任务执行结束后,手动删除ids
+  手动添加日志中的 Authorization
 🎯重写脚本:
 [rewrite local]
 ^https:\/\/prod\.rewardsplatform\.microsoft\.com\/dapi\/me\/activities url script-request-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingRead.cookie.js
@@ -19,10 +20,11 @@ https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.jso
   新闻有时效性,手动刷新是因为没抓到新闻生成地址,我也想全自动。。。
   JSON格式检查: https://www.bejson.com/json/format/
 @params: 
-  "bingRead_ids"        阅读id个数
-  "bingRead_auths"      用户鉴权个数
-  "bingRead_timeout"    超时时间,默认30s
-  "bingRead_interval"   阅读间隔,默认2s
+  "bingRead_ids"          阅读id个数
+  "bingRead_auths"        用户鉴权个数
+  "bingRead_timeout"      超时时间,默认100s
+  "bingRead_interval"     阅读间隔,默认2s
+  "bingRead_autoDelete"   自动删除ids,默认关闭
 @bingRead_auths格式:
   [{
     "account": "example1@qqq.com",
@@ -39,17 +41,19 @@ var ids = $.getdata("bingRead_ids") || "";
 var auths = $.getdata("bingRead_auths");
 var timeout = $.getdata("bingRead_timeout") || 30;
 var interval = $.getdata("bingRead_interval") || 2;
+var autoDelete = $.getdata("bingRead_autoDelete") === "true" ? "true" : "false";
 
 auths = JSON.parse(auths);
 $.log(`共找到${auths.length}个账号`);
 $.log(`当前阅读次数: ${ids.split(",").length}次`);
 $.log(`阅读间隔时间: ${interval}s`);
 $.log(`预计在${timeout}s后结束任务`);
+$.log(`自动删除: ${autoDelete}`);
 $.log(`-------------------------------------------`);
 
 async function processAll() {
   var promises = [];
-  
+
   for (var i = 0; i < auths.length; i++) {
     var account = auths[i].account; // account
     var auth = auths[i].auth; // auth
@@ -70,6 +74,9 @@ setTimeout(() => {
 }, `${timeout}` * 1000);
 
 processAll().then(() => {
+  if (autoDelete === "true") {
+    $.setdata("", "bingRead_ids");
+  }
   $.log(`🎉BingRead已自动结束,请检查是否完成全部任务!`);
   $.msg($.name, `🎉BingRead已自动结束`, `请检查是否完成全部任务!`);
   $.done();
