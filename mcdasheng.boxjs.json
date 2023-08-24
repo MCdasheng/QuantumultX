@@ -240,6 +240,7 @@
         "bingRead_ids",
         "bingRead_interval",
         "bingRead_timeout",
+        "bingRead_autoDelete",
         "bingRead_auths"
       ],
       "desc": "获取Cookie以及脚本配置详见脚本注释,如需修改Cookie列表请严格按照JSON格式",
@@ -267,6 +268,14 @@
           "type": "number",
           "placeholder": "",
           "desc": "超时自动结束任务,默认30s"
+        },
+        {
+          "id": "bingRead_autoDelete",
+          "name": "自动删除",
+          "val": false,
+          "type": "boolean",
+          "placeholder": "",
+          "desc": "⚠️开启后,任务结束后ids将自动删除!"
         },
         {
           "id": "bingRead_auths",
