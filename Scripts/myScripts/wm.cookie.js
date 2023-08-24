@@ -4,7 +4,7 @@
 
 🎯重写脚本:
 [rewrite local]
-^https:\/\/fz-gateway\.waimaimingtang\.com\/api\/api\/v2\/user\/api_user_sign_in script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/wm.cookie.js
+^https:\/\/fz-gateway\.waimaimingtang\.com\/api\/api\/v2\/user\/api_user_sign_in url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/wm.cookie.js
 [MITM]
 hostname = fz-gateway.waimaimingtang.com
 
