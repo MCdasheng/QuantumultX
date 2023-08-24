@@ -18,6 +18,9 @@ https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.jso
 @tips:
   🥳支持多账号
   新闻有时效性,手动刷新是因为没抓到新闻生成地址,我也想全自动。。。
+  id是每天更新的，不可以跨天使用。
+  这样用一个账号手动观看，会自动记录id，用于其他账号做这个任务
+  如果只有一个账号，意义不大
   JSON格式检查: https://www.bejson.com/json/format/
 @params: 
   "bingRead_ids"          阅读id个数
