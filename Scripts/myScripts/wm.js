@@ -38,16 +38,8 @@ async function signIn() {
   let options = JSON.parse(session);
 
   return $.http.post(options).then((resp) => {
-    var obj = JSON.parse(resp.body);
-    var msg = obj.msg ? "🎉" + obj.msg : obj.error_msg;
-    if (msg) {
-      $.log(msg);
-      $.log(resp.body);
-      $.msg($.name, msg, resp.body);
-    } else {
-      $.log(resp.body);
-      $.msg($.name, "❌签到失败!", resp.body);
-    }
+    $.log(resp.body);
+    
   });
 }
 
