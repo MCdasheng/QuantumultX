@@ -36,7 +36,6 @@ signIn()
 
 async function signIn() {
   let options = JSON.parse(session);
-  options.url = url;
 
   return $.http.post(options).then((resp) => {
     var obj = JSON.parse(resp.body);
