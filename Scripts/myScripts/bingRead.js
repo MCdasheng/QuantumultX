@@ -1,6 +1,6 @@
 /* 
 脚本作者: @mcdasheng688
-脚本功能: 📖BingRead 新闻阅读 (国区) v1.0.2
+脚本功能: 📖BingRead 新闻阅读 (国区) v1.0.3
 操作步骤: 
   打开第一个账号,阅读新闻,下拉到底,等待金币提示or重写通知
   每天任务执行结束后,手动删除ids
@@ -115,8 +115,7 @@ async function read(account, auth, id) {
       if (point == 3) {
         $.log(`🎉成功! 当前积分: ${balance}`);
       } else if (point == 0) {
-        $.log(`🔴失败!`);
-        $.log(resp.body);
+        $.log(`🔴失败! 当前积分: ${balance}`);
       }
     } catch {
       $.log(`❌错误!`);
