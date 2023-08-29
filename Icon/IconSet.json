@@ -1,0 +1,34 @@
+{
+  "name": "IconSet",
+  "description": "For own use",
+  "icons": [
+    {
+      "name": "Ali",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/Ali.png"
+    },
+    {
+      "name": "Aliyun",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/Aliyun.png"
+    },
+    {
+      "name": "ESign",
+      "url": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/ESign.png"
+    },
+    {
+      "name": "Nexitally",
+      "url": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Nex.png"
+    },
+    {
+      "name": "Dler",
+      "url": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Dler.png"
+    },
+    {
+      "name": "Cylink",
+      "url": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Cylink.png"
+    },
+    {
+      "name": "SaySS",
+      "url": "https://raw.githubusercontent.com/Orz-3/mini/master/Color/SaySS.png"
+    }
+  ]
+}

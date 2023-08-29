@@ -1,0 +1,57 @@
+# 🥳For own use
+# 🔗url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/RemoteRules.list
+
+# 🇨🇳Geoip
+geoip, cn, direct
+
+# 📍IP
+host, ipinfo.io, proxy
+host, ip-api.com, proxy
+
+# 🤖️ChatGPT
+host, chat-shared.zhile.io, 节点选择
+host, api.statsig.com, ChatGPT
+host, o33249.ingest.sentry.io, reject
+
+
+# ✈️机场订阅
+host, xunfan.co, 节点选择
+host, fmmmz.com, 节点选择
+host, ruicloud.one, 节点选择
+host, sub.ssrsub.com, 节点选择
+host, get.ooop.ink, direct
+host, woc.ooop.ink, direct
+host, get.arki.ink, direct
+host, proxy.aries.ovh, direct
+host, get.noaries.app, direct
+host, sub.cloudflare.quest, direct
+
+# 🎯签到网站
+host, appsliced.co, direct
+host, appraven.net, direct
+host, www.macat.vip, direct
+host, www.mmybt.com, direct
+host, www.52appleid.com, direct
+host, esign.yyyue.xyz, direct
+host, bbs.wahatiyu.com, 🇼🇸台湾最优节点
+
+# 🏫uestc
+host-keyword, legym, direct
+host-keyword, uestc, direct
+
+# 📺Bilibili 
+host-suffix, cm.bilibili.com, reject
+
+# 📺HdoBox
+host-suffix, applovin.com, reject
+host-suffix, applvn.com, reject
+host-suffix, doubleclick.net, reject
+
+# 🏓WTT
+host, mb3admin.com, 节点选择
+host, documentstore.ittf.com, 节点选择
+host, ap.pumpjackdataworks.com, 节点选择
+host, wtt-prod-app-services-v2.pumpjackdataworks.com, 节点选择
+host, wttsimfiles.blob.core.windows.net, 节点选择
+host, documentstore.ittf.com, 节点选择
+host, wttwebcmsprod.blob.core.windows.net, 节点选择

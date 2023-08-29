@@ -1,0 +1,15 @@
+{
+    "data": {
+        "accountModule": {
+            "__typename": "AccountModuleQuery",
+            "userMemberCardList": [
+                {
+                    "__typename": "MemberCard",
+                    "name": "铂金权益卡",
+                    "cardType": "PLATINUM_CARD",
+                    "hold": true
+                }
+            ]
+        }
+    }
+}
