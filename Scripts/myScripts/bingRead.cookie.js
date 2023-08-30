@@ -1,6 +1,6 @@
 /* 
 脚本作者: @mcdasheng688
-脚本功能: 📖BingRead 新闻阅读 (国区) v1.1
+脚本功能: 📖BingRead 新闻阅读 (国区) v1.1.1
 操作步骤: 
   打开第一个账号,阅读10个新闻,下拉到底,等待金币提示or重写通知
   打开其他账号,获取对应账号信息
@@ -37,14 +37,12 @@ var notice = [];
 if ($request.headers["Authorization"] || $request.headers["authorization"]) {
   var auth =
     $request.headers["Authorization"] || $request.headers["authorization"];
-  $.log("🎉Auth获取成功!");
-  $.log(`${auth}`);
   auths += `,${auth}`;
   auths = [...new Set(auths.split(","))].join(",");
   auths = auths.replace(/^,+/g, "");
   $.setdata(auths, "bingRead_auths");
   $.log("🎉用户鉴权获取成功!");
-  $.log(auths);
+  $.log(auth);
   $.log(`当前auth个数: ${auths.split(",").length}个`);
   notice.push(`当前auth个数: ${auths.split(",").length}个`);
 }
