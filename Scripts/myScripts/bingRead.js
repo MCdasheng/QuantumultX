@@ -29,7 +29,7 @@ https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.jso
   "bingRead_autoDelete"   自动删除ids,默认关闭
 */
 
-const $ = new Env("📖BingRead_lite");
+const $ = new Env("📖BingRead");
 
 var ids = $.getdata("bingRead_ids") || "";
 var auths = $.getdata("bingRead_auths") || "";

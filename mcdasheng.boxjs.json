@@ -243,7 +243,7 @@
         "bingRead_autoDelete",
         "bingRead_auths"
       ],
-      "desc": "获取Cookie以及脚本配置详见脚本注释,如需修改Cookie列表请严格按照JSON格式",
+      "desc": "获取auth以及脚本配置详见脚本注释",
       "settings": [
         {
           "id": "bingRead_ids",
@@ -275,7 +275,7 @@
           "val": false,
           "type": "boolean",
           "placeholder": "",
-          "desc": "⚠️开启后,任务结束后ids将自动删除!"
+          "desc": "⚠️开启后,任务结束后auths,ids将自动删除!"
         },
         {
           "id": "bingRead_auths",
@@ -283,7 +283,7 @@
           "val": "",
           "type": "textarea",
           "placeholder": "",
-          "desc": "严格JSON格式,详见注释"
+          "desc": ""
         }
       ],
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingRead.js",
@@ -295,7 +295,7 @@
       "id": "kuwo",
       "name": "酷我音乐",
       "keys": ["kw_loginUid", "kw_loginSid"],
-      "desc": "loginSid好像过期很快,挖坑",
+      "desc": "",
       "settings": [
         {
           "id": "kw_loginUid",
