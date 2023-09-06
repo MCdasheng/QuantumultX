@@ -26,7 +26,7 @@ https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.jso
   "bingRead_auths"        用户鉴权个数
   "bingRead_timeout"      超时时间,默认100s
   "bingRead_interval"     阅读间隔,默认2s
-  "bingRead_autoDelete"   自动删除ids,默认关闭
+  "bingRead_autoDelete"   自动删除auths ids,默认关闭
 */
 
 const $ = new Env("📖BingRead");
@@ -47,6 +47,7 @@ $.log(`-------------------------------------------`);
 async function processAll() {
   var promises = [];
   for (const auth of auths.split(",")) {
+    $.log(`-------------------------------------------`);
     for (const id of ids.split(",")) {
       promises.push(read(auth, id));
       await $.wait(`${interval}` * 1000); // interval
