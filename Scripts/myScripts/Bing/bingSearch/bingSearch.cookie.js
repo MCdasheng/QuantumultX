@@ -1,5 +1,5 @@
 /* 
-🏆脚本功能: 获取 bingSearch Cookie v2.1
+🏆脚本功能: 获取 bingSearch Cookie v2.2
 🤓脚本作者: @mcdasheng
 🥳操作步骤: 
   💻pc_Cookie: 
@@ -31,8 +31,6 @@ if ($request.url.search(/q=testt/) != -1) {
   $.log("🎉MobileCookie获取成功!");
   $.log(ck);
   $.setval(ck, "bingSearchCookieMobileKey");
-  $.log("testCookie...");
-  $.log($.getdata("bingSearchCookieMobileKey"));
   $.done();
 }
 
@@ -42,8 +40,6 @@ if ($request.url.search(/q=pc/) != -1) {
   $.log("🎉PC端Cookie获取成功!");
   $.log(ck);
   $.setval(ck, "bingSearchCookiePCKey");
-  $.log("testCookie...");
-  $.log($.getdata("bingSearchCookiePCKey"));
   $.done();
 }
 
