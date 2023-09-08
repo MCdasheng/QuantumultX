@@ -1,4 +1,5 @@
 /*
+作者: @mcdasheng
 脚本功能: ipInfo --> NetWork, IP, ASN, ISP, Type, Country, City
 执行方式:
   手动执行: 显示分流节点信息

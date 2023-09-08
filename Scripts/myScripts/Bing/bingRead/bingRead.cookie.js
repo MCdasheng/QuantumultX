@@ -7,12 +7,12 @@
   执行任务
 🎯重写脚本:
 [rewrite local]
-^https:\/\/prod\.rewardsplatform\.microsoft\.com\/dapi\/me\/activities url script-request-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingRead.cookie.js
+^https:\/\/prod\.rewardsplatform\.microsoft\.com\/dapi\/me\/activities url script-request-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingRead/bingRead.cookie.js
 [MITM]
 hostname = prod.rewardsplatform.microsoft.com
 ⏰定时任务:
 [task local]
-38 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingRead.js, img-url=book.fill.system, tag=bingRead, enabled=true
+38 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingRead/bingRead.js, img-url=book.fill.system, tag=bingRead, enabled=true
 📦BoxJs地址:
 https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 @tips:

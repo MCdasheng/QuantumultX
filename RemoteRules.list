@@ -25,6 +25,7 @@ host, get.arki.ink, direct
 host, proxy.aries.ovh, direct
 host, get.noaries.app, direct
 host, sub.cloudflare.quest, direct
+host-keyword, nfsq, 节点选择
 
 # 🎯签到网站
 host, appsliced.co, direct
