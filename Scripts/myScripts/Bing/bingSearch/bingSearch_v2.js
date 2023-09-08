@@ -1,20 +1,18 @@
 /* 
 🏆Bing Task v2.3
+🤓脚本作者: @mcdasheng
+⏰定时任务:
 [task_local]
-36 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch_v2.js, tag=🏆BingSearch Task, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png, enabled=false
-⚠️注意事项:
-    v1版本用于单账号搜索任务快速执行,也可以使用BoxJS多会话实现多账号
-    v2版本支持多账号搜索任务&lowking积分任务,Cookies以严格JSON格式填入
-    JSON格式检查: https://www.bejson.com/json/format/
+  36 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingSearch/bingSearch_v2.js, tag=🏆BingSearch Task, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png, enabled=true
 🥳脚本功能: 
     ✅兼容执行@mcdasheng搜索任务
     ✅兼容执行@lowking积分任务
-    ✅国区每日阅读📖    (新增，半自动,详见bingRead.js)
+    ✅国区每日阅读📖    (新增,半自动,详见 bingRead.js)
     ❎国区每日签到      (不好写)
     ❎外区每日任务      (手做任务都失败,写锤子)
     ❎外区浏览任务      (目前不在外区做任务了,先不写了~)
 📍地区选择:
-    详见v1版本中注释: https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.js
+    详见v1版本中注释: https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingSearch/bingSearch.js
 📦BoxJs地址:
     https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 @thanks
@@ -26,21 +24,26 @@
     bing_cookies:   多账号Cookie,严格JSON格式
     bing_timeout:   执行任务时间,超时自动结束任务,默认50s
     bing_interval:  搜索间隔,默认2s
-Cookies格式:
+⚠️注意事项:
+    v1版本用于单账号搜索任务快速执行,也可以使用BoxJS多会话实现多账号
+    v2版本支持多账号搜索任务&lowking积分任务,Cookies以严格JSON格式填入
+    JSON格式检查: https://www.bejson.com/json/format/
+    单账号也要在两侧也要加中括号!
+⚠️Cookies格式:
     [{
         "account": "example1@qqq.com",
-        "bingPointCookieKey": "",
-        "bingSearchCookiePCKey": "",
-        "bingSearchCookieMobileKey": ""
+        "bingPointCookieKey": "xxx",
+        "bingSearchCookiePCKey": "xxx",
+        "bingSearchCookieMobileKey": "xxx"
     },{
         "account": "example2@qqq.com",
-        "bingPointCookieKey": "",
-        "bingSearchCookiePCKey": "",
-        "bingSearchCookieMobileKey": ""
+        "bingPointCookieKey": "xxx",
+        "bingSearchCookiePCKey": "xxx",
+        "bingSearchCookieMobileKey": "xxx"
     }]
 */
 
-const $ = new Env("Bing任务");
+const $ = new Env("🔍BingSearch_v2");
 
 const lk = new ToolKit(`🏆Bing积分`, `BingPoint`);
 

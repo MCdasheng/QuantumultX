@@ -2,14 +2,14 @@
 脚本功能: 获取 bing面板cookie,用于lowking脚本
 操作步骤: web访问 https://rewards.bing.com 登录即可
 [rewrite local]
-^https\:\/\/rewards\.bing\.com url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingPoint.cookie.js
+^https\:\/\/rewards\.bing\.com url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingPoint/bingPoint.cookie.js
 [MITM]
 hostname = rewards.bing.com
 */
 
 const $ = init();
 
-const ck = $request.headers["Cookie"];
+const ck = $request.headers["Cookie"] || $request.headers["cookie"];
 $.msg("Bing积分", "🎉面板cookie获取成功,请禁用脚本");
 $.log("🎉面板cookie获取成功");
 $.log(ck);

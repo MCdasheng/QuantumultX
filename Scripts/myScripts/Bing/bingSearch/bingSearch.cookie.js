@@ -1,130 +1,50 @@
-/*
-脚本功能: 🏆BingSearch Task v1.2
-脚本地址: https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.js
-脚本说明:
-  v1版本用于单账号快速执行
-  v2版本支持多账号: https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch_v2.js
-操作步骤: 
-  1.先获取 Cookie
-      Dashboard Cookie:  
-        面板 Cookie,可用于lowking脚本
-        https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingPoint.cookie.js
-      BingSearch Cookie:  
-        移动端 & pc端 Cookie,用于本脚本
-        https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.cookie.js
-  2.自行设置cron表达式
-注意事项:
-  Bing每天只能在一个地区进行积分任务or搜索任务,注意配置分流
-  Bing跨区执行任务可能导致积分无法兑换     (别乱换区啊，好几千积分兑换不了了555)
-  Bing搜索任务刷新时间以做任务时间为准,24h后刷新,最好每天定时完成
-  如果国区搜索任务无效,请先查看日志
-    如果日志显示正常执行,尝试打开"强制国区"更换host
-地区选择:
-  Bing搜索等级达到2级后,解锁移动端搜索任务
-    每日搜索积分: 国区162,日区162,美区270!!
-  外区额外有每日任务,连续完成一定天数可以获得额外积分
-    目前只能手做任务,偶尔还会失败         (未解决,手做任务都失败写锤子)
-  国区也有签到任务啦,但是分数很少
-兑换物品:
-    国区: 京东e卡 ￥50 RMB               (京东自营店可用,真香)
-    日区: 苹果礼品卡 ￥2500 JPY          (需要日本手机号,攒了2w分没换到)
-    美区: xBox,Spotify,StarBucks...     (没换过,不知道)
-MicroSoft分流:
-    https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/QuantumultX/Microsoft/Microsoft.list
-BoxJs订阅地址:
-    https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
-[task_local]
-0-59/3 * * * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.js, tag=🏆BingSearch Task, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Opinion_Rewards.png, enabled=false
+/* 
+🏆脚本功能: 获取 bingSearch Cookie v2.1
+🤓脚本作者: @mcdasheng
+🥳操作步骤: 
+  💻pc_Cookie: 
+    Bing web登录,搜索 'pc' 
+    ipad Bing app 登录,搜索 'pc' (好像获取不到了?)
+    ipad Edge app 登录,搜索 'pc'
+  📱mb_Cookie: 
+    ios Bing app登录,搜索 'testt'
+    ios Edge app登录,搜索 'testt'
+🎯重写脚本:
+[rewrite_local]
+外区: 也可以用于获取国区cookie,执行任务无效请打开"强制国区"开关
+  ^https\:\/\/www\.bing\.com\/search\?.*q=pc.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingSearch/bingSearch.cookie.js
+  ^https\:\/\/www\.bing\.com\/search\?.*q=testt.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingSearch/bingSearch.cookie.js
+国区:
+  ^https\:\/\/cn\.bing\.com\/search\?.*q=pc.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingSearch/bingSearch.cookie.js
+  ^https\:\/\/cn\.bing\.com\/search\?.*q=testt.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingSearch/bingSearch.cookie.js
+[mitm]
+  hostname = www.bing.com, cn.bing.com
+📦BoxJs订阅地址:
+  https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 */
 
-const $ = new Env("bingSearch");
+const $ = new Env("🔍BingSearchCookie");
 
-$.host = $.getdata("bing_cn") === "true" ? "cn.bing.com" : "www.bing.com";
-$.mb_cookie = $.getdata("bingSearchCookieMobileKey");
-$.pc_cookie = $.getdata("bingSearchCookiePCKey");
-
-bingSearch()
-  .catch((e) => $.log(e))
-  .finally(() => {
-    $.log("ok");
-    $.done();
-  });
-
-async function bingSearch() {
-  await mbSearch();
-  await pcSearch();
+if ($request.url.search(/q=testt/) != -1) {
+  const ck = $request.headers["Cookie"] || $request.headers["cookie"];
+  $.msg($.name, "🎉MobileCookie获取成功!");
+  $.log("🎉MobileCookie获取成功!");
+  $.log(ck);
+  $.setval(ck, "bingSearchCookieMobileKey");
+  $.log("testCookie...");
+  $.log($.getdata("bingSearchCookieMobileKey"));
+  $.done();
 }
 
-async function mbSearch() {
-  $.log("mbSearching...");
-  if (!$.mb_cookie) {
-    $.log("🟡mobile Cookie为空,跳过移动端搜索任务!");
-    return 0;
-  } else {
-    let rd = Math.random().toString(36).slice(-8);
-    let options = {
-      url: `https://${$.host}/search?q=${rd}`,
-      headers: {
-        Accept: `text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8`,
-        Connection: `keep-alive`,
-        "Accept-Encoding": `gzip, deflate, br`,
-        "User-Agent": `Mozilla/5.0 (iPhone; CPU iPhone OS 16_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/605.1.15 BingSapphire/1.0.410308003`,
-        "Accept-Language": `zh-CN,zh-Hans;q=0.9`,
-        Cookie: $.mb_cookie,
-      },
-    };
-    return $.http.get(options).then(
-      (resp) => {
-        $.log("🎉mb:" + resp.statusCode + " " + rd);
-        // $done();
-      },
-      (reason) => {
-        $.log("mbSearch error");
-        $.log(reason.error);
-        $.msg($.name, "🔴mbSearch error", reason.error);
-        $.done();
-      }
-    );
-  }
-}
-
-async function pcSearch() {
-  $.log("pcSearching...");
-  if (!$.pc_cookie) {
-    $.log("🟡pc Cookie为空,跳过pc端搜索任务!");
-    return 0;
-  } else {
-    let rd = Math.random().toString(36).slice(-8);
-    let options = {
-      url: `https://${$.host}/search?q=${rd}`,
-      headers: {
-        accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-        "accept-encoding": "gzip, deflate, br",
-        "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
-        "sec-fetch-dest": "document",
-        "sec-fetch-mode": "navigate",
-        "sec-fetch-site": "same-origin",
-        "sec-fetch-user": "?1",
-        "upgrade-insecure-requests": "1",
-        "user-agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36 Edg/111.0.1661.44",
-        Cookie: $.pc_cookie,
-      },
-    };
-    return $.http.get(options).then(
-      (resp) => {
-        $.log("🎉pc:" + resp.statusCode + " " + rd);
-        // $done();
-      },
-      (reason) => {
-        $.log("pcSearch error");
-        $.log(reason.error);
-        $.msg($.name, "🔴pcSearch error", reason.error);
-        $.done();
-      }
-    );
-  }
+if ($request.url.search(/q=pc/) != -1) {
+  const ck = $request.headers["Cookie"] || $request.headers["cookie"];
+  $.msg($.name, "🎉PC端Cookie获取成功!");
+  $.log("🎉PC端Cookie获取成功!");
+  $.log(ck);
+  $.setval(ck, "bingSearchCookiePCKey");
+  $.log("testCookie...");
+  $.log($.getdata("bingSearchCookiePCKey"));
+  $.done();
 }
 
 function Env(t, s) {
