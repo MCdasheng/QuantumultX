@@ -156,7 +156,7 @@
           "desc": "开启后将强制在国区执行搜索任务"
         }
       ],
-      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch.js",
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingSearch/bingSearch.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": [
@@ -225,7 +225,7 @@
           "desc": "开启后将强制在国区执行搜索任务"
         }
       ],
-      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingSearch_v2.js",
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingSearch/bingSearch_v2.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": [
@@ -275,7 +275,7 @@
           "val": false,
           "type": "boolean",
           "placeholder": "",
-          "desc": "⚠️开启后,任务结束后auths,ids将自动删除!"
+          "desc": "⚠️开启后,任务结束后auths & ids将自动删除!"
         },
         {
           "id": "bingRead_auths",
@@ -286,7 +286,7 @@
           "desc": ""
         }
       ],
-      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/bingRead.js",
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingRead/bingRead.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": ["", ""]
