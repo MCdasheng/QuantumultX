@@ -53,9 +53,9 @@ function hbxxh(timeout = 0) {
           data = JSON.parse(data);
 
           if (data.status == "SUCCEED") {
-            console.log("\n【获得】: " + data.data.todayPrize);
+            console.log(`\💴${data.data.todayPrize}元`);
 
-            $.message += "\n【获得】: " + data.data.data.data.todayPrize + "元";
+            $.message += `\💴${data.data.todayPrize}元`;
           } else {
             console.log("\n【" + data.errorMessage + "】");
 
