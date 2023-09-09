@@ -472,7 +472,7 @@ async function SendMsg(message) {
   if (!message) return;
 
   if (Notify > 0) {
-    $.msg($.name, "🎉任务完成!", message);
+    $.msg($.name, "🎉任务完成!", message.trim());
   } else {
     console.log(message);
   }
