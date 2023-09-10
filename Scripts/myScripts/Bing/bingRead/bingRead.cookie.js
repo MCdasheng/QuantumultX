@@ -43,8 +43,6 @@ if ($request.headers["Authorization"] || $request.headers["authorization"]) {
   auths = [...new Set(auths.split(","))].join(",");
   auths = auths.replace(/^,+/g, "");
   $.setdata(auths, "bingRead_auths");
-  $.log("🎉用户鉴权获取成功!");
-  $.log(auths);
   $.log(`当前auth个数: ${auths.split(",").length}个`);
   notice.push(`当前auth个数: ${auths.split(",").length}个`);
 }
