@@ -3,12 +3,20 @@
   "description": "For own use",
   "icons": [
     {
-      "name": "Ali",
-      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/Ali.png"
+      "name": "appraven",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/appraven.png"
     },
     {
-      "name": "Aliyun",
-      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/Aliyun.png"
+      "name": "qtx",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/qtx.png"
+    },
+    {
+      "name": "htx",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/htx.png"
+    },
+    {
+      "name": "legym",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/legym.png"
     },
     {
       "name": "ESign",
