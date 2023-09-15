@@ -4,19 +4,31 @@
   "icons": [
     {
       "name": "appraven",
-      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/appraven.png"
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/appraven.png"
+    },
+    {
+      "name": "dddc",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/dddc.png"
+    },
+    {
+      "name": "google",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/google.png"
+    },
+    {
+      "name": "gqcq",
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/gqcq.png"
     },
     {
       "name": "qtx",
-      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/qtx.png"
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/qtx.png"
     },
     {
       "name": "htx",
-      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/htx.png"
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/htx.png"
     },
     {
       "name": "legym",
-      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/legym.png"
+      "url": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/legym.png"
     },
     {
       "name": "ESign",
