@@ -7,26 +7,6 @@
   "repo": "https://github.com/mcdasheng",
   "apps": [
     {
-      "id": "waha",
-      "name": "哇哈体育",
-      "keys": ["waha_cookie"],
-      "desc": "",
-      "settings": [
-        {
-          "id": "waha_cookie",
-          "name": "waha_cookie",
-          "val": "",
-          "type": "text",
-          "placeholder": "",
-          "desc": ""
-        }
-      ],
-      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/waha.js",
-      "author": "@mcdasheng",
-      "repo": "https://github.com/mcdasheng",
-      "icons": []
-    },
-    {
       "id": "macat",
       "name": "macat",
       "keys": ["macat_loginBody"],
@@ -67,7 +47,33 @@
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/mmy.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
-      "icons": []
+      "icons": [
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Skicat.png",
+        "https://raw.githubusercontent.com/Orz-3/mini/master/Color/Skicat.png"
+      ]
+    },
+    {
+      "id": "waha",
+      "name": "哇哈体育",
+      "keys": ["waha_cookie"],
+      "desc": "",
+      "settings": [
+        {
+          "id": "waha_cookie",
+          "name": "waha_cookie",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": ""
+        }
+      ],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/waha.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/legym.png",
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/legym.png"
+      ]
     },
     {
       "id": "legym",
@@ -108,7 +114,10 @@
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/legym.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
-      "icons": []
+      "icons": [
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/legym.png",
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/legym.png"
+      ]
     },
     {
       "id": "bingSearch",
@@ -166,7 +175,7 @@
     },
     {
       "id": "bingSearch_v2",
-      "name": "🔍Bing搜索v2",
+      "name": "🔍Bing_v2",
       "keys": [
         "bingPointCookieKey",
         "bing_times",
@@ -275,7 +284,7 @@
           "val": false,
           "type": "boolean",
           "placeholder": "",
-          "desc": "⚠️开启后,任务结束后auths & ids将自动删除!"
+          "desc": "⚠️任务结束后自动删除 auths & ids"
         },
         {
           "id": "bingRead_auths",
