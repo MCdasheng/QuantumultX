@@ -289,7 +289,10 @@
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Bing/bingRead/bingRead.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
-      "icons": ["", ""]
+      "icons": [
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/book.png",
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/book.png"
+      ]
     },
     {
       "id": "kuwo",
@@ -409,7 +412,10 @@
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TimeBlocks.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
-      "icons": ["", ""]
+      "icons": [
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/TimeBlocks.png",
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/TimeBlocks.png"
+      ]
     },
     {
       "id": "qidian",
@@ -537,8 +543,8 @@
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": [
-        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png",
-        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icon/ESign.png"
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/ESign.png",
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/ESign.png"
       ]
     },
     {
@@ -559,7 +565,10 @@
       "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
-      "icons": ["", ""]
+      "icons": [
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/ipinfo.png",
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/ipinfo.png"
+      ]
     },
     {
       "id": "GoFans",
