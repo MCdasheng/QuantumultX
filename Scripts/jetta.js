@@ -25,7 +25,8 @@ $.message = "";
 //开始运行
 !(async () => {
   await hbxxh();
-  message(); //通知
+  await getDate();
+  await message(); //通知
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done());
@@ -69,6 +70,13 @@ function hbxxh(timeout = 0) {
       timeout
     );
   });
+}
+
+async function getDate() {
+  var date = new Date().getDate();
+  if (date == 18) {
+    $.message += "\n 🥳今天是提现日!";
+  }
 }
 
 //通知
