@@ -25,6 +25,7 @@ const $ = new Env("TestFlight");
 const account_key = $.getdata("tf_account_key");
 let ids = $.getdata("tf_appIds");
 // let ids = "qqa1Sl22,Xh9VNQoA";
+// let ids = "qqa1Sl22,Xh9VNQoA,aad,aad/accept,da";
 
 $.setdata(ids, "tf_appIds_2"); // 备用
 
@@ -44,7 +45,11 @@ if (ids == "") {
 if (ids.split(",").length == 1) {
   ids = [ids];
 } else {
-  ids = ids.split(",");
+  // ids = ids.split(",");
+  ids = ids.split(",").filter(function (element) {
+    return !element.match(/^[a-zA-Z]+\/accept$/);
+  }); // 修复 /accept 问题
+  // $.log(ids);
 }
 
 (async () => {
