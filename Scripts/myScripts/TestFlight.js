@@ -2,7 +2,7 @@
 🥳脚本功能: 自动加入 TestFlight
 🎯重写脚本:
 [rewrite_local]
-^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/ru\/(.*)$ url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TF_appIds.js
+^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/ru\/([^\/]+)(?!\/accept)$ url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TF_appIds.js
 [mitm]
 hostname = testflight.apple.com
 ⏰定时任务:
@@ -17,15 +17,15 @@ https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.jso
     "tf_request_id"
     "tf_session_digest"
 @tips:
-  无法打开tf商店请禁用mitm
+  无法打开tf商店请禁用 mitm
 */
 
 const $ = new Env("TestFlight");
 
 const account_key = $.getdata("tf_account_key");
 let ids = $.getdata("tf_appIds");
-// let ids = "qqa1Sl22,Xh9VNQoA";
-// let ids = "qqa1Sl22,Xh9VNQoA,aad,aad/accept,da";
+// let ids = "qqa1Sl22,APFBMqRW";
+// let ids = "pXj8dmQf,pXj8dmQf/accept";
 
 $.setdata(ids, "tf_appIds_2"); // 备用
 
@@ -45,25 +45,24 @@ if (ids == "") {
 if (ids.split(",").length == 1) {
   ids = [ids];
 } else {
-  ids = ids.split(",").filter(function (element) {
-    return !element.match(/^[a-zA-Z]+\/accept$/);
+  ids = ids.split(",").map(function (element) {
+    return element.replace(/\/accept$/, ""); // 去掉末尾的 /accept
   });
-  // $.log(ids);
+  $.log("🤖当前appId列表");
+  $.log(ids);
 }
 
 (async () => {
   let promises = [];
-
   for (var i = 0; i < ids.length; i++) {
     const promise = autoPost(ids[i]);
     promises.push(promise);
   }
-
   await Promise.all(promises);
 })()
   .catch((e) => {
     $.logErr(e);
-    new_ids = $.getdata("tf_appIds");
+    new_ids = $.getdata("tf_appIds"); // 出现异常时,不更改appIds列表
   })
   .finally(() => {
     new_ids = new_ids.replace(/^,+/g, "");
@@ -80,25 +79,32 @@ async function autoPost(id) {
   };
 
   return $.http.get(options).then((resp) => {
-    // $.log(resp.statusCode);
-    // $.log(resp.body);
-    if (resp.statusCode == 404) {
-      $.log(`❌tf链接${id}失效,已自动删除该appId!`);
-    } else {
-      var obj = JSON.parse(resp.body);
-      if (obj.data == null) {
-        new_ids += `,${id}`;
-        $.log(`🔴tf链接${id}不再接受任何新测试人员,跳过该tf`);
-      } else if (obj.data.status == "FULL") {
-        new_ids += `,${id}`;
-        $.log(`🟡tf链接${id}人数已满,跳过该tf`);
-      } else if (obj.data.status == "OPEN") {
-        // $.log(1);
-        return tf_join(id);
+    try {
+      if (resp.statusCode == 404) {
+        $.log(`❌tf链接${id}失效,已自动删除该appId!`);
       } else {
-        $.log(`🔴tf链接${id}: 失败!`);
-        $.log(resp.body);
+        var obj = JSON.parse(resp.body);
+        if (obj.data == null) {
+          new_ids += `,${id}`;
+          $.log(`🔴tf链接${id}不再接受任何新测试人员,跳过该tf`);
+        } else if (obj.data.status == "FULL") {
+          new_ids += `,${id}`;
+          $.log(`🟡tf链接${id}人数已满,跳过该tf`);
+        } else if (obj.data.status == "OPEN") {
+          // $.log(1);
+          return tf_join(id);
+        } else {
+          $.log(`🔴tf链接${id}: 失败!`);
+          $.log(resp.body);
+        }
       }
+    } catch (error) {
+      $.log("----------------------------------");
+      $.log(`❌错误信息: ${error}`);
+      $.log(`🔗链接: ${options.url}`);
+      $.log(`🟡状态码:${resp.statusCode}`);
+      $.log(resp.body);
+      $.log("----------------------------------");
     }
   });
 }
@@ -113,14 +119,13 @@ function tf_join(id) {
     // $.log(resp.body);
     if (resp.statusCode == 200) {
       var name = JSON.parse(resp.body).data.name;
-      $.log(`🎉${name} TestFlight加入成功!`);
+      $.log(`🎉tf链接${id}: ${name} 加入成功!`);
       $.msg($.name, `🎉${name} TestFlight加入成功!`);
     } else {
       new_ids += `,${id}`;
       $.log(resp.body);
       $.msg($.name, `🔴${name} TestFlight加入失败!`, `请自行查看日志!`);
     }
-
     // $.done();
   });
 }

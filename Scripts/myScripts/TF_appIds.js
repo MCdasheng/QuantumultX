@@ -5,7 +5,7 @@
 
 🎯重写脚本:
 [rewrite_local]
-^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/ru\/(.*)$ url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TF_appIds.js
+^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/ru\/([^\/]+)(?!\/accept)$ url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TF_appIds.js
 [mitm]
 hostname = testflight.apple.com
 ⏰定时任务:
@@ -14,7 +14,7 @@ hostname = testflight.apple.com
 📦BoxJs地址:
 https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/mcdasheng.boxjs.json
 @tips:
-    无法打开商店请禁用mitm
+    无法打开商店请禁用 mitm
 */
 
 const $ = new Env("TestFlight");
