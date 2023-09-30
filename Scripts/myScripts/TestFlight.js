@@ -45,10 +45,9 @@ if (ids == "") {
 if (ids.split(",").length == 1) {
   ids = [ids];
 } else {
-  // ids = ids.split(",");
   ids = ids.split(",").filter(function (element) {
     return !element.match(/^[a-zA-Z]+\/accept$/);
-  }); // 修复 /accept 问题
+  });
   // $.log(ids);
 }
 
@@ -92,20 +91,19 @@ async function autoPost(id) {
         $.log(`🔴tf链接${id}不再接受任何新测试人员,跳过该tf`);
       } else if (obj.data.status == "FULL") {
         new_ids += `,${id}`;
-        $.log(`🔴tf链接${id}人数已满,跳过该tf`);
+        $.log(`🟡tf链接${id}人数已满,跳过该tf`);
       } else if (obj.data.status == "OPEN") {
         // $.log(1);
         return tf_join(id);
       } else {
-        $.log(resp.body);
         $.log(`🔴tf链接${id}: 失败!`);
+        $.log(resp.body);
       }
     }
   });
 }
 
 function tf_join(id) {
-  // $.log(2);
   let options = {
     url: `https://testflight.apple.com/v3/accounts/${account_key}/ru/${id}/accept`,
     headers: tf_headers,
@@ -120,7 +118,7 @@ function tf_join(id) {
     } else {
       new_ids += `,${id}`;
       $.log(resp.body);
-      $.msg($.name, `🔴${name} TestFlight加入失败!`, `请自行查看!`);
+      $.msg($.name, `🔴${name} TestFlight加入失败!`, `请自行查看日志!`);
     }
 
     // $.done();
