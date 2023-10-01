@@ -24,14 +24,30 @@ const reg = /^https:\/\/testflight\.apple\.com\/v3\/accounts\/(.*)\/ru\/(.*)/;
 // const reg2 = /^https:\/\/testflight\.apple\.com\/join\/(.*)/;
 
 if (reg.test($request.url)) {
+  // 兼容性转换 from ScriptHub
+  if (typeof $request !== "undefined") {
+    const lowerCaseRequestHeaders = Object.fromEntries(
+      Object.entries($request.headers).map(([k, v]) => [k.toLowerCase(), v])
+    );
+
+    $request.headers = new Proxy(lowerCaseRequestHeaders, {
+      get: function (target, propKey, receiver) {
+        return Reflect.get(target, propKey.toLowerCase(), receiver);
+      },
+      set: function (target, propKey, value, receiver) {
+        return Reflect.set(target, propKey.toLowerCase(), value, receiver);
+      },
+    });
+  }
+
   let url = $request.url;
   let headers = $request.headers;
   let appId = reg.exec(url)[2];
   let account_key = reg.exec(url)[1];
 
-  let session_id = headers["X-Session-Id"];
-  let request_id = headers["X-Request-Id"];
-  let session_digest = headers["X-Session-Digest"];
+  let session_id = headers["x-session-id"];
+  let request_id = headers["X-request-id"];
+  let session_digest = headers["x-session-digest"];
 
   $.appIds += `,${appId}`;
   $.appIds = [...new Set($.appIds.split(","))].join(",");

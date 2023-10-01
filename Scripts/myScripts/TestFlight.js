@@ -44,6 +44,8 @@ if (ids == "") {
 
 if (ids.split(",").length == 1) {
   ids = [ids];
+  $.log("🤖当前appId列表");
+  $.log(ids);
 } else {
   ids = ids.split(",").map(function (element) {
     return element.replace(/\/accept$/, ""); // 去掉末尾的 /accept
@@ -82,6 +84,12 @@ async function autoPost(id) {
     try {
       if (resp.statusCode == 404) {
         $.log(`❌tf链接${id}失效,已自动删除该appId!`);
+      } else if (resp.statusCode == 500) {
+        $.log("----------------------------------");
+        $.log(`🤔tf链接${id}: 状态码500,不知道怎么回事。。。`);
+        $.log(resp.body);
+        $.log(`已保留该appId!`);
+        $.log("----------------------------------");
       } else {
         var obj = JSON.parse(resp.body);
         if (obj.data == null) {
@@ -91,7 +99,7 @@ async function autoPost(id) {
           new_ids += `,${id}`;
           $.log(`🟡tf链接${id}人数已满,跳过该tf`);
         } else if (obj.data.status == "OPEN") {
-          // $.log(1);
+          // $.log(`tf_joining...`);
           return tf_join(id);
         } else {
           $.log(`🔴tf链接${id}: 失败!`);
@@ -102,9 +110,11 @@ async function autoPost(id) {
       $.log("----------------------------------");
       $.log(`❌错误信息: ${error}`);
       $.log(`🔗链接: ${options.url}`);
+      $.log(`🤔请求头: ${JSON.stringify(options.headers)}`);
       $.log(`🟡状态码:${resp.statusCode}`);
       $.log(resp.body);
       $.log("----------------------------------");
+      new_ids += `,${id}`;
     }
   });
 }
