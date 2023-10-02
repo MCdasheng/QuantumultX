@@ -1,8 +1,9 @@
 /*
   url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/qtx.js
   From https://github.com/LinYuanovo/scripts/blob/main/qtx.js
-  原作者:临渊, 本版本兼容 qx
-  日期:5-21
+  @mcdasheng 
+    本版本兼容 qx 
+    增加行走任务
   软件:青碳行
   功能:签到、分享、回答问题、收取精力值
   抓包:carbon.lcago.cn 这个域名 请求体 的body部分的 token 和 deviceCoding
@@ -81,10 +82,14 @@ let url = {
       await $.wait(2 * 1000);
 
       console.log("开始回答问题");
-      for (var k = 0; k < 5; k++) {
+      for (var k = 0; k < queIdArr.length; k++) {
         await doQue(k);
         await $.wait(2 * 1000);
       }
+
+      console.log("开始走路");
+      await walk();
+      await $.wait(2 * 1000);
 
       console.log("开始获取未收取精力");
       await getCal();
@@ -157,7 +162,7 @@ function signIn(timeout = 3 * 1000) {
  */
 function share(timeout = 3 * 1000) {
   url.url = "https://carbon.lcago.cn/community/share/accomplish";
-  url.body = `{"token":"${data[0]}","deviceCoding":"${data[1]}","taskId":"SHARE0"01""}`;
+  url.body = `{"token":"${data[0]}","deviceCoding":"${data[1]}","taskId":"SHARE001"}`;
   return new Promise((resolve) => {
     if (debug) {
       console.log(
@@ -214,7 +219,7 @@ function getQue(timeout = 3 * 1000) {
 
           let result = JSON.parse(data);
           var obj1 = eval(result.data);
-          for (var i = 0; i < 5; i++) {
+          for (var i = 0; i < obj1.dataList.length; i++) {
             queIdArr[i] = obj1.dataList[i].id;
             queAnswerArr[i] = obj1.dataList[i].answer;
           }
@@ -264,6 +269,43 @@ function doQue(num1) {
           console.log(`\n该题目已回答 `);
         } else {
           console.log(`\n回答失败,原因是${result.respmsg} `);
+        }
+      } catch (e) {
+        console.log(e);
+      } finally {
+        resolve();
+      }
+    });
+  });
+}
+
+// @mcdasheng 走路
+function walk() {
+  var randStep = Math.floor(Math.random() * 1000) + 10000;
+  url.url = "https://carbon.lcago.cn/community/step/latest";
+  url.body = `{"token":"${data[0]}","deviceCoding":"${data[1]}","step":"${randStep}","taskId":"STEP001"}`;
+  return new Promise((resolve) => {
+    if (debug) {
+      console.log(
+        `\n【debug】=============== 这是 走路 请求 url ===============`
+      );
+      console.log(JSON.stringify(url));
+    }
+
+    $.post(url, async (error, response, data) => {
+      try {
+        if (debug) {
+          console.log(
+            `\n\n【debug】===============这是 走路 返回data==============`
+          );
+          console.log(data);
+        }
+
+        let result = JSON.parse(data);
+        if (result.respcod == "01") {
+          console.log(`\n走路成功: ${randStep}步`);
+        } else {
+          console.log(`\n走路失败,原因是${result.respmsg}`);
         }
       } catch (e) {
         console.log(e);
