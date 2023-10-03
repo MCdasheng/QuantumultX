@@ -1,17 +1,16 @@
 /*
-沪碳行app 支持 QX
-
 url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/htx.js
 From https://raw.githubusercontent.com/liuqi6968/-/main/htx.js
-
+ @mcdasheng 
+    本版本兼容 qx 
+    增加行走任务
+沪碳行app 支持 QX
 有显示系统异常的自行更新ck
-
 一天一毛数字人民币 小毛 
 抓取 htx.lcago.cn  body中的 token 和deviceCoding  
 多账号换行   
 htx  'token#deviceCoding'
 cron 10 7,17 * * *  htx.js
-
 */
 
 const $ = new Env("沪碳行");
@@ -146,6 +145,33 @@ class UserInfo {
     }
   }
 
+  async walk() {
+    try {
+      var randomStep = Math.floor(Math.random() * 1000) + 10000;
+      let url = `https://htx.lcago.cn/community/step/latest`;
+      let body = `{"token":"${this.ck[0]}","deviceCoding":"${this.ck[1]}","appChannel":"htx","step":"${randomStep}","taskId":"STEP001_htx"}`;
+      let h = {
+        "Content-Type": "application/json; charset\u003dutf-8",
+        Host: "htx.lcago.cn",
+      };
+      let urlObject = popu(url, h, body);
+      // console.log(urlObject)
+      await httpRequest("post", urlObject);
+      let result = httpResult;
+      //console.log(result)
+      if (result.respcod == "01") {
+        console.log(`${this.index}  ${result.respmsg} ${randomStep}步`);
+      } else if (result.respcod == "02") {
+        console.log(`${this.index}  ${result.respmsg}`);
+      } else if (result.respcod == "04") {
+        console.log(`${this.index}  ${result.respmsg}`);
+      }
+    } catch (e) {
+    } finally {
+      return Promise.resolve(1);
+    }
+  }
+
   async interact() {
     try {
       let url = `https://htx.lcago.cn/interact/data`;
@@ -246,6 +272,9 @@ class UserInfo {
 
       console.log(`\n============= 答题 =============`);
       await user.dt();
+
+      console.log(`\n============= 行走 =============`);
+      await user.walk();
 
       console.log(`\n============= 收取能量 =============`);
       await user.interact();

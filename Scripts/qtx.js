@@ -281,9 +281,9 @@ function doQue(num1) {
 
 // @mcdasheng 走路
 function walk() {
-  var randStep = Math.floor(Math.random() * 1000) + 10000;
+  var randomStep = Math.floor(Math.random() * 1000) + 10000;
   url.url = "https://carbon.lcago.cn/community/step/latest";
-  url.body = `{"token":"${data[0]}","deviceCoding":"${data[1]}","step":"${randStep}","taskId":"STEP001"}`;
+  url.body = `{"token":"${data[0]}","deviceCoding":"${data[1]}","step":"${randomStep}","taskId":"STEP001"}`;
   return new Promise((resolve) => {
     if (debug) {
       console.log(
@@ -303,7 +303,7 @@ function walk() {
 
         let result = JSON.parse(data);
         if (result.respcod == "01") {
-          console.log(`\n走路成功: ${randStep}步`);
+          console.log(`\n走路成功: ${randomStep}步`);
         } else {
           console.log(`\n走路失败,原因是${result.respmsg}`);
         }
