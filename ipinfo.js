@@ -115,6 +115,10 @@ function json2info(a) {
   var res_type =
     obj.data.asn.type == "isp"
       ? "🏠" + obj.data.asn.type
+      : obj.data.asn.type == "education"
+      ? "🏫" + obj.data.asn.type
+      : obj.data.asn.type == "business"
+      ? "💼" + obj.data.asn.type
       : "🖥" + obj.data.asn.type;
   var flag = flags.get(obj.data.country.toUpperCase())
     ? flags.get(obj.data.country.toUpperCase())
