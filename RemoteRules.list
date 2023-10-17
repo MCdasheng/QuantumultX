@@ -5,8 +5,8 @@
 geoip, cn, direct
 
 # 📍IP
-host, ipinfo.io, proxy
-host, ip-api.com, proxy
+# host, ipinfo.io, proxy
+# host, ip-api.com, proxy
 
 # 🤖️ChatGPT
 host, chat-shared.zhile.io, 节点选择
