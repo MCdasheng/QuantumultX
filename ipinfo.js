@@ -6,8 +6,6 @@
   事件执行: 显示选中节点信息
 [task_local]
   event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js, tag=ipInfo查询, img-url=location.fill.system
-[filter_local]
-  host, ipinfo.io, proxy
 @params
   "ipinfo_token": 自行申请 
 @tips
@@ -42,7 +40,7 @@ async function getIpinfo() {
 
   return $.http.get(options).then(
     (resp) => {
-      // $.log(resp.body);
+      $.log(resp.body);
       result = json2info(resp.body);
       result1 = result.result1;
       result2 = result.result2;
@@ -79,14 +77,11 @@ async function getIp() {
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
       "Accept-Encoding": "gzip, deflate, br",
     },
-    opts: {
-      policy: $environment.params,
-    },
   };
 
   // 主函数
   return $.http.get(options).then((resp) => {
-    // $.log(resp.body);
+    $.log(resp.body);
     var obj = JSON.parse(resp.body);
     if (!obj.ip) {
       $.log("🔴ip查询失败!");
