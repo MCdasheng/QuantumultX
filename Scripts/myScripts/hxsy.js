@@ -2,13 +2,13 @@
 脚本功能: 花夏数娱 ios签到
 网站入口: https://www.huaxiashuyu.com
 [task_local]
-30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/hxsy.js, tag=花夏数娱, https://raw.githubusercontent.com/Orz-3/mini/master/Color/Skicat.png, enabled=true
+30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/hxsy.js, tag=花夏数娱, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/hxsy.jpg, enabled=true
 @params: 
   "hxsy_loginBody" (boxjs自行填入,包含账号密码信息等)
      格式: `action=user_login&username=xxx&password=xxx`
 */
 
-const $ = new Env("hxsy");
+const $ = new Env("花夏数娱");
 
 var loginBody = $.getdata("hxsy_loginBody");
 
