@@ -1,5 +1,3 @@
-vmess=162.159.140.6:2052, method=aes-128-gcm, password=fe5edf04-c2af-4ac5-84ee-16d43024decb, obfs=ws, obfs-host=lu.wx.alue.link, obfs-uri=/, fast-open=false, udp-relay=false, aead=true, tag=🇱🇺 卢森堡
-vmess=103.140.136.91:7654, method=aes-128-gcm, password=0ab40fda-9186-4eb2-96bc-266fd4cb52d4, obfs=wss, obfs-host=dengpao.cfd, obfs-uri=/7fe4UmAm, tls-verification=false, fast-open=false, udp-relay=false, aead=true, tag=🇯🇵 日本CN2
 shadowsocks=5.188.6.8:989, method=aes-256-cfb, password=f8f7aCzcPKbsF8p3, fast-open=false, udp-relay=false, tag=🇺🇦 乌克兰
 shadowsocks=51.15.27.48:989, method=aes-256-cfb, password=f8f7aCzcPKbsF8p3, fast-open=false, udp-relay=false, tag=🇳🇱 荷兰
 shadowsocks=194.14.217.115:989, method=aes-256-cfb, password=f8f7aCzcPKbsF8p3, fast-open=false, udp-relay=false, tag=🇷🇴 罗马尼亚
