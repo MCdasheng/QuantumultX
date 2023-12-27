@@ -243,9 +243,9 @@ var flags = new Map([
 var body = $response.body;
 var obj = JSON.parse(body);
 
-var isp = obj.isp ? obj.isp : org;
-var org = obj.org ? obj.org : "GFW.org";
-var city = obj.city ? obj.city : "ChinaTown";
+var org = obj.org !== "" ? obj.org : "GFW.org";
+var isp = obj.isp !== "" ? obj.isp : org;
+var city = obj.city !== "" ? obj.city : "ChinaTown";
 var flag = flags.get(obj.countryCode)? flags.get(obj.countryCode) : "🏳️‍🌈"
 
 var ip = obj.query;
