@@ -1,5 +1,5 @@
 if ($response.statusCode != 200) {
-  $done("检测失败!");
+  $done();
 }
 
 var flags = new Map([
@@ -245,8 +245,8 @@ var obj = JSON.parse(body);
 
 var org = obj.org !== "" ? obj.org : "GFW.org";
 var isp = obj.isp !== "" ? obj.isp : org;
-var city = obj.city !== "" ? obj.city : "ChinaTown";
-var flag = flags.get(obj.countryCode)? flags.get(obj.countryCode) : "🏳️‍🌈"
+var city = obj.city !== "" ? obj.city : obj.country;
+var flag = flags.get(obj.countryCode) ? flags.get(obj.countryCode) : "🏳️‍🌈";
 
 var ip = obj.query;
 var title = flag + " " + city;
