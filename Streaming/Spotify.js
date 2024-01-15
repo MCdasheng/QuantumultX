@@ -56,7 +56,7 @@ async function Spotify_Test() {
     $.log(resp.body);
     var obj = JSON.parse(resp.body);
     if (obj.status == "320" || obj.status == "120") {
-      spotify = "🔴Proxy";
+      spotify = "🔴No";
     } else if (obj.status == "311") {
       spotify_country = getCountryFlagEmoji(obj.country) + obj.country;
       spotify = "🎉Yes" + arrow + spotify_country;
