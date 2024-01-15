@@ -1,8 +1,8 @@
 /*
 作者: @mcdasheng
-脚本功能: Spotify 解锁查询
+脚本功能: Spotify 注册查询
 [task_local]
-  event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/Spotify.js, tag=Spotify解锁查询, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/Spotify.png
+  event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/Spotify.js, tag=Spotify注册查询, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/Spotify.png
 @thanks
   https://github.com/lmc999/RegionRestrictionCheck/blob/main/check.sh
 */
@@ -48,6 +48,9 @@ async function Spotify_Test() {
       "User-Agent":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     },
+    opts: {
+      policy: $environment.params,
+    },
     body: "birth_day=11&birth_month=11&birth_year=2000&collect_personal_info=undefined&creation_flow=&creation_point=https%3A%2F%2Fwww.spotify.com%2Fhk-en%2F&displayname=Gay%20Lord&gender=male&iagree=1&key=a1e486e2729f46d6bb368d6b2bcda326&platform=www&referrer=&send-email=0&thirdpartyemail=0&identifier_token=AgE6YTvEzkReHNfJpO114514",
     timeout: 20000,
   };
@@ -64,6 +67,7 @@ async function Spotify_Test() {
     $.log("🎵Spotify: " + spotify);
   });
 }
+
 function getCountryFlagEmoji(countryCode) {
   if (countryCode.toUpperCase() == "TW") {
     countryCode = "WS";
