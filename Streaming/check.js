@@ -1,16 +1,92 @@
-const $ = new Env("ChatGPT");
+/*
+作者: @mcdasheng
+脚本功能: 流媒体解锁查询
+[task_local]
+  event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/check.js, tag=流媒体解锁查询, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/AppleTV.png
+@params
+  "ipinfo_token": 自行申请 
+@thanks
+  @getSomeCats, @KOP-XIAO, @lmc999
+*/
+
+const $ = new Env("Streaming");
 const BASE_URL = "https://www.netflix.com/title/";
 const FILM_ID = 81280792;
 const AREA_TEST_FILM_ID = 80018499;
 const arrow = " ➟ ";
 var result = "";
-
 $.token = $.getdata("ipinfo_token") ? $.getdata("ipinfo_token") : "";
 
-ChatGPT_Test()
+(async () => {
+  await YouTube_Test();
+  await Netflix_Test();
+  await ChatGPT_Test();
+  await Spotify_Test();
+})()
   .catch((e) => $.logErr(e))
   .finally(async () => {
-    $.log("ok");
+    var res = "------------------------------";
+    res =
+      res +
+      "</br><b>" +
+      "<font  color=>" +
+      "📺YouTube Premium" +
+      "</font> : " +
+      "</b>" +
+      "<font  color=>" +
+      ytb +
+      "</font></br>";
+
+    res =
+      res +
+      "</br><b>" +
+      "<font  color=>" +
+      "📺Netflix" +
+      "</font> : " +
+      "</b>" +
+      "<font  color=>" +
+      netflix +
+      "</font></br>";
+
+    res =
+      res +
+      "</br><b>" +
+      "<font  color=>" +
+      "🤖ChatGPT" +
+      "</font> : " +
+      "</b>" +
+      "<font  color=>" +
+      gpt +
+      "</font></br>";
+
+    res =
+      res +
+      "</br><b>" +
+      "<font  color=>" +
+      "🎵Spotify" +
+      "</font> : " +
+      "</b>" +
+      "<font  color=>" +
+      spotify +
+      "</font></br>";
+
+    res =
+      res +
+      "------------------------------" +
+      `</br><font color=#6959CD><b>节点</b> ➟ ${$environment.params} </font>`;
+
+    res =
+      `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` +
+      res +
+      `</p>`;
+
+    msg = res;
+
+    $done({
+      title: "         流媒体查询结果",
+      htmlMessage: msg,
+    });
+
     $.done();
   });
 
@@ -190,11 +266,15 @@ async function ChatGPT_Test() {
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
       "Accept-Encoding": "gzip, deflate, br",
     },
+    opts: {
+      policy: $environment.params,
+    },
     timeout: 5000,
   };
 
   return $.http.get(options).then(
     (resp) => {
+      $.log("ChatGPT Testing...");
       var body = resp.body;
       $.log(body);
 
@@ -229,36 +309,6 @@ async function ChatGPT_Test() {
       // $.log(gpt_warp);
       // $.log(gpt_country);
       $.log(gpt);
-
-      var res = "------------------------------";
-
-      res =
-        res +
-        "</br><b>" +
-        "<font  color=>" +
-        "🤖ChatGPT" +
-        "</font> : " +
-        "</b>" +
-        "<font  color=>" +
-        gpt +
-        "</font></br>";
-
-      res =
-        res +
-        "------------------------------" +
-        `</br><font color=#6959CD><b>节点</b> ➟ ${$environment.params} </font>`;
-
-      res =
-        `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` +
-        res +
-        `</p>`;
-
-      message = res;
-
-      $done({
-        title: "      ChatGPT 查询结果",
-        htmlMessage: message,
-      });
     },
     (reason) => {
       $.log("🔴ChatGPT test error");
@@ -268,7 +318,93 @@ async function ChatGPT_Test() {
   );
 }
 
-async function testNetflix() {
+async function Spotify_Test() {
+  var options = {
+    url: `https://spclient.wg.spotify.com/signup/public/v1/account`,
+    headers: {
+      "Content-Type": "application/json",
+      "Accept-Language": "en",
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    },
+    opts: {
+      policy: $environment.params,
+    },
+    body: "birth_day=11&birth_month=11&birth_year=2000&collect_personal_info=undefined&creation_flow=&creation_point=https%3A%2F%2Fwww.spotify.com%2Fhk-en%2F&displayname=Gay%20Lord&gender=male&iagree=1&key=a1e486e2729f46d6bb368d6b2bcda326&platform=www&referrer=&send-email=0&thirdpartyemail=0&identifier_token=AgE6YTvEzkReHNfJpO114514",
+    timeout: 20000,
+  };
+
+  return $.http.post(options).then((resp) => {
+    $.log("Spotify Testing...");
+    $.log(resp.body);
+    var obj = JSON.parse(resp.body);
+    if (obj.status == "320" || obj.status == "120") {
+      spotify = "🔴No";
+    } else if (obj.status == "311") {
+      spotify_country = getCountryFlagEmoji(obj.country) + obj.country;
+      spotify = "🎉Yes" + arrow + spotify_country;
+    }
+    $.log("🎵Spotify: " + spotify);
+  });
+}
+
+async function YouTube_Test() {
+  var options = {
+    url: `https://www.youtube.com/premium`,
+    headers: {
+      "User-Agent": `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36`,
+      "Content-Type": "text/html; charset=utf-8",
+      Accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "Accept-Encoding": "gzip, deflate, br",
+    },
+    opts: {
+      policy: $environment.params,
+    },
+    timeout: 8000,
+  };
+
+  return $.http.get(options).then(
+    (response) => {
+      $.log("YouTube Premium Testing...");
+
+      let body = response.body;
+      // $.log(body);
+      // $.log(response.statusCode);
+      if (response.statusCode !== 200) {
+        ytb = "检测失败❗️";
+      } else if (
+        body.indexOf("Premium is not available in your country") !== -1
+      ) {
+        ytb = "🚫未支持";
+      } else {
+        let region = "";
+        let re = new RegExp('"GL":"(.*?)"', "gm");
+        let ret = re.exec(body);
+        if (ret != null && ret.length === 2) {
+          region = ret[1];
+        } else if (body.indexOf("www.google.cn") !== -1) {
+          region = "CN";
+        } else {
+          region = "US";
+        }
+        ytb =
+          "🎉支持 " +
+          arrow +
+          getCountryFlagEmoji(region) +
+          region.toUpperCase();
+      }
+
+      console.log(ytb);
+    },
+    (reason) => {
+      ytb = "<b>📺YouTube Premium: </b>🚦检测超时";
+      //resolve("timeout")
+    }
+  );
+}
+
+async function Netflix_Test() {
   try {
     netflix = await testNf(FILM_ID);
     if (result !== "Success") {
@@ -277,35 +413,6 @@ async function testNetflix() {
   } catch (error) {
     console.error("Error:", error);
   } finally {
-    var res = "------------------------------";
-
-    res =
-      res +
-      "</br><b>" +
-      "<font  color=>" +
-      "📺Netflix" +
-      "</font> : " +
-      "</b>" +
-      "<font  color=>" +
-      netflix +
-      "</font></br>";
-
-    res =
-      res +
-      "------------------------------" +
-      `</br><font color=#6959CD><b>节点</b> ➟ ${$environment.params} </font>`;
-
-    res =
-      `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` +
-      res +
-      `</p>`;
-
-    message = res;
-
-    $done({
-      title: "      Netflix 查询结果",
-      htmlMessage: message,
-    });
   }
 }
 
@@ -313,6 +420,9 @@ async function testNf(filmId) {
   let options = {
     url: BASE_URL + filmId,
     timeout: 5000,
+    opts: {
+      policy: $environment.params,
+    },
     headers: {
       "User-Agent":
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",
@@ -361,113 +471,6 @@ async function testNf(filmId) {
       $.log(netflix);
       return netflix;
     }
-  });
-}
-
-async function YouTube_Test() {
-  var options = {
-    url: `https://www.youtube.com/premium`,
-    headers: {
-      "User-Agent": `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36`,
-      "Content-Type": "text/html; charset=utf-8",
-      Accept:
-        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-      "Accept-Encoding": "gzip, deflate, br",
-    },
-    timeout: 8000,
-  };
-
-  return $.http.get(options).then(
-    (response) => {
-      let body = response.body;
-      // $.log(body);
-      // $.log(response.statusCode);
-
-      if (response.statusCode !== 200) {
-        ytb = "检测失败❗️";
-      } else if (
-        body.indexOf("Premium is not available in your country") !== -1
-      ) {
-        ytb = "🚫未支持";
-      } else {
-        let region = "";
-        let re = new RegExp('"GL":"(.*?)"', "gm");
-        let ret = re.exec(body);
-        if (ret != null && ret.length === 2) {
-          region = ret[1];
-        } else if (body.indexOf("www.google.cn") !== -1) {
-          region = "CN";
-        } else {
-          region = "US";
-        }
-        ytb =
-          "🎉支持 " +
-          arrow +
-          getCountryFlagEmoji(region) +
-          region.toUpperCase();
-      }
-
-      console.log(ytb);
-
-      var res = "------------------------------";
-
-      res =
-        res +
-        "</br><b>" +
-        "<font  color=>" +
-        "📺YouTube Premium" +
-        "</font> : " +
-        "</b>" +
-        "<font  color=>" +
-        ytb +
-        "</font></br>";
-
-      res =
-        res +
-        "------------------------------" +
-        `</br><font color=#6959CD><b>节点</b> ➟ ${$environment.params} </font>`;
-
-      res =
-        `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` +
-        res +
-        `</p>`;
-
-      message = res;
-
-      $done({
-        title: "      YouTube 查询结果",
-        htmlMessage: message,
-      });
-    },
-    (reason) => {
-      ytb = "<b>📺YouTube Premium: </b>🚦检测超时";
-      //resolve("timeout")
-    }
-  );
-}
-async function Spotify_Test() {
-  var options = {
-    url: `https://spclient.wg.spotify.com/signup/public/v1/account`,
-    headers: {
-      "Content-Type": "application/json",
-      "Accept-Language": "en",
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    },
-    body: "birth_day=11&birth_month=11&birth_year=2000&collect_personal_info=undefined&creation_flow=&creation_point=https%3A%2F%2Fwww.spotify.com%2Fhk-en%2F&displayname=Gay%20Lord&gender=male&iagree=1&key=a1e486e2729f46d6bb368d6b2bcda326&platform=www&referrer=&send-email=0&thirdpartyemail=0&identifier_token=AgE6YTvEzkReHNfJpO114514",
-    timeout: 20000,
-  };
-
-  return $.http.post(options).then((resp) => {
-    $.log(resp.body);
-    var obj = JSON.parse(resp.body);
-    if (obj.status == "320" || obj.status == "120") {
-      spotify = "🔴No";
-    } else if (obj.status == "311") {
-      spotify_country = getCountryFlagEmoji(obj.country) + obj.country;
-      spotify = "🎉Yes" + arrow + spotify_country;
-    }
-    $.log("🎵Spotify: " + spotify);
   });
 }
 

@@ -15,14 +15,14 @@ const AREA_TEST_FILM_ID = 80018499;
 const arrow = " ➟ ";
 var result = "";
 
-testNetflix()
+Netflix_Test()
   .catch((e) => $.logErr(e))
   .finally(async () => {
     $.log("ok");
     $.done();
   });
 
-async function testNetflix() {
+async function Netflix_Test() {
   try {
     netflix = await testNf(FILM_ID);
     if (result !== "Success") {
