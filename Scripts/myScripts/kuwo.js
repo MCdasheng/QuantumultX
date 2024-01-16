@@ -70,8 +70,10 @@ $.notifyMsg = [];
   await sign(); // 3次
   await sign();
   await sign();
+  for (var i = 0; i < 20; i++) {
+    await video(); // 20次
+  }
   for (var i = 0; i < 10; i++) {
-    await video(); // 10次
     await ad_poster(); //10次
     await loterry_video(); // 8次
   }
@@ -338,7 +340,7 @@ async function box() {
 }
 
 async function box_new(time) {
-  var rand = Math.random() < 0.3 ? 48 : Math.random() < 0.6 ? 49 : 50;
+  var rand = Math.random() < 0.3 ? 28 : Math.random() < 0.6 ? 29 : 30;
 
   let options = {
     url: `https://integralapi.kuwo.cn/api/v1/online/sign/new/boxRenew?loginUid=${loginUid}&loginSid=${loginSid}&action=new&time=${time}&goldNum=${rand}`,
@@ -366,7 +368,7 @@ async function box_new(time) {
 }
 
 async function box_old(time) {
-  var rand = Math.random() < 0.3 ? 48 : Math.random() < 0.6 ? 49 : 50;
+  var rand = Math.random() < 0.3 ? 28 : Math.random() < 0.6 ? 29 : 30;
 
   let options = {
     url: `https://integralapi.kuwo.cn/api/v1/online/sign/new/boxRenew?loginUid=${loginUid}&loginSid=${loginSid}&action=old&time=${time}&goldNum=${rand}`,
