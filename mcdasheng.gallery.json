@@ -1,0 +1,45 @@
+{
+  "name": "MCdasheng脚本库",
+  "description": "tg频道: https://t.me/mcdasheng6888",
+  "task": [
+    {
+      "config": "event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/check.js, tag=流媒体检测, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/AppleTV.png, enabled=true"
+    },
+    {
+      "config": "event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/Spotify.js, tag=Spotify解锁查询, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/Spotify.png, enabled=true"
+    },
+    {
+      "config": "event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/ChatGPT.js, tag=ChatGPT解锁查询, img-url=https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/ChatGPT/ChatGPT4.png"
+    },
+    {
+      "config": "event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/YouTube.js, tag=YouTube解锁查询, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/YouTube.png"
+    },
+    {
+      "config": "event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/Netflix.js, tag=Netflix解锁查询, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/Netflix.png"
+    },
+    {
+      "config": "event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/ipinfo.js, tag=IPinfo查询, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/IPinfo.png, enabled=true"
+    },
+    {
+      "config": "30 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/hxsy.js, tag=花夏数娱, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/hxsy.jpg, enabled=true"
+    },
+    {
+      "config": "30 * * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TestFlight.js, tag=TestFlight自动加入, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/testflight.png, enabled=true"
+    },
+    {
+      "config": "32 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/acfun.js, tag=AcFun, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/acfun.png, enabled=true"
+    },
+    {
+      "config": "33 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Appraven.js, tag=Appraven今日限免, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/Appraven.png, enabled=true"
+    },
+    {
+      "config": "33 10,20 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/kuwo.js, tag=🎵酷我音乐, img-url=https://raw.githubusercontent.com/deezertidal/private/main/icons/kuwosvip.png, enabled=true"
+    },
+    {
+      "config": "30,31 10 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/macat.js, tag=macat, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/macat.png, enabled=true"
+    },
+    {
+      "config": "31 10 */7 * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/Esign.js, tag=轻松签版本监控, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/ESign.png, enabled=true"
+    }
+  ]
+}
