@@ -4,7 +4,7 @@
 [task_local]
   event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/ChatGPT.js, tag=ChatGPT解锁查询, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png
 @params
-  "ipinfo_token": 自行申请 
+  "ipinfo_token": https://ipinfo.io 官网自行申请 
 @thanks
   @getSomeCats
 */
