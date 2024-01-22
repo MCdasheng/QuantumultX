@@ -111,6 +111,7 @@ async function ChatGPT_Test() {
 
   return $.http.get(options).then(
     (resp) => {
+      $.log("ChatGPT Testing...");
       var body = resp.body;
       $.log(body);
 
@@ -145,36 +146,6 @@ async function ChatGPT_Test() {
       // $.log(gpt_warp);
       // $.log(gpt_country);
       $.log(gpt);
-
-      var res = "------------------------------";
-
-      res =
-        res +
-        "</br><b>" +
-        "<font  color=>" +
-        "🤖ChatGPT" +
-        "</font> : " +
-        "</b>" +
-        "<font  color=>" +
-        gpt +
-        "</font></br>";
-
-      res =
-        res +
-        "------------------------------" +
-        `</br><font color=#6959CD><b>节点</b> ➟ ${$environment.params} </font>`;
-
-      res =
-        `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` +
-        res +
-        `</p>`;
-
-      message = res;
-
-      $done({
-        title: "      ChatGPT 查询结果",
-        htmlMessage: message,
-      });
     },
     (reason) => {
       $.log("🔴ChatGPT test error");
