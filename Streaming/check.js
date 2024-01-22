@@ -4,7 +4,7 @@
 [task_local]
   event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/check.js, tag=流媒体解锁查询, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/AppleTV.png
 @params
-  "ipinfo_token": 自行申请 
+  "ipinfo_token": https://ipinfo.io 官网自行申请 
 @thanks
   @getSomeCats, @KOP-XIAO, @lmc999
 */
@@ -92,171 +92,8 @@ $.token = $.getdata("ipinfo_token") ? $.getdata("ipinfo_token") : "";
 
 async function ChatGPT_Test() {
   var ip = await getIp();
-  let chatGPT_regions = [
-    "T1",
-    "XX",
-    "AL",
-    "DZ",
-    "AD",
-    "AO",
-    "AG",
-    "AR",
-    "AM",
-    "AU",
-    "AT",
-    "AZ",
-    "BS",
-    "BD",
-    "BB",
-    "BE",
-    "BZ",
-    "BJ",
-    "BT",
-    "BA",
-    "BW",
-    "BR",
-    "BG",
-    "BF",
-    "CV",
-    "CA",
-    "CL",
-    "CO",
-    "KM",
-    "CR",
-    "HR",
-    "CY",
-    "DK",
-    "DJ",
-    "DM",
-    "DO",
-    "EC",
-    "SV",
-    "EE",
-    "FJ",
-    "FI",
-    "FR",
-    "GA",
-    "GM",
-    "GE",
-    "DE",
-    "GH",
-    "GR",
-    "GD",
-    "GT",
-    "GN",
-    "GW",
-    "GY",
-    "HT",
-    "HN",
-    "HU",
-    "IS",
-    "IN",
-    "ID",
-    "IQ",
-    "IE",
-    "IL",
-    "IT",
-    "JM",
-    "JP",
-    "JO",
-    "KZ",
-    "KE",
-    "KI",
-    "KW",
-    "KG",
-    "LV",
-    "LB",
-    "LS",
-    "LR",
-    "LI",
-    "LT",
-    "LU",
-    "MG",
-    "MW",
-    "MY",
-    "MV",
-    "ML",
-    "MT",
-    "MH",
-    "MR",
-    "MU",
-    "MX",
-    "MC",
-    "MN",
-    "ME",
-    "MA",
-    "MZ",
-    "MM",
-    "NA",
-    "NR",
-    "NP",
-    "NL",
-    "NZ",
-    "NI",
-    "NE",
-    "NG",
-    "MK",
-    "NO",
-    "OM",
-    "PK",
-    "PW",
-    "PA",
-    "PG",
-    "PE",
-    "PH",
-    "PL",
-    "PT",
-    "QA",
-    "RO",
-    "RW",
-    "KN",
-    "LC",
-    "VC",
-    "WS",
-    "SM",
-    "ST",
-    "SN",
-    "RS",
-    "SC",
-    "SL",
-    "SG",
-    "SK",
-    "SI",
-    "SB",
-    "ZA",
-    "ES",
-    "LK",
-    "SR",
-    "SE",
-    "CH",
-    "TH",
-    "TG",
-    "TO",
-    "TT",
-    "TN",
-    "TR",
-    "TV",
-    "UG",
-    "AE",
-    "US",
-    "UY",
-    "VU",
-    "ZM",
-    "BO",
-    "BN",
-    "CG",
-    "CZ",
-    "VA",
-    "FM",
-    "MD",
-    "PS",
-    "KR",
-    "TW",
-    "TZ",
-    "TL",
-    "GB",
-  ];
-
+  // prettier-ignore
+  let chatGPT_regions = ["AL", "DZ", "AF", "AD", "AO", "AG", "AR", "AM", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BE", "BZ", "BJ", "BT", "BO", "BA", "BW", "BR", "BN", "BG", "BF", "BI", "CV", "KH", "CM", "CA", "CF", "TD", "CL", "CO", "KM", "CG", "CD", "CR", "CI", "HR", "CY", "CZ", "DK", "DJ", "DM", "DO", "EC", "EG", "SV", "GQ", "ER", "EE", "SZ", "ET", "FJ", "FI", "FR", "GA", "GM", "GE", "DE", "GH", "GR", "GD", "GT", "GN", "GW", "GY", "HT", "VA", "HN", "HU", "IS", "IN", "ID", "IQ", "IE", "IL", "IT", "JM", "JP", "JO", "KZ", "KE", "KI", "KW", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT", "LU", "MG", "MW", "MY", "MV", "ML", "MT", "MH", "MR", "MU", "MX", "FM", "MD", "MC", "MN", "ME", "MA", "MZ", "MM", "NA", "NR", "NP", "NL", "NZ", "NI", "NE", "NG", "MK", "NO", "OM", "PK", "PW", "PS", "PA", "PG", "PY", "PE", "PH", "PL", "PT", "QA", "RO", "RW", "KN", "LC", "VC", "WS", "SM", "ST", "SA", "SN", "RS", "SC", "SL", "SG", "SK", "SI", "SB", "SO", "ZA", "KR", "SS", "ES", "LK", "SR", "SE", "CH", "SD", "TW", "TJ", "TZ", "TH", "TL", "TG", "TO", "TT", "TN", "TR", "TM", "TV", "UG", "UA", "AE", "GB", "US", "UY", "UZ", "VU", "VN", "YE", "ZM", "ZW", ];
   var options = {
     url: `https://chat.openai.com/cdn-cgi/trace`,
     headers: {
@@ -274,7 +111,6 @@ async function ChatGPT_Test() {
 
   return $.http.get(options).then(
     (resp) => {
-      $.log("ChatGPT Testing...");
       var body = resp.body;
       $.log(body);
 
@@ -285,7 +121,7 @@ async function ChatGPT_Test() {
         return a;
       }, {});
 
-      var gpt_warp = cf.warp === "plus" || cf.warp === "on" ? "true" : "false";
+      var gpt_warp = cf.warp === "plus" || cf.warp === "on" ? true : false;
       var gpt_ip;
 
       if (gpt_warp == true) {
@@ -309,6 +145,36 @@ async function ChatGPT_Test() {
       // $.log(gpt_warp);
       // $.log(gpt_country);
       $.log(gpt);
+
+      var res = "------------------------------";
+
+      res =
+        res +
+        "</br><b>" +
+        "<font  color=>" +
+        "🤖ChatGPT" +
+        "</font> : " +
+        "</b>" +
+        "<font  color=>" +
+        gpt +
+        "</font></br>";
+
+      res =
+        res +
+        "------------------------------" +
+        `</br><font color=#6959CD><b>节点</b> ➟ ${$environment.params} </font>`;
+
+      res =
+        `<p style="text-align: center; font-family: -apple-system; font-size: large; font-weight: thin">` +
+        res +
+        `</p>`;
+
+      message = res;
+
+      $done({
+        title: "      ChatGPT 查询结果",
+        htmlMessage: message,
+      });
     },
     (reason) => {
       $.log("🔴ChatGPT test error");
@@ -373,9 +239,7 @@ async function YouTube_Test() {
       // $.log(response.statusCode);
       if (response.statusCode !== 200) {
         ytb = "检测失败❗️";
-      } else if (
-        body.indexOf("Premium is not available in your country") !== -1
-      ) {
+      } else if (body.indexOf("Premium is not available in your country") !== -1) {
         ytb = "🚫未支持";
       } else {
         let region = "";
@@ -388,11 +252,7 @@ async function YouTube_Test() {
         } else {
           region = "US";
         }
-        ytb =
-          "🎉支持 " +
-          arrow +
-          getCountryFlagEmoji(region) +
-          region.toUpperCase();
+        ytb = "🎉支持 " + arrow + getCountryFlagEmoji(region) + region.toUpperCase();
       }
 
       console.log(ytb);
@@ -456,10 +316,7 @@ async function testNf(filmId) {
 
       if (filmId == FILM_ID) {
         netflix =
-          "🎉完整支持" +
-          arrow +
-          getCountryFlagEmoji(region.toUpperCase()) +
-          region.toUpperCase();
+          "🎉完整支持" + arrow + getCountryFlagEmoji(region.toUpperCase()) + region.toUpperCase();
       } else {
         netflix =
           "🟡仅支持自制剧" +
