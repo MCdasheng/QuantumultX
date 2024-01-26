@@ -1,5 +1,5 @@
 /* 
-🎵酷我音乐 v1.5
+🎵酷我音乐 v1.6
 🥳脚本功能:  
   ✅每日小说
   ✅每日签到
@@ -8,7 +8,7 @@
   ✅创意视频
   ✅免费抽奖
   ✅视频抽奖
-  ✅海报广告
+  ✅惊喜任务
   ✅定时宝箱
   ✅补领宝箱
   ✅资产查询
@@ -61,20 +61,21 @@ const kw_headers = {
 $.notifyMsg = [];
 
 (async () => {
-  await novel(); // 1次
-  await mobile(); // 1次
-  await collect(); // 1次
-  await box(); // 1次
-  await loterry_free(); // 2次
+  await new_sign();
+  await novel();
+  await mobile();
+  await collect();
+  await box();
   await loterry_free();
-  await sign(); // 3次
+  await loterry_free();
+  await sign();
   await sign();
   await sign();
   for (var i = 0; i < 20; i++) {
     await video(); // 20次
   }
   for (var i = 0; i < 10; i++) {
-    await ad_poster(); //10次
+    await surprise(); //10次
     await loterry_video(); // 8次
   }
 })()
@@ -205,9 +206,31 @@ async function sign() {
       if (desc == "成功") desc = `🎉每日签到: ${desc}`;
       else if (desc == "今天已完成任务") desc = `🟢每日签到: ${desc}`;
       else if (desc == "用户未登录") desc = `🔴每日签到: ${desc}`;
-      else if (desc == "已达到当日观看额外视频次数")
-        desc = `🟢每日签到: ${desc}`;
+      else if (desc == "已达到当日观看额外视频次数") desc = `🟢每日签到: ${desc}`;
       else desc = `⚠️每日签到: ${desc}`;
+    } else {
+      desc = `❌每日签到: 错误!`;
+      $.log(resp.body);
+    }
+    $.log(desc);
+    $.notifyMsg.push(desc);
+  });
+}
+
+async function new_sign() {
+  let options = {
+    url: `https://integralapi.kuwo.cn/api/v1/online/sign/v1/earningSignIn/newUserSignList?loginUid=587513271&loginSid=1062618347`,
+    headers: kw_headers,
+  };
+  return $.http.get(options).then((resp) => {
+    $.log("🟡正在执行每日签到任务...");
+    // $.log(resp.body);
+    var desc;
+    var obj = JSON.parse(resp.body);
+    if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
+      desc = obj.data.isSign;
+      if (desc == "true") desc = `🟢每日签到: 成功!`;
+      else if (desc == "用户未登录") desc = `🔴每日签到: 失败`;
     } else {
       desc = `❌每日签到: 错误!`;
       $.log(resp.body);
@@ -229,9 +252,7 @@ async function loterry_free() {
     var desc;
     var obj = JSON.parse(resp.body);
     if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
-      desc = obj.data.loterryname
-        ? `🎉免费抽奖: ${obj.data.loterryname}`
-        : `❌免费抽奖: 错误!`;
+      desc = obj.data.loterryname ? `🎉免费抽奖: ${obj.data.loterryname}` : `❌免费抽奖: 错误!`;
     } else desc = obj.msg ? `🔴免费抽奖: ${obj.msg}` : `❌免费抽奖: 错误!`;
     if (desc == `🔴免费抽奖: 免费次数用完了`) {
       desc = `🟢免费抽奖: 免费次数用完了`;
@@ -256,9 +277,7 @@ async function loterry_video() {
     var desc;
     var obj = JSON.parse(resp.body);
     if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
-      desc = obj.data.loterryname
-        ? `🎉视频抽奖: ${obj.data.loterryname}`
-        : `❌视频抽奖: 错误!`;
+      desc = obj.data.loterryname ? `🎉视频抽奖: ${obj.data.loterryname}` : `❌视频抽奖: 错误!`;
     } else desc = obj.msg ? `🔴视频抽奖: ${obj.msg}` : `❌视频抽奖: 错误!`;
     if (desc == `🔴视频抽奖: 视频次数用完了`) {
       desc = `🟢视频抽奖: 视频次数用完了`;
@@ -271,27 +290,27 @@ async function loterry_video() {
   });
 }
 
-async function ad_poster() {
-  var rand = Math.random() < 0.3 ? 98 : Math.random() < 0.6 ? 99 : 100;
+async function surprise() {
+  var rand = Math.random() < 0.3 ? 68 : Math.random() < 0.6 ? 69 : 70;
 
   let options = {
-    url: `https://integralapi.kuwo.cn/api/v1/online/sign/v1/earningSignIn/everydaymusic/doListen?loginUid=${loginUid}&loginSid=${loginSid}&from=surprise&goldNum=${rand}&surpriseType=`,
+    url: `https://integralapi.kuwo.cn/api/v1/online/sign/v1/earningSignIn/newDoListen?loginUid=${loginUid}&loginSid=${loginSid}&from=surprise&goldNum=${rand}&surpriseType=`,
     headers: kw_headers,
   };
 
   return $.http.get(options).then((resp) => {
-    $.log("🟡正在执行海报广告任务...");
+    $.log("🟡正在执行惊喜任务...");
     // $.log(resp.body);
     var desc;
     var obj = JSON.parse(resp.body);
     if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
       desc = obj.data.description;
-      if (desc == "成功") desc = `🎉海报广告: ${desc}`;
-      else if (desc == "今天已完成任务") desc = `🟢海报广告: ${desc}`;
-      else if (desc == "用户未登录") desc = `🔴海报广告: ${desc}`;
-      else desc = `⚠️海报广告: ${desc}`;
+      if (desc == "成功") desc = `🎉惊喜任务: ${desc}`;
+      else if (desc == "今天已完成任务") desc = `🟢惊喜任务: ${desc}`;
+      else if (desc == "用户未登录") desc = `🔴惊喜任务: ${desc}`;
+      else desc = `⚠️惊喜任务: ${desc}`;
     } else {
-      desc = `❌海报广告: 错误!`;
+      desc = `❌惊喜任务: 错误!`;
       $.log(resp.body);
     }
     $.log(desc);
@@ -468,9 +487,7 @@ function Env(t, s) {
       return "undefined" != typeof $task;
     }
     isSurge() {
-      return (
-        "undefined" != typeof $environment && $environment["surge-version"]
-      );
+      return "undefined" != typeof $environment && $environment["surge-version"];
     }
     isLoon() {
       return "undefined" != typeof $loon;
@@ -479,9 +496,7 @@ function Env(t, s) {
       return "undefined" != typeof $rocket;
     }
     isStash() {
-      return (
-        "undefined" != typeof $environment && $environment["stash-version"]
-      );
+      return "undefined" != typeof $environment && $environment["stash-version"];
     }
     toObj(t, s = null) {
       try {
@@ -623,10 +638,7 @@ function Env(t, s) {
       return e;
     }
     getval(t) {
-      return this.isSurge() ||
-        this.isShadowrocket() ||
-        this.isLoon() ||
-        this.isStash()
+      return this.isSurge() || this.isShadowrocket() || this.isLoon() || this.isStash()
         ? $persistentStore.read(t)
         : this.isQuanX()
         ? $prefs.valueForKey(t)
@@ -635,18 +647,12 @@ function Env(t, s) {
         : (this.data && this.data[t]) || null;
     }
     setval(t, s) {
-      return this.isSurge() ||
-        this.isShadowrocket() ||
-        this.isLoon() ||
-        this.isStash()
+      return this.isSurge() || this.isShadowrocket() || this.isLoon() || this.isStash()
         ? $persistentStore.write(t, s)
         : this.isQuanX()
         ? $prefs.setValueForKey(t, s)
         : this.isNode()
-        ? ((this.data = this.loaddata()),
-          (this.data[s] = t),
-          this.writedata(),
-          !0)
+        ? ((this.data = this.loaddata()), (this.data[s] = t), this.writedata(), !0)
         : (this.data && this.data[s]) || null;
     }
     initGotEnv(t) {
@@ -655,19 +661,12 @@ function Env(t, s) {
         (this.ckjar = this.ckjar ? this.ckjar : new this.cktough.CookieJar()),
         t &&
           ((t.headers = t.headers ? t.headers : {}),
-          void 0 === t.headers.Cookie &&
-            void 0 === t.cookieJar &&
-            (t.cookieJar = this.ckjar));
+          void 0 === t.headers.Cookie && void 0 === t.cookieJar && (t.cookieJar = this.ckjar));
     }
     get(t, s = () => {}) {
       if (
-        (t.headers &&
-          (delete t.headers["Content-Type"],
-          delete t.headers["Content-Length"]),
-        this.isSurge() ||
-          this.isShadowrocket() ||
-          this.isLoon() ||
-          this.isStash())
+        (t.headers && (delete t.headers["Content-Type"], delete t.headers["Content-Length"]),
+        this.isSurge() || this.isShadowrocket() || this.isLoon() || this.isStash())
       )
         this.isSurge() &&
           this.isNeedRewrite &&
@@ -682,8 +681,7 @@ function Env(t, s) {
               s(t, e, i);
           });
       else if (this.isQuanX())
-        this.isNeedRewrite &&
-          ((t.opts = t.opts || {}), Object.assign(t.opts, { hints: !1 })),
+        this.isNeedRewrite && ((t.opts = t.opts || {}), Object.assign(t.opts, { hints: !1 })),
           $task.fetch(t).then(
             (t) => {
               const { statusCode: e, statusCode: i, headers: r, body: o } = t;
@@ -698,11 +696,8 @@ function Env(t, s) {
             .on("redirect", (t, s) => {
               try {
                 if (t.headers["set-cookie"]) {
-                  const e = t.headers["set-cookie"]
-                    .map(this.cktough.Cookie.parse)
-                    .toString();
-                  e && this.ckjar.setCookieSync(e, null),
-                    (s.cookieJar = this.ckjar);
+                  const e = t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString();
+                  e && this.ckjar.setCookieSync(e, null), (s.cookieJar = this.ckjar);
                 }
               } catch (t) {
                 this.logErr(t);
@@ -710,18 +705,9 @@ function Env(t, s) {
             })
             .then(
               (t) => {
-                const {
-                    statusCode: i,
-                    statusCode: r,
-                    headers: o,
-                    rawBody: h,
-                  } = t,
+                const { statusCode: i, statusCode: r, headers: o, rawBody: h } = t,
                   a = e.decode(h, this.encoding);
-                s(
-                  null,
-                  { status: i, statusCode: r, headers: o, rawBody: h, body: a },
-                  a
-                );
+                s(null, { status: i, statusCode: r, headers: o, rawBody: h, body: a }, a);
               },
               (t) => {
                 const { message: i, response: r } = t;
@@ -738,10 +724,7 @@ function Env(t, s) {
           !t.headers["Content-Type"] &&
           (t.headers["Content-Type"] = "application/x-www-form-urlencoded"),
         t.headers && delete t.headers["Content-Length"],
-        this.isSurge() ||
-          this.isShadowrocket() ||
-          this.isLoon() ||
-          this.isStash())
+        this.isSurge() || this.isShadowrocket() || this.isLoon() || this.isStash())
       )
         this.isSurge() &&
           this.isNeedRewrite &&
@@ -757,8 +740,7 @@ function Env(t, s) {
           });
       else if (this.isQuanX())
         (t.method = e),
-          this.isNeedRewrite &&
-            ((t.opts = t.opts || {}), Object.assign(t.opts, { hints: !1 })),
+          this.isNeedRewrite && ((t.opts = t.opts || {}), Object.assign(t.opts, { hints: !1 })),
           $task.fetch(t).then(
             (t) => {
               const { statusCode: e, statusCode: i, headers: r, body: o } = t;
@@ -774,11 +756,7 @@ function Env(t, s) {
           (t) => {
             const { statusCode: e, statusCode: r, headers: o, rawBody: h } = t,
               a = i.decode(h, this.encoding);
-            s(
-              null,
-              { status: e, statusCode: r, headers: o, rawBody: h, body: a },
-              a
-            );
+            s(null, { status: e, statusCode: r, headers: o, rawBody: h, body: a }, a);
           },
           (t) => {
             const { message: e, response: r } = t;
@@ -799,17 +777,12 @@ function Env(t, s) {
         S: e.getMilliseconds(),
       };
       /(y+)/.test(t) &&
-        (t = t.replace(
-          RegExp.$1,
-          (e.getFullYear() + "").substr(4 - RegExp.$1.length)
-        ));
+        (t = t.replace(RegExp.$1, (e.getFullYear() + "").substr(4 - RegExp.$1.length)));
       for (let s in i)
         new RegExp("(" + s + ")").test(t) &&
           (t = t.replace(
             RegExp.$1,
-            1 == RegExp.$1.length
-              ? i[s]
-              : ("00" + i[s]).substr(("" + i[s]).length)
+            1 == RegExp.$1.length ? i[s] : ("00" + i[s]).substr(("" + i[s]).length)
           ));
       return t;
     }
@@ -819,8 +792,7 @@ function Env(t, s) {
         let i = t[e];
         null != i &&
           "" !== i &&
-          ("object" == typeof i && (i = JSON.stringify(i)),
-          (s += `${e}=${i}&`));
+          ("object" == typeof i && (i = JSON.stringify(i)), (s += `${e}=${i}&`));
       }
       return (s = s.substring(0, s.length - 1)), s;
     }
@@ -855,10 +827,7 @@ function Env(t, s) {
       };
       if (
         (this.isMute ||
-          (this.isSurge() ||
-          this.isShadowrocket() ||
-          this.isLoon() ||
-          this.isStash()
+          (this.isSurge() || this.isShadowrocket() || this.isLoon() || this.isStash()
             ? $notification.post(s, e, i, o(r))
             : this.isQuanX() && $notify(s, e, i, o(r))),
         !this.isMuteLog)
@@ -875,8 +844,7 @@ function Env(t, s) {
       }
     }
     log(...t) {
-      t.length > 0 && (this.logs = [...this.logs, ...t]),
-        console.log(t.join(this.logSeparator));
+      t.length > 0 && (this.logs = [...this.logs, ...t]), console.log(t.join(this.logSeparator));
     }
     logErr(t, s) {
       const e = !(
@@ -896,16 +864,9 @@ function Env(t, s) {
     done(t = {}) {
       const s = new Date().getTime(),
         e = (s - this.startTime) / 1e3;
-      this.log(
-        "",
-        `\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`
-      ),
+      this.log("", `\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`),
         this.log(),
-        this.isSurge() ||
-        this.isShadowrocket() ||
-        this.isQuanX() ||
-        this.isLoon() ||
-        this.isStash()
+        this.isSurge() || this.isShadowrocket() || this.isQuanX() || this.isLoon() || this.isStash()
           ? $done(t)
           : this.isNode() && process.exit(1);
     }
