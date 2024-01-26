@@ -1,5 +1,5 @@
 /* 
-🎵酷我音乐 v1.6
+🎵酷我音乐 v1.6.1
 🥳脚本功能:  
   ✅每日小说
   ✅每日签到
@@ -61,13 +61,13 @@ const kw_headers = {
 $.notifyMsg = [];
 
 (async () => {
-  await new_sign();
   await novel();
   await mobile();
   await collect();
   await box();
   await loterry_free();
   await loterry_free();
+  await new_sign();
   await sign();
   await sign();
   await sign();
@@ -229,7 +229,7 @@ async function new_sign() {
     var obj = JSON.parse(resp.body);
     if (obj.code == 200 && obj.msg == "success" && obj.success == true) {
       desc = obj.data.isSign;
-      if (desc == "true") desc = `🟢每日签到: 成功!`;
+      if (desc == true) desc = `🟢每日签到: 成功!`;
       else if (desc == "用户未登录") desc = `🔴每日签到: 失败`;
     } else {
       desc = `❌每日签到: 错误!`;
