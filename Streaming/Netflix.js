@@ -13,6 +13,7 @@ const BASE_URL = "https://www.netflix.com/title/";
 const FILM_ID = 81280792;
 const AREA_TEST_FILM_ID = 80018499;
 const arrow = " ➟ ";
+var netflix = "";
 var result = "";
 
 Netflix_Test()
@@ -29,7 +30,7 @@ async function Netflix_Test() {
       netflix = await testNf(AREA_TEST_FILM_ID);
     }
   } catch (error) {
-    console.error("Error:", error);
+    console.log("Error:", error);
   } finally {
     var res = "------------------------------";
 
