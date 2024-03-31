@@ -113,8 +113,7 @@ async function Spotify_Price() {
     while ((matchResult = regex.exec(body)) !== null) {
       const price = matchResult[1];
       if (!price.includes("Free")) {
-        // lastPrice = price.trim().replace(/\s*\/\s*/, "/");
-        lastPrice = price;
+        lastPrice = price.trim().replace(/\s*\/\s*/, "/");
       }
     }
 
