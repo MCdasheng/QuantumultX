@@ -1,6 +1,6 @@
 /*
 作者: @mcdasheng
-脚本功能: Spotify 注册查询
+脚本功能: Spotify 注册检测 & 价格查询
 [task_local]
   event-interaction https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Streaming/Spotify.js, tag=Spotify注册查询, img-url=https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/Spotify.png
 @thanks
