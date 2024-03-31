@@ -9,8 +9,14 @@
 
 const $ = new Env("Spotify");
 const arrow = " ➟ ";
+let lastPrice = null;
 
-Spotify_Test()
+$.token = $.getdata("ipinfo_token") ? $.getdata("ipinfo_token") : "";
+
+(async () => {
+  await Spotify_Test();
+  await Spotify_Price();
+})()
   .catch((e) => $.logErr(e))
   .finally(async () => {
     var res = "------------------------------";
@@ -18,11 +24,21 @@ Spotify_Test()
       res +
       "</br><b>" +
       "<font  color=>" +
-      "🎵Spotify" +
+      "🔐Register" +
       "</font> : " +
       "</b>" +
       "<font  color=>" +
       spotify +
+      "</font></br>";
+    res =
+      res +
+      "</br><b>" +
+      "<font  color=>" +
+      "💰Price" +
+      "</font> : " +
+      "</b>" +
+      "<font  color=>" +
+      lastPrice +
       "</font></br>";
     res =
       res +
@@ -34,7 +50,7 @@ Spotify_Test()
       `</p>`;
     message = res;
     $done({
-      title: "      Spotify 查询结果",
+      title: "      🎵Spotify 查询结果",
       htmlMessage: message,
     });
   });
@@ -52,7 +68,7 @@ async function Spotify_Test() {
       policy: $environment.params,
     },
     body: "birth_day=11&birth_month=11&birth_year=2000&collect_personal_info=undefined&creation_flow=&creation_point=https%3A%2F%2Fwww.spotify.com%2Fhk-en%2F&displayname=Gay%20Lord&gender=male&iagree=1&key=a1e486e2729f46d6bb368d6b2bcda326&platform=www&referrer=&send-email=0&thirdpartyemail=0&identifier_token=AgE6YTvEzkReHNfJpO114514",
-    timeout: 20000,
+    timeout: 10000,
   };
 
   return $.http.post(options).then((resp) => {
@@ -61,10 +77,121 @@ async function Spotify_Test() {
     if (obj.status == "320" || obj.status == "120") {
       spotify = "🔴No";
     } else if (obj.status == "311") {
-      spotify_country = getCountryFlagEmoji(obj.country) + obj.country;
-      spotify = "🎉Yes" + arrow + spotify_country;
+      spotify_country = obj.country;
+      spotify = "🎉Yes" + arrow + getCountryFlagEmoji(obj.country) + spotify_country;
     }
     $.log("🎵Spotify: " + spotify);
+  });
+}
+
+async function Spotify_Price() {
+  var lang = spotify_country ? spotify_country.toLowerCase() : await getLanguage();
+
+  var options = {
+    url: `https://www.spotify.com/${lang}/premium/`,
+    headers: {
+      Cookie: `sp_t=10f2c6c4-dcd4-4ca8-9b60-bd1718e60d4b; sp_landing=https%3A%2F%2Fwww.spotify.com%2Fnl%2Fpremium%2F; sp_m=nl; sp_new=1; sp_t=8edfd15b-23d8-4b5f-b6ec-27da0f69f674`,
+      "Accept-Encoding": `gzip, deflate, br`,
+      Accept: `*/*`,
+      Referer: `https://www.spotify.com/nl/premium/`,
+      Connection: `keep-alive`,
+      Host: `www.spotify.com`,
+      "User-Agent": `Mozilla/5.0 (iPhone; CPU iPhone OS 16_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1`,
+      "Accept-Language": `zh-CN,zh-Hans;q=0.9`,
+    },
+    opts: {
+      policy: $environment.params,
+    },
+    timeout: 10000,
+  };
+  $.log(options.url);
+  return $.http.get(options).then((resp) => {
+    let body = resp.body;
+    let matchResult;
+    const regex = /"primaryPriceDescription"\s*:\s*"([^"]+)"/g;
+
+    while ((matchResult = regex.exec(body)) !== null) {
+      const price = matchResult[1];
+      if (!price.includes("Free")) {
+        // lastPrice = price.trim().replace(/\s*\/\s*/, "/");
+        lastPrice = price;
+      }
+    }
+
+    if (lastPrice !== null) {
+      console.log(`Last Primary Price:${lastPrice}`);
+    } else {
+      lastPrice = "N/A";
+      console.log("No family plan");
+    }
+
+    $.log(lastPrice);
+  });
+}
+
+async function getCountry() {
+  var options = {
+    url: `https://ipinfo.io/json?token=${$.token}`,
+    headers: {
+      "User-Agent": `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36`,
+      "Content-Type": "application/json",
+      Accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "Accept-Encoding": "gzip, deflate, br",
+    },
+    opts: {
+      policy: $environment.params,
+    },
+  };
+
+  return $.http.get(options).then((resp) => {
+    $.log(resp.body);
+    var obj = JSON.parse(resp.body);
+    if (!obj.ip) {
+      $.log("🔴ip查询失败!");
+      $.log(resp.body);
+      $.msg($.name, "🔴ip查询失败!");
+      $.done();
+    }
+    return obj.country.toLowerCase();
+  });
+}
+
+async function getLanguage() {
+  var country = await getCountry();
+
+  var options = {
+    url: `https://www.spotify.com/${country}/premium/`,
+    headers: {
+      Cookie: `sp_t=10f2c6c4-dcd4-4ca8-9b60-bd1718e60d4b; sp_landing=https%3A%2F%2Fwww.spotify.com%2Fnl%2Fpremium%2F; sp_m=nl; sp_new=1; sp_t=8edfd15b-23d8-4b5f-b6ec-27da0f69f674`,
+      "Accept-Encoding": `gzip, deflate, br`,
+      Accept: `*/*`,
+      Referer: `https://www.spotify.com/nl/premium/`,
+      Connection: `keep-alive`,
+      Host: `www.spotify.com`,
+      "User-Agent": `Mozilla/5.0 (iPhone; CPU iPhone OS 16_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1`,
+      "Accept-Language": `zh-CN,zh-Hans;q=0.9`,
+    },
+    opts: {
+      policy: $environment.params,
+    },
+    timeout: 10000,
+  };
+  $.log(options.url);
+  return $.http.get(options).then((resp) => {
+    let body = resp.body;
+
+    const regex =
+      /updatePreferredLocaleUrl\"\:\"https:\/\/www\.spotify\.com\/(.*)\/update-preferred-locale\//;
+
+    let ret = regex.exec(body);
+    if (ret != null && ret.length === 2) {
+      region = ret[1];
+    } else {
+      region = `${country}`;
+    }
+    $.log(region);
+    return region;
   });
 }
 
