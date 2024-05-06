@@ -115,9 +115,9 @@ async function ChatGPT_Test() {
 }
 
 function getCountryFlagEmoji(countryCode) {
-  if (countryCode.toUpperCase() == "TW") {
-    countryCode = "WS";
-  }
+  // if (countryCode.toUpperCase() == "TW") {
+  //   countryCode = "WS";
+  // }
   const codePoints = countryCode
     .toUpperCase()
     .split("")
