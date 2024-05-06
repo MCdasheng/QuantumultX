@@ -195,9 +195,9 @@ async function getLanguage() {
 }
 
 function getCountryFlagEmoji(countryCode) {
-  if (countryCode.toUpperCase() == "TW") {
-    countryCode = "WS";
-  }
+  // if (countryCode.toUpperCase() == "TW") {
+  //   countryCode = "WS";
+  // }
   const codePoints = countryCode
     .toUpperCase()
     .split("")

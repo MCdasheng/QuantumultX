@@ -105,9 +105,9 @@ async function YouTube_Test() {
 
 //获取国旗Emoji函数
 function getCountryFlagEmoji(countryCode) {
-  if (countryCode.toUpperCase() == "TW") {
-    countryCode = "WS";
-  }
+  // if (countryCode.toUpperCase() == "TW") {
+  //   countryCode = "WS";
+  // }
   const codePoints = countryCode
     .toUpperCase()
     .split("")

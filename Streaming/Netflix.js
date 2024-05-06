@@ -123,9 +123,9 @@ async function testNf(filmId) {
 }
 
 function getCountryFlagEmoji(countryCode) {
-  if (countryCode.toUpperCase() == "TW") {
-    countryCode = "WS";
-  }
+  // if (countryCode.toUpperCase() == "TW") {
+  //   countryCode = "WS";
+  // }
   const codePoints = countryCode
     .toUpperCase()
     .split("")
