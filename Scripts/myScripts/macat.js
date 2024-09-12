@@ -73,7 +73,7 @@ async function get_nonce(ck1) {
     $.log("🟢正在获取user页面...");
     //   $.log(resp.body);
     var reg =
-      /data-nonce=\"(.*)\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"每日签到奖励: 0.2喵币\"\>/;
+      /data-nonce=\"(.*)\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"每日签到奖励: 0.1喵币\"\>/;
     if (resp.body.search(reg) != -1) {
       var nonce = reg.exec(resp.body)[1];
       $.log("🎉获取签到nonce成功!");
