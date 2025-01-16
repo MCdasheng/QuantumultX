@@ -3,7 +3,7 @@
 操作步骤: 我 --> 福利中心 
 
 [rewrite local]
-https\:\/\/h5\.if\.qidian\.com\/argus\/api\/v1\/video\/adv\/mainPage url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/qidian/qidian.taskId.js
+https\:\/\/h5\.if\.qidian\.com\/argus\/api\/v1\/video\/adv\/mainPage url script-response-body https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/QiDian/qidian.taskId.js
 
 [MITM]
 hostname = h5.if.qidian.com
@@ -12,34 +12,21 @@ hostname = h5.if.qidian.com
 const $ = new Env("起点读书");
 
 var obj = JSON.parse($response.body);
-var a = obj.Data.VideoBenefitModule.TaskList[0].TaskId;
-var b = obj.Data.VideoBenefitModule.TaskList[1].TaskId;
-var c;
+var a = obj.Data.DailyBenefitModule.TaskList[0].TaskId;
+var b = obj.Data.VideoRewardTab.TaskList[0].TaskId;
 
-for (var i = 0; i < obj.Data.CountdownBenefitModule.TaskList.length; i++) {
-  if (
-    obj.Data.CountdownBenefitModule.TaskList[i].Title ==
-    "额外看3次小视频得奖励"
-  ) {
-    c = obj.Data.CountdownBenefitModule.TaskList[i].TaskId;
-    $.setdata(c, "qd_taskId_2");
-    break;
-  } else {
-    continue;
-  }
-}
-
-if ((a = b) && c) {
+if (a && b) {
   $.setdata(a, "qd_taskId");
-  $.log(`🎉任务信息获取成功!`);
-  $.log(`taskId_2: ${a}`);
-  $.log(`taskId_2: ${c}`);
-  $.msg($.name, `🎉任务信息获取成功!`);
+  $.setdata(b, "qd_taskId_2");
+  $.log(`🎉任务taskId获取成功!`);
+  $.log(`taskId: ${a}`);
+  $.log(`taskId_2: ${b}`);
+  $.msg($.name, `🎉任务taskId获取成功!`);
   $.done();
 } else {
-  $.log("🔴任务信息获取失败!");
+  $.log("🔴任务taskId获取失败!");
   $.log($response.body);
-  $.msg($.name, "🔴任务信息获取失败!");
+  $.msg($.name, "🔴任务taskId获取失败!");
   $.done();
 }
 
@@ -89,9 +76,7 @@ function Env(t, s) {
       return "undefined" != typeof $task;
     }
     isSurge() {
-      return (
-        "undefined" != typeof $environment && $environment["surge-version"]
-      );
+      return "undefined" != typeof $environment && $environment["surge-version"];
     }
     isLoon() {
       return "undefined" != typeof $loon;
@@ -100,9 +85,7 @@ function Env(t, s) {
       return "undefined" != typeof $rocket;
     }
     isStash() {
-      return (
-        "undefined" != typeof $environment && $environment["stash-version"]
-      );
+      return "undefined" != typeof $environment && $environment["stash-version"];
     }
     toObj(t, s = null) {
       try {
@@ -244,10 +227,7 @@ function Env(t, s) {
       return e;
     }
     getval(t) {
-      return this.isSurge() ||
-        this.isShadowrocket() ||
-        this.isLoon() ||
-        this.isStash()
+      return this.isSurge() || this.isShadowrocket() || this.isLoon() || this.isStash()
         ? $persistentStore.read(t)
         : this.isQuanX()
         ? $prefs.valueForKey(t)
@@ -256,18 +236,12 @@ function Env(t, s) {
         : (this.data && this.data[t]) || null;
     }
     setval(t, s) {
-      return this.isSurge() ||
-        this.isShadowrocket() ||
-        this.isLoon() ||
-        this.isStash()
+      return this.isSurge() || this.isShadowrocket() || this.isLoon() || this.isStash()
         ? $persistentStore.write(t, s)
         : this.isQuanX()
         ? $prefs.setValueForKey(t, s)
         : this.isNode()
-        ? ((this.data = this.loaddata()),
-          (this.data[s] = t),
-          this.writedata(),
-          !0)
+        ? ((this.data = this.loaddata()), (this.data[s] = t), this.writedata(), !0)
         : (this.data && this.data[s]) || null;
     }
     initGotEnv(t) {
@@ -276,19 +250,12 @@ function Env(t, s) {
         (this.ckjar = this.ckjar ? this.ckjar : new this.cktough.CookieJar()),
         t &&
           ((t.headers = t.headers ? t.headers : {}),
-          void 0 === t.headers.Cookie &&
-            void 0 === t.cookieJar &&
-            (t.cookieJar = this.ckjar));
+          void 0 === t.headers.Cookie && void 0 === t.cookieJar && (t.cookieJar = this.ckjar));
     }
     get(t, s = () => {}) {
       if (
-        (t.headers &&
-          (delete t.headers["Content-Type"],
-          delete t.headers["Content-Length"]),
-        this.isSurge() ||
-          this.isShadowrocket() ||
-          this.isLoon() ||
-          this.isStash())
+        (t.headers && (delete t.headers["Content-Type"], delete t.headers["Content-Length"]),
+        this.isSurge() || this.isShadowrocket() || this.isLoon() || this.isStash())
       )
         this.isSurge() &&
           this.isNeedRewrite &&
@@ -303,8 +270,7 @@ function Env(t, s) {
               s(t, e, i);
           });
       else if (this.isQuanX())
-        this.isNeedRewrite &&
-          ((t.opts = t.opts || {}), Object.assign(t.opts, { hints: !1 })),
+        this.isNeedRewrite && ((t.opts = t.opts || {}), Object.assign(t.opts, { hints: !1 })),
           $task.fetch(t).then(
             (t) => {
               const { statusCode: e, statusCode: i, headers: r, body: o } = t;
@@ -319,11 +285,8 @@ function Env(t, s) {
             .on("redirect", (t, s) => {
               try {
                 if (t.headers["set-cookie"]) {
-                  const e = t.headers["set-cookie"]
-                    .map(this.cktough.Cookie.parse)
-                    .toString();
-                  e && this.ckjar.setCookieSync(e, null),
-                    (s.cookieJar = this.ckjar);
+                  const e = t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString();
+                  e && this.ckjar.setCookieSync(e, null), (s.cookieJar = this.ckjar);
                 }
               } catch (t) {
                 this.logErr(t);
@@ -331,18 +294,9 @@ function Env(t, s) {
             })
             .then(
               (t) => {
-                const {
-                    statusCode: i,
-                    statusCode: r,
-                    headers: o,
-                    rawBody: h,
-                  } = t,
+                const { statusCode: i, statusCode: r, headers: o, rawBody: h } = t,
                   a = e.decode(h, this.encoding);
-                s(
-                  null,
-                  { status: i, statusCode: r, headers: o, rawBody: h, body: a },
-                  a
-                );
+                s(null, { status: i, statusCode: r, headers: o, rawBody: h, body: a }, a);
               },
               (t) => {
                 const { message: i, response: r } = t;
@@ -359,10 +313,7 @@ function Env(t, s) {
           !t.headers["Content-Type"] &&
           (t.headers["Content-Type"] = "application/x-www-form-urlencoded"),
         t.headers && delete t.headers["Content-Length"],
-        this.isSurge() ||
-          this.isShadowrocket() ||
-          this.isLoon() ||
-          this.isStash())
+        this.isSurge() || this.isShadowrocket() || this.isLoon() || this.isStash())
       )
         this.isSurge() &&
           this.isNeedRewrite &&
@@ -378,8 +329,7 @@ function Env(t, s) {
           });
       else if (this.isQuanX())
         (t.method = e),
-          this.isNeedRewrite &&
-            ((t.opts = t.opts || {}), Object.assign(t.opts, { hints: !1 })),
+          this.isNeedRewrite && ((t.opts = t.opts || {}), Object.assign(t.opts, { hints: !1 })),
           $task.fetch(t).then(
             (t) => {
               const { statusCode: e, statusCode: i, headers: r, body: o } = t;
@@ -395,11 +345,7 @@ function Env(t, s) {
           (t) => {
             const { statusCode: e, statusCode: r, headers: o, rawBody: h } = t,
               a = i.decode(h, this.encoding);
-            s(
-              null,
-              { status: e, statusCode: r, headers: o, rawBody: h, body: a },
-              a
-            );
+            s(null, { status: e, statusCode: r, headers: o, rawBody: h, body: a }, a);
           },
           (t) => {
             const { message: e, response: r } = t;
@@ -420,17 +366,12 @@ function Env(t, s) {
         S: e.getMilliseconds(),
       };
       /(y+)/.test(t) &&
-        (t = t.replace(
-          RegExp.$1,
-          (e.getFullYear() + "").substr(4 - RegExp.$1.length)
-        ));
+        (t = t.replace(RegExp.$1, (e.getFullYear() + "").substr(4 - RegExp.$1.length)));
       for (let s in i)
         new RegExp("(" + s + ")").test(t) &&
           (t = t.replace(
             RegExp.$1,
-            1 == RegExp.$1.length
-              ? i[s]
-              : ("00" + i[s]).substr(("" + i[s]).length)
+            1 == RegExp.$1.length ? i[s] : ("00" + i[s]).substr(("" + i[s]).length)
           ));
       return t;
     }
@@ -440,8 +381,7 @@ function Env(t, s) {
         let i = t[e];
         null != i &&
           "" !== i &&
-          ("object" == typeof i && (i = JSON.stringify(i)),
-          (s += `${e}=${i}&`));
+          ("object" == typeof i && (i = JSON.stringify(i)), (s += `${e}=${i}&`));
       }
       return (s = s.substring(0, s.length - 1)), s;
     }
@@ -476,10 +416,7 @@ function Env(t, s) {
       };
       if (
         (this.isMute ||
-          (this.isSurge() ||
-          this.isShadowrocket() ||
-          this.isLoon() ||
-          this.isStash()
+          (this.isSurge() || this.isShadowrocket() || this.isLoon() || this.isStash()
             ? $notification.post(s, e, i, o(r))
             : this.isQuanX() && $notify(s, e, i, o(r))),
         !this.isMuteLog)
@@ -496,8 +433,7 @@ function Env(t, s) {
       }
     }
     log(...t) {
-      t.length > 0 && (this.logs = [...this.logs, ...t]),
-        console.log(t.join(this.logSeparator));
+      t.length > 0 && (this.logs = [...this.logs, ...t]), console.log(t.join(this.logSeparator));
     }
     logErr(t, s) {
       const e = !(
@@ -517,16 +453,9 @@ function Env(t, s) {
     done(t = {}) {
       const s = new Date().getTime(),
         e = (s - this.startTime) / 1e3;
-      this.log(
-        "",
-        `\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`
-      ),
+      this.log("", `\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`),
         this.log(),
-        this.isSurge() ||
-        this.isShadowrocket() ||
-        this.isQuanX() ||
-        this.isLoon() ||
-        this.isStash()
+        this.isSurge() || this.isShadowrocket() || this.isQuanX() || this.isLoon() || this.isStash()
           ? $done(t)
           : this.isNode() && process.exit(1);
     }
