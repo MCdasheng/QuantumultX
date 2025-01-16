@@ -479,7 +479,7 @@
           "desc": "默认间隔20s"
         }
       ],
-      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/qidian/qidian.js",
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/QiDian/qidian.js",
       "author": "@mcdasheng",
       "repo": "https://github.com/mcdasheng",
       "icons": [
