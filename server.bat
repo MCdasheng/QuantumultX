@@ -1,3 +1,3 @@
 @echo off
-cd /d D:\IDM Downloads\QuantumultX
+cd /d D:\Share\QuantumultX
 http-server
