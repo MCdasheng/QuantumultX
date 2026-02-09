@@ -27,7 +27,7 @@ async function signIn() {
     options.url = signIn_url;
     return $.http.get(options).then((resp) => {
         var obj = JSON.parse(resp.body);
-        var msg = (obj.code === "already_signin") ? "✅" : "❌";
+        var msg = (obj.code === "ok" || obj.code === "already_signin") ? "✅" : "❌";
         if (msg) {
             $.log(msg);
             $.log(resp.body);
