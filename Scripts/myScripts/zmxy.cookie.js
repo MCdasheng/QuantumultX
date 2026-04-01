@@ -1,6 +1,7 @@
 /* 
 [rewrite local]
 http\:\/\/yxhhd2\.5054399\.com\/gamecenter\/signin\/\?ctl\=.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/zmxy.cookie.js
+https\:\/\/yxhhd2\.5054399\.com\/gamecenter\/signin\/\?ctl\=.* url script-request-header https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/zmxy.cookie.js
 [MITM]
 hostname = yxhhd2.5054399.com
 */
