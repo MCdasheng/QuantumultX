@@ -1,52 +1,83 @@
-// 脚本功能: 监控 TopCashback 德区 Avira 页面中的 Onlinebestellung 返现比例
+// 脚本功能: 监控 TopCashback 德区多个商户页面中的返现比例
 // [task_local]
-// 0 */6 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/topcashback-avira-monitor.js, tag=TopCashback Avira 返现监控, enabled=true
+// 0 */6 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TCB/tcb.js, tag=TopCashback 返现监控, enabled=true
 
-const $ = new Env("topcashback-avira-monitor");
+const $ = new Env("tcb-monitor");
 
-const TARGET_URL = "https://www.topcashback.de/avira/";
-const TARGET_LABEL = "Onlinebestellung";
-const STORE_KEY_RATE = "topcashback_avira_onlinebestellung_rate";
-const STORE_KEY_TIME = "topcashback_avira_onlinebestellung_updated_at";
 const COOKIE =
   "TCB_SessionID8=110df70b-0a3a-4ebf-a94e-908c0e8edc67; ReferralID=8034864; CookiesEnabled=true; _conv_v=vi%3A1*sc%3A2*cs%3A1775201576*fs%3A1775120961*pv%3A2*exp%3A%7B%7D*ps%3A1775120961; OptanonConsent=isGpcEnabled=0&datestamp=Fri+Apr+03+2026+15%3A32%3A57+GMT%2B0800+(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)&version=202505.1.0&browserGpcFlag=0&isIABGlobal=false&hosts=&landingPath=https%3A%2F%2Fwww.topcashback.de%2Favira%2F&groups=C0001%3A1%2CC0002%3A0%2CC0003%3A0%2CC0004%3A0%2CC0005%3A0";
 
+const MONITORS = [
+  {
+    id: "avira",
+    name: "Avira",
+    url: "https://www.topcashback.de/avira/",
+    label: "Onlinebestellung",
+  },
+  {
+    id: "purevpn",
+    name: "PureVPN",
+    url: "https://www.topcashback.de/purevpn/",
+    label: "Onlinebestellung",
+  },
+];
+
 !(async () => {
-  const currentRate = await fetchCurrentRate();
-  const previousRate = $.getdata(STORE_KEY_RATE);
-  const previousTime = $.getdata(STORE_KEY_TIME);
-  const currentTime = $.time("yyyy-MM-dd HH:mm:ss");
+  const messages = [];
 
-  $.log(`当前 ${TARGET_LABEL} 返现: ${currentRate}`);
-
-  let subtitle = `当前返现 ${currentRate}`;
-  let message = `页面分类: ${TARGET_LABEL}`;
-
-  if (previousRate) {
-    if (previousRate === currentRate) {
-      message = `返现未变化，上次记录 ${previousRate}${previousTime ? ` (${previousTime})` : ""}`;
-    } else {
-      message = `返现发生变化: ${previousRate} -> ${currentRate}`;
+  for (const item of MONITORS) {
+    try {
+      const result = await checkMerchantRate(item);
+      messages.push(result.message);
+    } catch (error) {
+      const errorText = `${item.name}: 获取失败 (${error.message || String(error)})`;
+      $.log(errorText);
+      messages.push(errorText);
     }
-  } else {
-    message = `首次记录返现: ${currentRate}`;
   }
 
-  $.setdata(currentRate, STORE_KEY_RATE);
-  $.setdata(currentTime, STORE_KEY_TIME);
-  $.msg($.name, subtitle, message, { "open-url": TARGET_URL });
+  $.msg($.name, `本次检查 ${MONITORS.length} 个商户`, messages.join("\n"), {
+    "open-url": MONITORS[0] ? MONITORS[0].url : undefined,
+  });
 })()
   .catch((error) => {
     $.logErr(error);
-    $.msg($.name, "获取返现失败", error.message || String(error), {
-      "open-url": TARGET_URL,
-    });
+    $.msg($.name, "执行失败", error.message || String(error));
   })
   .finally(() => $.done());
 
-function fetchCurrentRate() {
+async function checkMerchantRate(item) {
+  const currentRate = await fetchMerchantRate(item);
+  const currentDate = $.time("M月d日");
+  const rateKey = `tcb_${item.id}_rate`;
+  const dateKey = `tcb_${item.id}_date`;
+  const previousRate = $.getdata(rateKey);
+  const previousDate = $.getdata(dateKey);
+
+  let message = `${item.name}: 当前 ${item.label} ${currentRate}`;
+  if (previousRate) {
+    if (previousRate === currentRate) {
+      message = `${item.name}: ${currentRate}，较 ${previousDate || "上次"} 无变化`;
+    } else {
+      message = `${item.name}: ${previousRate} -> ${currentRate} (${currentDate})`;
+    }
+  } else {
+    message = `${item.name}: 首次记录 ${currentRate} (${currentDate})`;
+  }
+
+  $.setdata(currentRate, rateKey);
+  $.setdata(currentDate, dateKey);
+  $.log(message);
+
+  return {
+    rate: currentRate,
+    message,
+  };
+}
+
+function fetchMerchantRate(item) {
   const options = {
-    url: TARGET_URL,
+    url: item.url,
     headers: {
       "User-Agent":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
@@ -61,21 +92,23 @@ function fetchCurrentRate() {
 
   return $.http.get(options).then((resp) => {
     if (!resp || resp.statusCode !== 200) {
-      throw new Error(`请求失败，状态码: ${resp ? resp.statusCode : "unknown"}`);
+      throw new Error(
+        `请求失败，状态码: ${resp ? resp.statusCode : "unknown"}`
+      );
     }
 
     const html = resp.body || "";
-    const rate = extractRateFromHtml(html);
+    const rate = extractRateFromHtml(html, item.label);
 
     if (!rate) {
-      throw new Error(`未找到 ${TARGET_LABEL} 对应返现信息`);
+      throw new Error(`未找到 ${item.label} 对应返现信息`);
     }
 
     return rate;
   });
 }
 
-function extractRateFromHtml(html) {
+function extractRateFromHtml(html, targetLabel) {
   const cardReg =
     /<div class="merch-rate-card"[\s\S]*?<span class="merch-cat__sub-cat">\s*([^<]+?)\s*<\/span>[\s\S]*?<span class="merch-cat__rate">\s*([^<]+?)\s*<\/span>[\s\S]*?<\/div>\s*<\/div>/gi;
 
@@ -84,7 +117,7 @@ function extractRateFromHtml(html) {
     const label = normalizeText(match[1]);
     const rate = normalizeText(match[2]);
 
-    if (label === TARGET_LABEL) {
+    if (label === targetLabel) {
       return rate;
     }
   }
@@ -540,10 +573,7 @@ function Env(t, s) {
             : this.isQuanX() && $notify(s, e, i, o(r))),
         !this.isMuteLog)
       ) {
-        let t = [
-          "",
-          "==============📣系统通知📣==============",
-        ];
+        let t = ["", "==============📣系统通知📣=============="];
         t.push(s),
           e && t.push(e),
           i && t.push(i),
@@ -573,10 +603,7 @@ function Env(t, s) {
     done(t = {}) {
       const s = new Date().getTime(),
         e = (s - this.startTime) / 1e3;
-      this.log(
-        "",
-        `🔔${this.name}, 结束! 🕛 ${e} 秒`
-      ),
+      this.log("", `🔔${this.name}, 结束! 🕛 ${e} 秒`),
         this.log(),
         this.isSurge() ||
         this.isShadowrocket() ||
