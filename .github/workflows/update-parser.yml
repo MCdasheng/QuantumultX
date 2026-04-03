@@ -3,7 +3,7 @@ name: Update Parser
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 7 * * *'
+    - cron: '0 16 * * 0'
 
 permissions:
   contents: write
@@ -24,6 +24,8 @@ jobs:
           node-version: '20'
 
       - name: Build parser
+        env:
+          FORCE_PARSER_UPDATE: ${{ github.event_name == 'schedule' && 'true' || 'false' }}
         run: node Parser/scripts/build-parser.js
 
       - name: Commit and push changes

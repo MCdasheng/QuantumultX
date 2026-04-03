@@ -8,6 +8,7 @@ const defaultsPath = path.join(__dirname, '..', 'patches', 'defaults.js');
 const getEmojiPath = path.join(__dirname, '..', 'patches', 'get_emoji.js');
 const outputPath = path.join(__dirname, '..', 'myParser.js');
 const parserUrl = 'https://raw.githubusercontent.com/MCdasheng/QuantumultX/refs/heads/main/Parser/myParser.js';
+const forceParserUpdate = process.env.FORCE_PARSER_UPDATE === 'true';
 
 function cleanupFile(dest) {
   if (fs.existsSync(dest)) {
@@ -157,6 +158,9 @@ ${defaultsContent}
 }
 
 console.log('Downloading latest upstream...');
+if (forceParserUpdate) {
+  console.log('Force update enabled for scheduled run.');
+}
 downloadUpstream(upstreamUrl, upstreamPath)
   .then(() => {
     console.log('Upstream downloaded.');
@@ -172,7 +176,7 @@ downloadUpstream(upstreamUrl, upstreamPath)
       console.log('Upstream version marker not found; falling back to content diff behavior.');
     }
 
-    if (fs.existsSync(outputPath) && upstreamVersion) {
+    if (!forceParserUpdate && fs.existsSync(outputPath) && upstreamVersion) {
       const currentOutput = fs.readFileSync(outputPath, 'utf8');
       const currentVersion = extractUpstreamVersion(currentOutput);
 
