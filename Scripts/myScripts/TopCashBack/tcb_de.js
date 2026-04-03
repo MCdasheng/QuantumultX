@@ -12,13 +12,31 @@ const MONITORS = [
     id: "avira",
     name: "Avira",
     url: "https://www.topcashback.de/avira/",
-    label: "Onlinebestellung",
+    title: "Avira Cashback",
+  },
+  {
+    id: "norton-antivirus",
+    name: "Norton Antivirus",
+    url: "https://www.topcashback.de/norton-antivirus/",
+    title: "Norton Antivirus Cashback",
+  },
+  {
+    id: "nordvpn",
+    name: "NordVPN",
+    url: "https://www.topcashback.de/nordvpn/",
+    title: "NordVPN Cashback",
   },
   {
     id: "purevpn",
     name: "PureVPN",
     url: "https://www.topcashback.de/purevpn/",
-    label: "Onlinebestellung",
+    title: "PureVPN Cashback",
+  },
+  {
+    id: "surfshark",
+    name: "Surfshark",
+    url: "https://www.topcashback.de/surfshark/",
+    title: "Surfshark Cashback",
   },
 ];
 
@@ -82,22 +100,68 @@ function fetchMerchantRate(item, acceptLanguage) {
       if (!resp || resp.statusCode !== 200) {
         throw new Error(`请求失败，状态码: ${resp ? resp.statusCode : "unknown"}`);
       }
-      const rate = extractRateFromHtml(resp.body || "", item.label);
-      if (!rate) throw new Error(`未找到 ${item.label} 对应返现信息`);
+      const rate = extractRateFromHtml(resp.body || "", item.title);
+      if (!rate) throw new Error(`未找到 ${item.title} 对应返现信息`);
       return rate;
     });
 }
 
-function extractRateFromHtml(html, targetLabel) {
-  const cardReg =
-    /<div class="merch-rate-card"[\s\S]*?<span class="merch-cat__sub-cat">\s*([^<]+?)\s*<\/span>[\s\S]*?<span class="merch-cat__rate">\s*([^<]+?)\s*<\/span>/gi;
+function extractRateFromHtml(html, targetTitle) {
+  const cardReg = /<div class="merch-rate-card"[\s\S]*?<\/div>\s*<\/div>/gi;
   let match;
+
   while ((match = cardReg.exec(html)) !== null) {
-    const label = normalizeText(match[1]);
-    const rate = normalizeText(match[2]);
-    if (label === targetLabel) return rate;
+    const cardHtml = match[0];
+    const title = extractCardTitle(cardHtml);
+    if (title !== targetTitle) continue;
+
+    const rate = extractMaxCardRate(cardHtml);
+    if (rate) return rate;
   }
   return "";
+}
+
+function extractCardTitle(cardHtml) {
+  const match = cardHtml.match(
+    /<h2 class="merch-cat__title">[\s\S]*?<\/h2>/i
+  );
+  if (!match) return "";
+  return normalizeText(stripHtml(match[0]));
+}
+
+function extractMaxCardRate(cardHtml) {
+  const rateReg = /<span class="merch-cat__rate">\s*([^<]+?)\s*<\/span>/gi;
+  let match;
+  let maxRate = null;
+
+  while ((match = rateReg.exec(cardHtml)) !== null) {
+    const rawRate = normalizeText(match[1]);
+    const numericRate = parseRateValue(rawRate);
+    if (numericRate === null) continue;
+
+    if (maxRate === null || numericRate > maxRate) {
+      maxRate = numericRate;
+    }
+  }
+
+  return maxRate === null ? "" : `${formatRateValue(maxRate)}%`;
+}
+
+function parseRateValue(rateText) {
+  const cleaned = String(rateText || "")
+    .replace(/%/g, "")
+    .replace(/\s+/g, "")
+    .replace(",", ".");
+  const value = Number(cleaned);
+  return Number.isFinite(value) ? value : null;
+}
+
+function formatRateValue(value) {
+  return Number.isInteger(value) ? String(value) : String(value);
+}
+
+function stripHtml(text) {
+  return String(text || "").replace(/<[^>]*>/g, " ");
 }
 
 function normalizeText(text) {
