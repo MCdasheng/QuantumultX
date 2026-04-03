@@ -7,32 +7,47 @@ const $ = new Env("tcb-us");
 const COOKIE =
   "TCB_SessionID8=110df70b-0a3a-4ebf-a94e-908c0e8edc67; ReferralID=8034864; CookiesEnabled=true; _conv_v=vi%3A1*sc%3A2*cs%3A1775201576*fs%3A1775120961*pv%3A2*exp%3A%7B%7D*ps%3A1775120961; OptanonConsent=isGpcEnabled=0&datestamp=Fri+Apr+03+2026+15%3A32%3A57+GMT%2B0800+(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)&version=202505.1.0&browserGpcFlag=0&isIABGlobal=false&hosts=&landingPath=https%3A%2F%2Fwww.topcashback.de%2Favira%2F&groups=C0001%3A1%2CC0002%3A0%2CC0003%3A0%2CC0004%3A0%2CC0005%3A0";
 
-const REGION = {
-  flag: "🇺🇸",
-  baseUrl: "https://www.topcashback.com",
-  label: "New Paid Subscription",
-  acceptLanguage: "en-US,en;q=0.9,zh-CN;q=0.7",
-  storePrefix: "tcb_us",
-};
-
-const MERCHANTS = [{ id: "PureVPN" }];
+const MONITORS = [
+  {
+    id: "purevpn",
+    name: "PureVPN",
+    url: "https://www.topcashback.com/purevpn/",
+    title: "PureVPN Cash Back",
+  },
+  {
+    id: "private-internet-access",
+    name: "Private Internet Access",
+    url: "https://www.topcashback.com/private-internet-access/",
+    title: "Private Internet Access Cash Back",
+  },
+  {
+    id: "norton-cps",
+    name: "Norton",
+    url: "https://www.topcashback.com/norton-cps/",
+    title: "Norton Cash Back",
+  },
+  {
+    id: "nordvpn",
+    name: "NordVPN",
+    url: "https://www.topcashback.com/nordvpn/",
+    title: "NordVPN Cash Back",
+  },
+];
 
 !(async () => {
   const messages = [];
-
-  for (const merchant of MERCHANTS) {
+  for (const item of MONITORS) {
     try {
-      messages.push(await checkMerchant(merchant));
+      messages.push(await checkMerchant(item, "tcb_us"));
     } catch (error) {
-      const displayName = getDisplayName(merchant);
-      const text = `${displayName}: 获取失败`;
-      $.log(`${text} (${error.message || String(error)})`);
+      const text = `${item.name}: 获取失败 (${error.message || String(error)})`;
+      $.log(text);
       messages.push(text);
     }
   }
 
-  $.msg($.name, `${MERCHANTS.length} 个商户`, messages.join("\n"), {
-    "open-url": buildMerchantUrl(MERCHANTS[0]),
+  $.msg($.name, `本次检查 ${MONITORS.length} 个商户`, messages.join("\n"), {
+    "open-url": MONITORS[0] ? MONITORS[0].url : "",
   });
 })()
   .catch((error) => {
@@ -41,18 +56,17 @@ const MERCHANTS = [{ id: "PureVPN" }];
   })
   .finally(() => $.done());
 
-async function checkMerchant(merchant) {
-  const rate = await fetchMerchantRate(merchant);
-  const rateKey = `${REGION.storePrefix}_${merchant.id}_rate`;
-  const dateKey = `${REGION.storePrefix}_${merchant.id}_date`;
-  const prevRate = $.getdata(rateKey);
+async function checkMerchant(item, prefix) {
+  const rate = await fetchMerchantRate(item, "en-US,en;q=0.9,zh-CN;q=0.7");
   const date = $.time("M月d日");
-  const displayName = getDisplayName(merchant);
+  const rateKey = `${prefix}_${item.id}_rate`;
+  const dateKey = `${prefix}_${item.id}_date`;
+  const prevRate = $.getdata(rateKey);
 
   const message =
     prevRate && prevRate !== rate
-      ? `${displayName}: ${prevRate} -> ${rate}`
-      : `${displayName}: ${rate}`;
+      ? `${item.name}: ${prevRate} -> ${rate}`
+      : `${item.name}: ${rate}`;
 
   $.setdata(rate, rateKey);
   $.setdata(date, dateKey);
@@ -60,16 +74,15 @@ async function checkMerchant(merchant) {
   return message;
 }
 
-function fetchMerchantRate(merchant) {
+function fetchMerchantRate(item, acceptLanguage) {
   return $.http
     .get({
-      url: buildMerchantUrl(merchant),
+      url: item.url,
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": REGION.acceptLanguage,
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": acceptLanguage,
         "Cache-Control": "no-cache",
         Pragma: "no-cache",
         Cookie: COOKIE,
@@ -77,42 +90,85 @@ function fetchMerchantRate(merchant) {
     })
     .then((resp) => {
       if (!resp || resp.statusCode !== 200) {
-        throw new Error(
-          `请求失败，状态码: ${resp ? resp.statusCode : "unknown"}`
-        );
+        throw new Error(`请求失败，状态码: ${resp ? resp.statusCode : "unknown"}`);
       }
 
-      const rate = extractRateFromHtml(resp.body || "", REGION.label);
-      if (!rate) {
-        throw new Error(`未找到 ${REGION.label} 对应返现信息`);
+      const result = extractRateFromHtml(resp.body || "", item.title);
+      if (!result.rate) {
+        throw new Error(
+          `未找到 ${item.title} 对应返现信息\n${result.debugText || "无可用调试文本"}`
+        );
       }
-      return rate;
+      return result.rate;
     });
 }
 
-function buildMerchantUrl(merchant) {
-  const path = (merchant.path || merchant.id).toLowerCase();
-  return `${REGION.baseUrl}/${path}/`;
+function extractRateFromHtml(html, targetTitle) {
+  const titleReg = /<h2 class="merch-cat__title">[\s\S]*?<\/h2>/gi;
+  const titleMatches = Array.from(html.matchAll(titleReg));
+  const titles = [];
+
+  for (let i = 0; i < titleMatches.length; i++) {
+    const match = titleMatches[i];
+    const titleHtml = match[0];
+    const title = normalizeText(stripHtml(titleHtml));
+    if (title) titles.push(title);
+    if (title !== targetTitle) continue;
+
+    const titleIndex = match.index;
+    const nextTitleMatch = titleMatches[i + 1];
+    const nextTitleIndex = nextTitleMatch ? nextTitleMatch.index : html.length;
+    const cardHtml = html.slice(titleIndex, nextTitleIndex);
+
+    const rate = extractMaxCardRate(cardHtml);
+    if (rate) return { rate, debugText: buildCardDebugText(title, cardHtml) };
+    return { rate: "", debugText: buildCardDebugText(title, cardHtml) };
+  }
+
+  return {
+    rate: "",
+    debugText: `已识别标题: ${titles.length ? titles.join(" | ") : "无"}`,
+  };
 }
 
-function getDisplayName(merchant) {
-  return `${REGION.flag} ${merchant.id}`;
-}
-
-function extractRateFromHtml(html, targetLabel) {
-  const cardReg =
-    /<div class="merch-rate-card"[\s\S]*?<span class="merch-cat__sub-cat">\s*([^<]+?)\s*<\/span>[\s\S]*?<span class="merch-cat__rate">\s*([^<]+?)\s*<\/span>/gi;
-
+function extractMaxCardRate(cardHtml) {
+  const rateReg = /<span class="merch-cat__rate">\s*([^<]+?)\s*<\/span>/gi;
   let match;
-  while ((match = cardReg.exec(html)) !== null) {
-    const label = normalizeText(match[1]);
-    const rate = normalizeText(match[2]);
-    if (label === targetLabel) {
-      return rate;
+  let maxRate = null;
+
+  while ((match = rateReg.exec(cardHtml)) !== null) {
+    const rawRate = normalizeText(match[1]);
+    const numericRate = parseRateValue(rawRate);
+    if (numericRate === null) continue;
+
+    if (maxRate === null || numericRate > maxRate) {
+      maxRate = numericRate;
     }
   }
 
-  return "";
+  return maxRate === null ? "" : `${formatRateValue(maxRate)}%`;
+}
+
+function parseRateValue(rateText) {
+  const cleaned = String(rateText || "")
+    .replace(/%/g, "")
+    .replace(/\s+/g, "")
+    .replace(",", ".");
+  const value = Number(cleaned);
+  return Number.isFinite(value) ? value : null;
+}
+
+function formatRateValue(value) {
+  return Number.isInteger(value) ? String(value) : String(value);
+}
+
+function stripHtml(text) {
+  return String(text || "").replace(/<[^>]*>/g, " ");
+}
+
+function buildCardDebugText(title, cardHtml) {
+  const plainText = normalizeText(stripHtml(cardHtml));
+  return `命中标题: ${title}\n卡片文本: ${plainText}`;
 }
 
 function normalizeText(text) {
@@ -232,17 +288,7 @@ function Env(name) {
         });
       } else if (this.isQuanX()) {
         $task.fetch(opts).then(
-          (resp) =>
-            cb(
-              null,
-              {
-                status: resp.statusCode,
-                statusCode: resp.statusCode,
-                headers: resp.headers,
-                body: resp.body,
-              },
-              resp.body
-            ),
+          (resp) => cb(null, { status: resp.statusCode, statusCode: resp.statusCode, headers: resp.headers, body: resp.body }, resp.body),
           (err) => cb(err && err.error ? err.error : err)
         );
       } else if (this.isNode()) {
@@ -250,18 +296,8 @@ function Env(name) {
         const iconv = require("iconv-lite");
         got(opts).then(
           (resp) =>
-            cb(null, {
-              status: resp.statusCode,
-              statusCode: resp.statusCode,
-              headers: resp.headers,
-              body: iconv.decode(resp.rawBody, "utf-8"),
-            }),
-          (err) =>
-            cb(
-              err.message,
-              err.response,
-              err.response && iconv.decode(err.response.rawBody, "utf-8")
-            )
+            cb(null, { status: resp.statusCode, statusCode: resp.statusCode, headers: resp.headers, body: iconv.decode(resp.rawBody, "utf-8") }),
+          (err) => cb(err.message, err.response, err.response && iconv.decode(err.response.rawBody, "utf-8"))
         );
       }
     }
@@ -277,17 +313,7 @@ function Env(name) {
         });
       } else if (this.isQuanX()) {
         $task.fetch(opts).then(
-          (resp) =>
-            cb(
-              null,
-              {
-                status: resp.statusCode,
-                statusCode: resp.statusCode,
-                headers: resp.headers,
-                body: resp.body,
-              },
-              resp.body
-            ),
+          (resp) => cb(null, { status: resp.statusCode, statusCode: resp.statusCode, headers: resp.headers, body: resp.body }, resp.body),
           (err) => cb(err && err.error ? err.error : err)
         );
       } else if (this.isNode()) {
@@ -296,39 +322,18 @@ function Env(name) {
         const { url, ...rest } = opts;
         got.post(url, rest).then(
           (resp) =>
-            cb(null, {
-              status: resp.statusCode,
-              statusCode: resp.statusCode,
-              headers: resp.headers,
-              body: iconv.decode(resp.rawBody, "utf-8"),
-            }),
-          (err) =>
-            cb(
-              err.message,
-              err.response,
-              err.response && iconv.decode(err.response.rawBody, "utf-8")
-            )
+            cb(null, { status: resp.statusCode, statusCode: resp.statusCode, headers: resp.headers, body: iconv.decode(resp.rawBody, "utf-8") }),
+          (err) => cb(err.message, err.response, err.response && iconv.decode(err.response.rawBody, "utf-8"))
         );
       }
     }
     time(fmt, ts = null) {
       const d = ts ? new Date(ts) : new Date();
-      const map = {
-        "M+": d.getMonth() + 1,
-        "d+": d.getDate(),
-        "H+": d.getHours(),
-        "m+": d.getMinutes(),
-        "s+": d.getSeconds(),
-      };
-      if (/(y+)/.test(fmt)) {
-        fmt = fmt.replace(RegExp.$1, `${d.getFullYear()}`.slice(4 - RegExp.$1.length));
-      }
+      const map = { "M+": d.getMonth() + 1, "d+": d.getDate(), "H+": d.getHours(), "m+": d.getMinutes(), "s+": d.getSeconds() };
+      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, `${d.getFullYear()}`.slice(4 - RegExp.$1.length));
       for (const k in map) {
         if (new RegExp(`(${k})`).test(fmt)) {
-          fmt = fmt.replace(
-            RegExp.$1,
-            RegExp.$1.length === 1 ? map[k] : `00${map[k]}`.slice(`${map[k]}`.length)
-          );
+          fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? map[k] : `00${map[k]}`.slice(`${map[k]}`.length));
         }
       }
       return fmt;
@@ -340,12 +345,8 @@ function Env(name) {
         if (this.isQuanX()) return { "open-url": x["open-url"] || x.url || x.openUrl };
         return { url: x.url || x["open-url"] || x.openUrl };
       };
-      if (this.isSurge() || this.isLoon() || this.isShadowrocket() || this.isStash()) {
-        $notification.post(title, subt, desc, toEnvOpts(opts));
-      }
-      if (this.isQuanX()) {
-        $notify(title, subt, desc, toEnvOpts(opts));
-      }
+      if (this.isSurge() || this.isLoon() || this.isShadowrocket() || this.isStash()) $notification.post(title, subt, desc, toEnvOpts(opts));
+      if (this.isQuanX()) $notify(title, subt, desc, toEnvOpts(opts));
       this.log("", "==============📣系统通知📣==============", title, subt, desc);
     }
     log(...args) {
@@ -358,9 +359,7 @@ function Env(name) {
     done(val = {}) {
       const cost = (Date.now() - this.startTime) / 1000;
       this.log("", `🔔${this.name}, 结束! 🕛 ${cost} 秒`, "");
-      if (this.isSurge() || this.isLoon() || this.isShadowrocket() || this.isQuanX() || this.isStash()) {
-        $done(val);
-      }
+      if (this.isSurge() || this.isLoon() || this.isShadowrocket() || this.isQuanX() || this.isStash()) $done(val);
     }
   })(name);
 }
