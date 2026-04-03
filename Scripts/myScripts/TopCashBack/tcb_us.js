@@ -1,34 +1,21 @@
-// 脚本功能: 监控 TopCashBack 多地区返现比例
+// 脚本功能: 监控 TopCashBack 美国站返现比例
 // [task_local]
-// 0 */6 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TopCashBack/tcb.js, tag=TopCashBack 返现监控, enabled=true
+// 0 */6 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TopCashBack/tcb_us.js, tag=TopCashBack US 返现监控, enabled=true
 
-const $ = new Env("tcb");
+const $ = new Env("tcb-us");
 
 const COOKIE =
   "TCB_SessionID8=110df70b-0a3a-4ebf-a94e-908c0e8edc67; ReferralID=8034864; CookiesEnabled=true; _conv_v=vi%3A1*sc%3A2*cs%3A1775201576*fs%3A1775120961*pv%3A2*exp%3A%7B%7D*ps%3A1775120961; OptanonConsent=isGpcEnabled=0&datestamp=Fri+Apr+03+2026+15%3A32%3A57+GMT%2B0800+(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)&version=202505.1.0&browserGpcFlag=0&isIABGlobal=false&hosts=&landingPath=https%3A%2F%2Fwww.topcashback.de%2Favira%2F&groups=C0001%3A1%2CC0002%3A0%2CC0003%3A0%2CC0004%3A0%2CC0005%3A0";
 
-const REGIONS = {
-  US: {
-    flag: "🇺🇸",
-    baseUrl: "https://www.topcashback.com",
-    label: "New Paid Subscription",
-    acceptLanguage: "en-US,en;q=0.9,zh-CN;q=0.7",
-    storePrefix: "tcb_us",
-  },
-  DE: {
-    flag: "🇩🇪",
-    baseUrl: "https://www.topcashback.de",
-    label: "Onlinebestellung",
-    acceptLanguage: "de-DE,de;q=0.9,en;q=0.8,zh-CN;q=0.7",
-    storePrefix: "tcb_de",
-  },
+const REGION = {
+  flag: "🇺🇸",
+  baseUrl: "https://www.topcashback.com",
+  label: "New Paid Subscription",
+  acceptLanguage: "en-US,en;q=0.9,zh-CN;q=0.7",
+  storePrefix: "tcb_us",
 };
 
-const MERCHANTS = [
-  { region: "US", id: "PureVPN" },
-  { region: "DE", id: "Avira" },
-  { region: "DE", id: "PureVPN" },
-];
+const MERCHANTS = [{ id: "PureVPN" }];
 
 !(async () => {
   const messages = [];
@@ -55,10 +42,9 @@ const MERCHANTS = [
   .finally(() => $.done());
 
 async function checkMerchant(merchant) {
-  const region = getRegionConfig(merchant.region);
-  const rate = await fetchMerchantRate(merchant, region);
-  const rateKey = `${region.storePrefix}_${merchant.id}_rate`;
-  const dateKey = `${region.storePrefix}_${merchant.id}_date`;
+  const rate = await fetchMerchantRate(merchant);
+  const rateKey = `${REGION.storePrefix}_${merchant.id}_rate`;
+  const dateKey = `${REGION.storePrefix}_${merchant.id}_date`;
   const prevRate = $.getdata(rateKey);
   const date = $.time("M月d日");
   const displayName = getDisplayName(merchant);
@@ -74,7 +60,7 @@ async function checkMerchant(merchant) {
   return message;
 }
 
-function fetchMerchantRate(merchant, region) {
+function fetchMerchantRate(merchant) {
   return $.http
     .get({
       url: buildMerchantUrl(merchant),
@@ -83,7 +69,7 @@ function fetchMerchantRate(merchant, region) {
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
         Accept:
           "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": region.acceptLanguage,
+        "Accept-Language": REGION.acceptLanguage,
         "Cache-Control": "no-cache",
         Pragma: "no-cache",
         Cookie: COOKIE,
@@ -96,31 +82,21 @@ function fetchMerchantRate(merchant, region) {
         );
       }
 
-      const rate = extractRateFromHtml(resp.body || "", merchant.label || region.label);
+      const rate = extractRateFromHtml(resp.body || "", REGION.label);
       if (!rate) {
-        throw new Error(`未找到 ${(merchant.label || region.label)} 对应返现信息`);
+        throw new Error(`未找到 ${REGION.label} 对应返现信息`);
       }
       return rate;
     });
 }
 
 function buildMerchantUrl(merchant) {
-  const region = getRegionConfig(merchant.region);
   const path = (merchant.path || merchant.id).toLowerCase();
-  return `${region.baseUrl}/${path}/`;
+  return `${REGION.baseUrl}/${path}/`;
 }
 
 function getDisplayName(merchant) {
-  const region = getRegionConfig(merchant.region);
-  return `${region.flag} ${merchant.id}`;
-}
-
-function getRegionConfig(region) {
-  const config = REGIONS[region];
-  if (!config) {
-    throw new Error(`未配置地区: ${region}`);
-  }
-  return config;
+  return `${REGION.flag} ${merchant.id}`;
 }
 
 function extractRateFromHtml(html, targetLabel) {

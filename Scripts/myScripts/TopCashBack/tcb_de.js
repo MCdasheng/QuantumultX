@@ -49,16 +49,13 @@ async function checkMerchant(item, prefix) {
   const rateKey = `${prefix}_${item.id}_rate`;
   const dateKey = `${prefix}_${item.id}_date`;
   const prevRate = $.getdata(rateKey);
-  const prevDate = $.getdata(dateKey);
 
-  let message = `${item.name}: 当前 ${item.label} ${rate}`;
+  let message = `${item.name}: ${rate}`;
   if (prevRate) {
     message =
-      prevRate === rate
-        ? `${item.name}: ${rate}，较 ${prevDate || "上次"} 无变化`
-        : `${item.name}: ${prevRate} -> ${rate} (${date})`;
+      prevRate === rate ? `${item.name}: ${rate}` : `${item.name}: ${prevRate} -> ${rate}`;
   } else {
-    message = `${item.name}: 首次记录 ${rate} (${date})`;
+    message = `${item.name}: ${rate}`;
   }
 
   $.setdata(rate, rateKey);
