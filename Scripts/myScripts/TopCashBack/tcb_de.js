@@ -100,25 +100,35 @@ function fetchMerchantRate(item, acceptLanguage) {
       if (!resp || resp.statusCode !== 200) {
         throw new Error(`请求失败，状态码: ${resp ? resp.statusCode : "unknown"}`);
       }
-      const rate = extractRateFromHtml(resp.body || "", item.title);
-      if (!rate) throw new Error(`未找到 ${item.title} 对应返现信息`);
-      return rate;
+      const result = extractRateFromHtml(resp.body || "", item.title);
+      if (!result.rate) {
+        throw new Error(
+          `未找到 ${item.title} 对应返现信息\n${result.debugText || "无可用调试文本"}`
+        );
+      }
+      return result.rate;
     });
 }
 
 function extractRateFromHtml(html, targetTitle) {
   const cardReg = /<div class="merch-rate-card"[\s\S]*?<\/div>\s*<\/div>/gi;
   let match;
+  const titles = [];
 
   while ((match = cardReg.exec(html)) !== null) {
     const cardHtml = match[0];
     const title = extractCardTitle(cardHtml);
+    if (title) titles.push(title);
     if (title !== targetTitle) continue;
 
     const rate = extractMaxCardRate(cardHtml);
-    if (rate) return rate;
+    if (rate) return { rate, debugText: buildCardDebugText(title, cardHtml) };
+    return { rate: "", debugText: buildCardDebugText(title, cardHtml) };
   }
-  return "";
+  return {
+    rate: "",
+    debugText: `已识别标题: ${titles.length ? titles.join(" | ") : "无"}`
+  };
 }
 
 function extractCardTitle(cardHtml) {
@@ -162,6 +172,11 @@ function formatRateValue(value) {
 
 function stripHtml(text) {
   return String(text || "").replace(/<[^>]*>/g, " ");
+}
+
+function buildCardDebugText(title, cardHtml) {
+  const plainText = normalizeText(stripHtml(cardHtml));
+  return `命中标题: ${title}\n卡片文本: ${plainText}`;
 }
 
 function normalizeText(text) {
