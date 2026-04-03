@@ -4,7 +4,7 @@ This directory contains the maintenance setup for a customized Quantumult X reso
 
 ## Structure
 
-- `upstream/resource-parser.js`: Latest upstream script downloaded during build
+- `upstream/resource-parser.js`: Latest upstream parser downloaded from `KOP-XIAO/QuantumultX`
 - `patches/defaults.js`: Custom default parameters
 - `patches/get_emoji.js`: Custom `get_emoji` patch
 - `scripts/build-parser.js`: Build script that downloads upstream and applies patches
@@ -19,8 +19,8 @@ To update the parser locally:
    node Parser/scripts/build-parser.js
    ```
 2. The script will:
-   - Download the latest upstream parser into `Parser/upstream/resource-parser.js`
-   - Apply the local patches in `Parser/patches/`
+   - Download the latest upstream `resource-parser.js` into `Parser/upstream/resource-parser.js`
+   - Apply only the local patches in `Parser/patches/`
    - Generate `Parser/myParser.js`
 
 ## GitHub Actions
@@ -30,6 +30,7 @@ The GitHub Actions workflow only updates files inside the `Parser` directory.
 - Build script: `Parser/scripts/build-parser.js`
 - Upstream cache: `Parser/upstream/resource-parser.js`
 - Final output: `Parser/myParser.js`
+- Scheduled updates skip rebuilding when the upstream parser version marker has not changed
 
 The root-level `myParser.js` is kept temporarily as a backup and is not part of the new automated Parser workflow.
 

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 
-// Paths
+const upstreamUrl = 'https://raw.githubusercontent.com/KOP-XIAO/QuantumultX/master/Scripts/resource-parser.js';
 const upstreamPath = path.join(__dirname, '..', 'upstream', 'resource-parser.js');
 const defaultsPath = path.join(__dirname, '..', 'patches', 'defaults.js');
 const getEmojiPath = path.join(__dirname, '..', 'patches', 'get_emoji.js');
@@ -14,7 +14,6 @@ function cleanupFile(dest) {
   }
 }
 
-// Download upstream with basic validation so CI fails fast on bad responses.
 function downloadUpstream(url, dest) {
   return new Promise((resolve, reject) => {
     const file = fs.createWriteStream(dest);
@@ -57,38 +56,88 @@ function downloadUpstream(url, dest) {
   });
 }
 
-console.log('Downloading latest upstream...');
-downloadUpstream('https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/myParser.js', upstreamPath)
-  .then(() => {
-    console.log('Upstream downloaded.');
+function extractUpstreamVersion(content) {
+  const directVersion = content.match(/资源解析器[^\n]*⟦([^⟧]+)⟧/);
+  if (directVersion) {
+    return directVersion[1].trim();
+  }
 
-    const upstreamContent = fs.readFileSync(upstreamPath, 'utf8');
-    const defaultsContent = fs.readFileSync(defaultsPath, 'utf8');
-    const getEmojiContent = fs.readFileSync(getEmojiPath, 'utf8');
+  const fallbackDate = content.match(/\b(20\d{2}-\d{2}-\d{2}(?:\s+\d{2}:\d{2})?)\b/);
+  if (fallbackDate) {
+    return fallbackDate[1].trim();
+  }
 
-    const getEmojiRegex = /\/\/涓鸿妭鐐瑰悕娣诲姞 emoji\nfunction get_emoji\(emojip, sname\) \{[\s\S]*?\n\}/;
-    const newGetEmoji = '//涓鸿妭鐐瑰悕娣诲姞 emoji\n' + getEmojiContent;
-    let modifiedContent = upstreamContent.replace(getEmojiRegex, newGetEmoji);
-    if (modifiedContent === upstreamContent) {
-      throw new Error('Failed to replace get_emoji function. Upstream format may have changed.');
-    }
+  return null;
+}
 
-    const insertPoint = /var ProfileInfo = \{\s*"server":"",\s*"filter":"",\s*"rewrite":""\s*\}\s*\n/;
-    const insertText = `var ProfileInfo = {
+function replaceGetEmoji(content, getEmojiContent) {
+  const nextMarker = content.indexOf('//emoji 处理');
+  const start = content.indexOf('function get_emoji(emojip, sname)');
+
+  if (start === -1 || nextMarker === -1 || nextMarker <= start) {
+    throw new Error('Failed to locate get_emoji function boundaries. Upstream format may have changed.');
+  }
+
+  let replaceStart = start;
+  const lineStart = content.lastIndexOf('\n', start - 1) + 1;
+  const prefix = content.slice(lineStart, start);
+  if (/\/\/.*emoji/.test(prefix)) {
+    replaceStart = lineStart;
+  }
+
+  return content.slice(0, replaceStart) + getEmojiContent + '\n' + content.slice(nextMarker);
+}
+
+function insertDefaults(content, defaultsContent) {
+  const profileRegex = /var ProfileInfo = \{\s*"server":"",\s*"filter":"",\s*"rewrite":""\s*\}\s*\r?\n/;
+  const profileBlock = `var ProfileInfo = {
   "server":"",
   "filter":"",
   "rewrite":""
 }
 
 // ----------------------------------------------------------
-// 馃コFor own use
+// For own use
 ${defaultsContent}
 // ----------------------------------------------------------
 `;
-    modifiedContent = modifiedContent.replace(insertPoint, insertText);
-    if (!modifiedContent.includes(defaultsContent.trim())) {
-      throw new Error('Failed to insert defaults block. Upstream format may have changed.');
+
+  const updated = content.replace(profileRegex, profileBlock);
+  if (!updated.includes(defaultsContent)) {
+    throw new Error('Failed to insert defaults block. Upstream format may have changed.');
+  }
+
+  return updated;
+}
+
+console.log('Downloading latest upstream...');
+downloadUpstream(upstreamUrl, upstreamPath)
+  .then(() => {
+    console.log('Upstream downloaded.');
+
+    const upstreamContent = fs.readFileSync(upstreamPath, 'utf8');
+    const defaultsContent = fs.readFileSync(defaultsPath, 'utf8').trim();
+    const getEmojiContent = fs.readFileSync(getEmojiPath, 'utf8').trim();
+    const upstreamVersion = extractUpstreamVersion(upstreamContent);
+
+    if (upstreamVersion) {
+      console.log(`Detected upstream version: ${upstreamVersion}`);
+    } else {
+      console.log('Upstream version marker not found; falling back to content diff behavior.');
     }
+
+    if (fs.existsSync(outputPath) && upstreamVersion) {
+      const currentOutput = fs.readFileSync(outputPath, 'utf8');
+      const currentVersion = extractUpstreamVersion(currentOutput);
+
+      if (currentVersion === upstreamVersion) {
+        console.log(`Upstream version unchanged (${upstreamVersion}); skipping rebuild.`);
+        return;
+      }
+    }
+
+    let modifiedContent = replaceGetEmoji(upstreamContent, getEmojiContent);
+    modifiedContent = insertDefaults(modifiedContent, defaultsContent);
 
     fs.writeFileSync(outputPath, modifiedContent, 'utf8');
     console.log('myParser.js has been built successfully!');
