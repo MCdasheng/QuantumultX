@@ -9,6 +9,7 @@ This directory contains the maintenance setup for a customized Quantumult X reso
 - `patches/get_emoji.js`: Custom `get_emoji` patch
 - `scripts/build-parser.js`: Build script that downloads upstream and applies patches
 - `myParser.js`: Generated parser for daily use in Quantumult X
+- The generated file header is also rewritten during build to show your own notes while keeping the KOP-XIAO upstream source attribution
 
 ## Usage
 

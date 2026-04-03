@@ -57,9 +57,9 @@ function downloadUpstream(url, dest) {
 }
 
 function extractUpstreamVersion(content) {
-  const directVersion = content.match(/资源解析器[^\n]*⟦([^⟧]+)⟧/);
-  if (directVersion) {
-    return directVersion[1].trim();
+  const versionMatch = content.match(/⟦([^⟧]+)⟧/);
+  if (versionMatch) {
+    return versionMatch[1].trim();
   }
 
   const fallbackDate = content.match(/\b(20\d{2}-\d{2}-\d{2}(?:\s+\d{2}:\d{2})?)\b/);
@@ -70,9 +70,29 @@ function extractUpstreamVersion(content) {
   return null;
 }
 
+function replaceHeaderComment(content, upstreamVersion) {
+  const headerComment = `/** 
+☑️ 资源解析器 ©𝐒𝐡𝐚𝐰𝐧  ⟦${upstreamVersion || 'unknown'}⟧
+----------------------------------------------------------
+🥳For own use v1.7
+default params: 
+  emoji=1, udp=-1, sort="🏳️‍🌈>🇭🇰>🇹🇼>🇯🇵>🇺🇸>🇸🇬"
+modify get_emoji(): add flags & cities
+url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/refs/heads/main/Parser/myParser.js
+From https://github.com/KOP-XIAO/QuantumultX/blob/master/Scripts/resource-parser.js
+----------------------------------------------------------
+*/`;
+
+  if (!content.startsWith('/**')) {
+    throw new Error('Failed to locate top comment block. Upstream format may have changed.');
+  }
+
+  return content.replace(/^\/\*\*[\s\S]*?\*\//, headerComment);
+}
+
 function replaceGetEmoji(content, getEmojiContent) {
-  const nextMarker = content.indexOf('//emoji 处理');
   const start = content.indexOf('function get_emoji(emojip, sname)');
+  const nextMarker = content.indexOf('//emoji', start);
 
   if (start === -1 || nextMarker === -1 || nextMarker <= start) {
     throw new Error('Failed to locate get_emoji function boundaries. Upstream format may have changed.');
@@ -136,7 +156,8 @@ downloadUpstream(upstreamUrl, upstreamPath)
       }
     }
 
-    let modifiedContent = replaceGetEmoji(upstreamContent, getEmojiContent);
+    let modifiedContent = replaceHeaderComment(upstreamContent, upstreamVersion);
+    modifiedContent = replaceGetEmoji(modifiedContent, getEmojiContent);
     modifiedContent = insertDefaults(modifiedContent, defaultsContent);
 
     fs.writeFileSync(outputPath, modifiedContent, 'utf8');
