@@ -2,7 +2,7 @@
 // [task_local]
 // 0 */6 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TopCashBack/tcb_us.js, tag=TopCashBack US 返现监控, enabled=true
 
-const $ = new Env("tcb-us");
+const $ = new Env("TopCashBack US");
 
 const COOKIE =
   "TCB_SessionID8=110df70b-0a3a-4ebf-a94e-908c0e8edc67; ReferralID=8034864; CookiesEnabled=true; _conv_v=vi%3A1*sc%3A2*cs%3A1775201576*fs%3A1775120961*pv%3A2*exp%3A%7B%7D*ps%3A1775120961; OptanonConsent=isGpcEnabled=0&datestamp=Fri+Apr+03+2026+15%3A32%3A57+GMT%2B0800+(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)&version=202505.1.0&browserGpcFlag=0&isIABGlobal=false&hosts=&landingPath=https%3A%2F%2Fwww.topcashback.de%2Favira%2F&groups=C0001%3A1%2CC0002%3A0%2CC0003%3A0%2CC0004%3A0%2CC0005%3A0";
@@ -35,18 +35,19 @@ const MONITORS = [
 ];
 
 !(async () => {
-  const messages = [];
-  for (const item of MONITORS) {
+  const entries = [];
+  for (let index = 0; index < MONITORS.length; index++) {
+    const item = MONITORS[index];
     try {
-      messages.push(await checkMerchant(item, "tcb_us"));
+      entries.push(await checkMerchant(item, "tcb_us", index));
     } catch (error) {
       const text = `${item.name}: 获取失败 (${error.message || String(error)})`;
       $.log(text);
-      messages.push(text);
+      entries.push(createMessageEntry(text, null, index));
     }
   }
 
-  $.msg($.name, `本次检查 ${MONITORS.length} 个商户`, messages.join("\n"), {
+  $.msg($.name, "关注列表", buildNotificationMessage(entries), {
     "open-url": MONITORS[0] ? MONITORS[0].url : "",
   });
 })()
@@ -56,22 +57,23 @@ const MONITORS = [
   })
   .finally(() => $.done());
 
-async function checkMerchant(item, prefix) {
+async function checkMerchant(item, prefix, index) {
   const rate = await fetchMerchantRate(item, "en-US,en;q=0.9,zh-CN;q=0.7");
   const date = $.time("M月d日");
   const rateKey = `${prefix}_${item.id}_rate`;
   const dateKey = `${prefix}_${item.id}_date`;
   const prevRate = $.getdata(rateKey);
 
+  const marker = getRateMarker(rate);
   const message =
     prevRate && prevRate !== rate
-      ? `${item.name}: ${prevRate} -> ${rate}`
-      : `${item.name}: ${rate}`;
+      ? `${marker}${item.name}: ${prevRate} -> ${rate}`
+      : `${marker}${item.name}: ${rate}`;
 
   $.setdata(rate, rateKey);
   $.setdata(date, dateKey);
   $.log(message);
-  return message;
+  return createMessageEntry(message, rate, index);
 }
 
 function fetchMerchantRate(item, acceptLanguage) {
@@ -160,6 +162,32 @@ function parseRateValue(rateText) {
 
 function formatRateValue(value) {
   return Number.isInteger(value) ? String(value) : String(value);
+}
+
+function getRateMarker(rate) {
+  const value = parseRateValue(rate);
+  return value !== null && value >= 100 ? "💯 " : "";
+}
+
+function createMessageEntry(text, rate, index) {
+  const value = parseRateValue(rate);
+  return {
+    text,
+    index,
+    isTopRate: value !== null && value >= 100,
+  };
+}
+
+function buildNotificationMessage(entries) {
+  const topRates = [];
+  const normalRates = [];
+
+  for (const entry of entries) {
+    if (entry.isTopRate) topRates.push(entry.text);
+    else normalRates.push(entry.text);
+  }
+
+  return topRates.concat(normalRates).join("\n");
 }
 
 function stripHtml(text) {
