@@ -2,7 +2,7 @@
 // [task_local]
 // 0 */6 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TopCashBack/tcb.js, tag=TopCashBack 返现监控, enabled=true
 
-const $ = new Env("tcb");
+const $ = new Env("TopCashBack");
 
 const COOKIE =
   "TCB_SessionID8=110df70b-0a3a-4ebf-a94e-908c0e8edc67; ReferralID=8034864; CookiesEnabled=true; _conv_v=vi%3A1*sc%3A2*cs%3A1775201576*fs%3A1775120961*pv%3A2*exp%3A%7B%7D*ps%3A1775120961; OptanonConsent=isGpcEnabled=0&datestamp=Fri+Apr+03+2026+15%3A32%3A57+GMT%2B0800+(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)&version=202505.1.0&browserGpcFlag=0&isIABGlobal=false&hosts=&landingPath=https%3A%2F%2Fwww.topcashback.de%2Favira%2F&groups=C0001%3A1%2CC0002%3A0%2CC0003%3A0%2CC0004%3A0%2CC0005%3A0";
@@ -78,19 +78,20 @@ const MERCHANTS = [
 ];
 
 !(async () => {
-  const messages = [];
+  const entries = [];
 
-  for (const merchant of MERCHANTS) {
+  for (let index = 0; index < MERCHANTS.length; index++) {
+    const merchant = MERCHANTS[index];
     try {
-      messages.push(await checkMerchant(merchant));
+      entries.push(await checkMerchant(merchant, index));
     } catch (error) {
       const text = `${getDisplayName(merchant)}: 获取失败`;
       $.log(`${text} (${error.message || String(error)})`);
-      messages.push(text);
+      entries.push(createMessageEntry(text, null, index));
     }
   }
 
-  $.msg($.name, `本次检查 ${MERCHANTS.length} 个商户`, messages.join("\n"), {
+  $.msg($.name, "关注列表", buildNotificationMessage(entries), {
     "open-url": MERCHANTS[0] ? MERCHANTS[0].url : "",
   });
 })()
@@ -100,7 +101,7 @@ const MERCHANTS = [
   })
   .finally(() => $.done());
 
-async function checkMerchant(merchant) {
+async function checkMerchant(merchant, index) {
   const region = getRegionConfig(merchant.region);
   const rate = await fetchMerchantRate(merchant, region.acceptLanguage);
   const rateKey = `${region.storePrefix}_${merchant.id}_rate`;
@@ -108,15 +109,16 @@ async function checkMerchant(merchant) {
   const prevRate = $.getdata(rateKey);
   const date = $.time("M月d日");
 
+  const marker = getRateMarker(rate);
   const message =
     prevRate && prevRate !== rate
-      ? `${getDisplayName(merchant)}: ${prevRate} -> ${rate}`
-      : `${getDisplayName(merchant)}: ${rate}`;
+      ? `${marker}${getDisplayName(merchant)}: ${prevRate} -> ${rate}`
+      : `${marker}${getDisplayName(merchant)}: ${rate}`;
 
   $.setdata(rate, rateKey);
   $.setdata(date, dateKey);
   $.log(message);
-  return message;
+  return createMessageEntry(message, rate, index);
 }
 
 function fetchMerchantRate(merchant, acceptLanguage) {
@@ -202,6 +204,32 @@ function parseRateValue(rateText) {
 
 function formatRateValue(value) {
   return Number.isInteger(value) ? String(value) : String(value);
+}
+
+function getRateMarker(rate) {
+  const value = parseRateValue(rate);
+  return value !== null && value >= 100 ? "💯 " : "";
+}
+
+function createMessageEntry(text, rate, index) {
+  const value = parseRateValue(rate);
+  return {
+    text,
+    index,
+    isTopRate: value !== null && value >= 100,
+  };
+}
+
+function buildNotificationMessage(entries) {
+  const topRates = [];
+  const normalRates = [];
+
+  for (const entry of entries) {
+    if (entry.isTopRate) topRates.push(entry.text);
+    else normalRates.push(entry.text);
+  }
+
+  return topRates.concat(normalRates).join("\n");
 }
 
 function getRegionConfig(region) {
