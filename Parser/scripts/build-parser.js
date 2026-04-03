@@ -7,6 +7,7 @@ const upstreamPath = path.join(__dirname, '..', 'upstream', 'resource-parser.js'
 const defaultsPath = path.join(__dirname, '..', 'patches', 'defaults.js');
 const getEmojiPath = path.join(__dirname, '..', 'patches', 'get_emoji.js');
 const outputPath = path.join(__dirname, '..', 'myParser.js');
+const parserUrl = 'https://raw.githubusercontent.com/MCdasheng/QuantumultX/refs/heads/main/Parser/myParser.js';
 
 function cleanupFile(dest) {
   if (fs.existsSync(dest)) {
@@ -57,9 +58,9 @@ function downloadUpstream(url, dest) {
 }
 
 function extractUpstreamVersion(content) {
-  const versionMatch = content.match(/⟦([^⟧]+)⟧/);
-  if (versionMatch) {
-    return versionMatch[1].trim();
+  const bracketMatch = content.match(/⟦([^⟧]+)⟧/);
+  if (bracketMatch) {
+    return bracketMatch[1].trim();
   }
 
   const fallbackDate = content.match(/\b(20\d{2}-\d{2}-\d{2}(?:\s+\d{2}:\d{2})?)\b/);
@@ -70,32 +71,57 @@ function extractUpstreamVersion(content) {
   return null;
 }
 
-function replaceHeaderComment(content, upstreamVersion) {
-  const headerComment = `/** 
-☑️ 资源解析器 ©𝐒𝐡𝐚𝐰𝐧  ⟦${upstreamVersion || 'unknown'}⟧
-----------------------------------------------------------
-🥳For own use v1.7
-default params: 
-  emoji=1, udp=-1, sort="🏳️‍🌈>🇭🇰>🇹🇼>🇯🇵>🇺🇸>🇸🇬"
-modify get_emoji(): add flags & cities
-url = https://raw.githubusercontent.com/MCdasheng/QuantumultX/refs/heads/main/Parser/myParser.js
-From https://github.com/KOP-XIAO/QuantumultX/blob/master/Scripts/resource-parser.js
-----------------------------------------------------------
-*/`;
+function buildOwnUseBlock() {
+  return [
+    '----------------------------------------------------------',
+    '🥳For own use v1.7',
+    'default params: ',
+    '  emoji=1, udp=-1, sort="🏳️‍🌈>🇭🇰>🇹🇼>🇯🇵>🇺🇸>🇸🇬"',
+    'modify get_emoji(): add flags & cities',
+    `url = ${parserUrl}`,
+    'From https://github.com/KOP-XIAO/QuantumultX/blob/master/Scripts/resource-parser.js',
+    '----------------------------------------------------------',
+  ].join('\n');
+}
 
-  if (!content.startsWith('/**')) {
+function insertOwnUseHeader(content) {
+  const commentMatch = content.match(/^\/\*\*[\s\S]*?\*\//);
+  if (!commentMatch) {
     throw new Error('Failed to locate top comment block. Upstream format may have changed.');
   }
 
-  return content.replace(/^\/\*\*[\s\S]*?\*\//, headerComment);
+  const commentBlock = commentMatch[0];
+  const ownUseBlock = buildOwnUseBlock();
+
+  if (commentBlock.includes('🥳For own use v1.7')) {
+    return content;
+  }
+
+  const separator = '----------------------------------------------------------';
+  const separatorIndex = commentBlock.indexOf(separator);
+  if (separatorIndex === -1) {
+    throw new Error('Failed to locate header separator in top comment block.');
+  }
+
+  const insertPos = separatorIndex + separator.length;
+  const updatedComment =
+    commentBlock.slice(0, insertPos) +
+    '\n' +
+    ownUseBlock +
+    commentBlock.slice(insertPos);
+
+  return content.replace(commentBlock, updatedComment);
 }
 
 function replaceGetEmoji(content, getEmojiContent) {
   const start = content.indexOf('function get_emoji(emojip, sname)');
-  const nextMarker = content.indexOf('//emoji', start);
+  if (start === -1) {
+    throw new Error('Failed to locate get_emoji function. Upstream format may have changed.');
+  }
 
-  if (start === -1 || nextMarker === -1 || nextMarker <= start) {
-    throw new Error('Failed to locate get_emoji function boundaries. Upstream format may have changed.');
+  const nextMarker = content.indexOf('//emoji', start);
+  if (nextMarker === -1 || nextMarker <= start) {
+    throw new Error('Failed to locate get_emoji end marker. Upstream format may have changed.');
   }
 
   let replaceStart = start;
@@ -156,7 +182,7 @@ downloadUpstream(upstreamUrl, upstreamPath)
       }
     }
 
-    let modifiedContent = replaceHeaderComment(upstreamContent, upstreamVersion);
+    let modifiedContent = insertOwnUseHeader(upstreamContent);
     modifiedContent = replaceGetEmoji(modifiedContent, getEmojiContent);
     modifiedContent = insertDefaults(modifiedContent, defaultsContent);
 
