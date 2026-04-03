@@ -2,7 +2,7 @@
 // [task_local]
 // 0 */6 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TopCashBack/tcb_us.js, tag=TopCashBack US 返现监控, enabled=true
 
-const $ = new Env("TopCashBack US");
+const $ = new Env("TopCashBack USA");
 
 const COOKIE =
   "TCB_SessionID8=110df70b-0a3a-4ebf-a94e-908c0e8edc67; ReferralID=8034864; CookiesEnabled=true; _conv_v=vi%3A1*sc%3A2*cs%3A1775201576*fs%3A1775120961*pv%3A2*exp%3A%7B%7D*ps%3A1775120961; OptanonConsent=isGpcEnabled=0&datestamp=Fri+Apr+03+2026+15%3A32%3A57+GMT%2B0800+(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)&version=202505.1.0&browserGpcFlag=0&isIABGlobal=false&hosts=&landingPath=https%3A%2F%2Fwww.topcashback.de%2Favira%2F&groups=C0001%3A1%2CC0002%3A0%2CC0003%3A0%2CC0004%3A0%2CC0005%3A0";
