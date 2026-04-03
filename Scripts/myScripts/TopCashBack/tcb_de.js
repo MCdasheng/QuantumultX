@@ -111,15 +111,21 @@ function fetchMerchantRate(item, acceptLanguage) {
 }
 
 function extractRateFromHtml(html, targetTitle) {
-  const cardReg = /<div class="merch-rate-card"[\s\S]*?<\/div>\s*<\/div>/gi;
-  let match;
+  const titleReg = /<h2 class="merch-cat__title">[\s\S]*?<\/h2>/gi;
+  const titleMatches = Array.from(html.matchAll(titleReg));
   const titles = [];
 
-  while ((match = cardReg.exec(html)) !== null) {
-    const cardHtml = match[0];
-    const title = extractCardTitle(cardHtml);
+  for (let i = 0; i < titleMatches.length; i++) {
+    const match = titleMatches[i];
+    const titleHtml = match[0];
+    const title = normalizeText(stripHtml(titleHtml));
     if (title) titles.push(title);
     if (title !== targetTitle) continue;
+
+    const titleIndex = match.index;
+    const nextTitleMatch = titleMatches[i + 1];
+    const nextTitleIndex = nextTitleMatch ? nextTitleMatch.index : html.length;
+    const cardHtml = html.slice(titleIndex, nextTitleIndex);
 
     const rate = extractMaxCardRate(cardHtml);
     if (rate) return { rate, debugText: buildCardDebugText(title, cardHtml) };
@@ -129,14 +135,6 @@ function extractRateFromHtml(html, targetTitle) {
     rate: "",
     debugText: `已识别标题: ${titles.length ? titles.join(" | ") : "无"}`
   };
-}
-
-function extractCardTitle(cardHtml) {
-  const match = cardHtml.match(
-    /<h2 class="merch-cat__title">[\s\S]*?<\/h2>/i
-  );
-  if (!match) return "";
-  return normalizeText(stripHtml(match[0]));
 }
 
 function extractMaxCardRate(cardHtml) {
