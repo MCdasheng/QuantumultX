@@ -105,6 +105,9 @@ async function checkRegion(region) {
       if (item.matchedText) {
         $.log(`${region.flag}${region.name}${tag} matched: ${item.matchedText}`);
       }
+      if (region.name === "UK" && item.reward === "0") {
+        $.log(`${region.flag}${region.name}${tag} failed: ${item.reason || "未知原因"}`);
+      }
     }
   } else if (result.matchedText) {
     $.log(`${region.flag}${region.name} matched: ${result.matchedText}`);
@@ -113,6 +116,10 @@ async function checkRegion(region) {
 }
 
 async function fetchRegionReward(region) {
+  if (region.name === "UK") {
+    return fetchUkRegionReward(region);
+  }
+
   const urls = getRegionUrls(region);
   let lastError = null;
   const matches = [];
@@ -130,14 +137,12 @@ async function fetchRegionReward(region) {
           tag: getSourceTag(url),
           matchedText: parsed.matchedText,
         });
-        if (region.name !== "UK") {
-          return {
-            reward: parsed.reward,
-            source: url,
-            matchedText: parsed.matchedText,
-            matches,
-          };
-        }
+        return {
+          reward: parsed.reward,
+          source: url,
+          matchedText: parsed.matchedText,
+          matches,
+        };
       }
       lastError = new Error("未匹配到邀请奖励金额");
     } catch (error) {
@@ -145,25 +150,54 @@ async function fetchRegionReward(region) {
       debugHints.push({ url, snippets: [] });
     }
   }
-  if (region.name === "UK" && matches.length) {
-    const uniqueRewards = [];
-    const seen = {};
-    for (const item of matches) {
-      const display = formatDisplayReward(region, item.reward);
-      if (seen[display]) continue;
-      seen[display] = true;
-      uniqueRewards.push(display);
-    }
-    return {
-      reward: uniqueRewards.join(" | "),
-      source: matches[0].source,
-      matches,
-      matchedText: "",
-    };
-  }
   const finalError = lastError || new Error("未知错误");
   finalError.debugHints = debugHints;
   throw finalError;
+}
+
+async function fetchUkRegionReward(region) {
+  const urls = getRegionUrls(region);
+  const matches = [];
+
+  for (const url of urls) {
+    const tag = getSourceTag(url);
+    try {
+      const html = await fetchHtml(url, region.acceptLanguage);
+      const parsed = extractRewardFromHtml(html, region.currencyHints);
+      if (parsed.reward) {
+        matches.push({
+          tag,
+          source: url,
+          reward: parsed.reward,
+          matchedText: parsed.matchedText,
+          reason: "",
+        });
+      } else {
+        matches.push({
+          tag,
+          source: url,
+          reward: "0",
+          matchedText: "",
+          reason: "未匹配到金额",
+        });
+      }
+    } catch (error) {
+      matches.push({
+        tag,
+        source: url,
+        reward: "0",
+        matchedText: "",
+        reason: error && error.message ? error.message : String(error),
+      });
+    }
+  }
+
+  return {
+    reward: matches.map((item) => formatDisplayReward(region, item.reward)).join(" | "),
+    source: matches[0] ? matches[0].source : (urls[0] || ""),
+    matches,
+    matchedText: "",
+  };
 }
 
 function getRegionUrls(region) {
