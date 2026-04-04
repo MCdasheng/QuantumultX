@@ -23,59 +23,62 @@ const REGIONS = {
 const MERCHANTS = [
   {
     region: "DE",
-    id: "Avira",
+    name: "Avira",
     url: "https://www.topcashback.de/avira/",
     title: "Avira Cashback",
   },
   {
     region: "DE",
-    id: "Norton Antivirus",
+    name: "Norton Antivirus",
     url: "https://www.topcashback.de/norton-antivirus/",
     title: "Norton Antivirus Cashback",
   },
   {
     region: "DE",
-    id: "NordVPN",
+    name: "NordVPN",
     url: "https://www.topcashback.de/nordvpn/",
     title: "NordVPN Cashback",
   },
   {
     region: "DE",
-    id: "PureVPN",
+    name: "PureVPN",
     url: "https://www.topcashback.de/purevpn/",
     title: "PureVPN Cashback",
   },
   {
     region: "DE",
-    id: "Surfshark",
+    name: "Surfshark",
     url: "https://www.topcashback.de/surfshark/",
     title: "Surfshark Cashback",
   },
   {
     region: "US",
-    id: "PureVPN",
+    name: "PureVPN",
     url: "https://www.topcashback.com/purevpn/",
     title: "PureVPN Cash Back",
   },
   {
     region: "US",
-    id: "Private Internet Access",
+    name: "Private Internet Access",
     url: "https://www.topcashback.com/private-internet-access/",
     title: "Private Internet Access Cash Back",
   },
   {
     region: "US",
-    id: "Norton",
+    name: "Norton",
     url: "https://www.topcashback.com/norton-cps/",
     title: "Norton Cash Back",
   },
   {
     region: "US",
-    id: "NordVPN",
+    name: "NordVPN",
     url: "https://www.topcashback.com/nordvpn/",
     title: "NordVPN Cash Back",
   },
-];
+].map((merchant) => ({
+  ...merchant,
+  id: getMerchantIdFromUrl(merchant.url),
+}));
 
 !(async () => {
   const entries = [];
@@ -239,7 +242,14 @@ function getRegionConfig(region) {
 }
 
 function getDisplayName(merchant) {
-  return `${getRegionConfig(merchant.region).flag} ${merchant.id}`;
+  return `${getRegionConfig(merchant.region).flag} ${merchant.name}`;
+}
+
+function getMerchantIdFromUrl(url) {
+  return String(url || "")
+    .replace(/\/+$/, "")
+    .split("/")
+    .pop();
 }
 
 function stripHtml(text) {
