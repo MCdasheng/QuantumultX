@@ -71,6 +71,8 @@ const REGION_ORDER = ["AU", "US", "DE", "IT", "FR", "UK"];
       $.log(`${text} (${error.message || String(error)})`);
       logFailureHints(region, error);
       entries.push({ text, sortValue: -1 });
+    } finally {
+      $.log("-".repeat(30));
     }
   }
 
@@ -271,7 +273,7 @@ function fetchHtml(url, acceptLanguage) {
 }
 
 function extractRewardFromHtml(html, currencyHints, numberFormat) {
-  const text = normalizeText(stripHtml(htmlEntityDecode(removeScriptAndStyle(html))));
+  const text = extractReferralFocusedText(html);
   const amountReg =
     /(?:(?:A\$|AU\$|US\$|£|€|\$)\s?\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?|\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?\s?(?:€|£|\$))/g;
   const candidates = [];
@@ -295,7 +297,7 @@ function extractRewardFromHtml(html, currencyHints, numberFormat) {
   }
 
   if (!candidates.length) return { reward: "", matchedText: "" };
-  candidates.sort((a, b) => b.numericValue - a.numericValue || b.score - a.score || a.index - b.index);
+  candidates.sort((a, b) => b.score - a.score || b.numericValue - a.numericValue || a.index - b.index);
   return {
     reward: candidates[0].amount,
     matchedText: candidates[0].matchedText,
@@ -317,8 +319,49 @@ function getContextScore(context) {
     )
   )
     score += 2;
+  if (/up\s?to|upto|bis zu|fino a|jusqu('|’)a|jusqua|free cashback|cashback gratis/.test(context)) score += 3;
   if (/per friend|each friend|for each|pro freund|pour chaque ami|per ogni amico/.test(context)) score += 2;
+  if (/their first|first cashback|primo cashback|ersten cashback|premier cashback/.test(context)) score -= 4;
   return score;
+}
+
+function extractReferralFocusedText(html) {
+  const cleanHtml = htmlEntityDecode(removeScriptAndStyle(html));
+  const headingReg = /<h[1-3][^>]*>([\s\S]*?)<\/h[1-3]>/gi;
+  const blocks = [];
+  let match;
+
+  while ((match = headingReg.exec(cleanHtml)) !== null) {
+    const headingText = normalizeText(stripHtml(match[1]));
+    if (!isReferralHeading(headingText)) continue;
+
+    const start = match.index;
+    const endBySection = cleanHtml.indexOf("</section>", start);
+    const endByNextHeading = findNextHeadingIndex(cleanHtml, headingReg.lastIndex);
+    let end = start + 2600;
+
+    if (endBySection !== -1 && endBySection - start <= 5000) end = endBySection + "</section>".length;
+    else if (endByNextHeading !== -1 && endByNextHeading - start <= 3500) end = endByNextHeading;
+
+    const block = normalizeText(stripHtml(cleanHtml.slice(start, Math.min(cleanHtml.length, end))));
+    if (block) blocks.push(block);
+  }
+
+  if (blocks.length) return blocks.join(" ");
+  return normalizeText(stripHtml(cleanHtml));
+}
+
+function isReferralHeading(text) {
+  return /tell[-\s]?a[-\s]?friend|freunde werben freunde|parrainage|parrainez|invita|invitar|referral/i.test(
+    String(text || "")
+  );
+}
+
+function findNextHeadingIndex(html, fromIndex) {
+  const sub = String(html || "").slice(fromIndex);
+  const m = /<h[1-3][^>]*>/i.exec(sub);
+  if (!m) return -1;
+  return fromIndex + m.index;
 }
 
 function isCurrencyMatch(amount, hints) {
@@ -583,7 +626,7 @@ function Env(name) {
       }
       return false;
     }
-    get(opts, cb = () => {}) {
+    get(opts, cb = () => { }) {
       if (this.isSurge() || this.isLoon() || this.isShadowrocket() || this.isStash()) {
         $httpClient.get(opts, (err, resp, body) => {
           if (!err && resp) {
@@ -607,7 +650,7 @@ function Env(name) {
         );
       }
     }
-    post(opts, cb = () => {}) {
+    post(opts, cb = () => { }) {
       opts.method = opts.method || "POST";
       if (this.isSurge() || this.isLoon() || this.isShadowrocket() || this.isStash()) {
         $httpClient.post(opts, (err, resp, body) => {
