@@ -1,4 +1,4 @@
-// Script: TopCashBack referral monitor (AU/US/DE/IT/FR/UK)
+﻿// Script: TopCashBack referral monitor (AU/US/DE/IT/FR/UK)
 // [task_local]
 // 0 */6 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TopCashBack/tcb_aff.js, tag=TopCashBack 邀请奖励监控, enabled=true
 
@@ -93,10 +93,11 @@ async function checkRegion(region) {
   const displayReward = formatDisplayReward(region, result.reward);
   const prevReward = $.getdata(rewardKey);
   const date = $.time("MM-dd");
+  const marker = isHotReward(region, displayReward) ? "🔥 " : "";
   const text =
     prevReward && prevReward !== displayReward
-      ? `${region.flag}${region.name}: ${prevReward} -> ${displayReward}`
-      : `${region.flag}${region.name}: ${displayReward}`;
+      ? `${marker}${region.flag}${region.name}: ${prevReward} -> ${displayReward}`
+      : `${marker}${region.flag}${region.name}: ${displayReward}`;
 
   $.setdata(displayReward, rewardKey);
   $.setdata(date, dateKey);
@@ -119,7 +120,7 @@ async function checkRegion(region) {
   }
   return {
     text,
-    sortValue: getRewardSortValue(displayReward),
+    sortValue: getRewardSortValue(region, displayReward),
   };
 }
 
@@ -266,7 +267,7 @@ function fetchHtml(url, acceptLanguage) {
     })
     .then((resp) => {
       if (!resp || resp.statusCode !== 200) {
-        throw new Error(`请求失败，状态码: ${resp ? resp.statusCode : "unknown"}`);
+        throw new Error(`璇锋眰澶辫触锛岀姸鎬佺爜: ${resp ? resp.statusCode : "unknown"}`);
       }
       return resp.body || "";
     });
@@ -275,7 +276,7 @@ function fetchHtml(url, acceptLanguage) {
 function extractRewardFromHtml(html, currencyHints, numberFormat) {
   const text = extractReferralFocusedText(html);
   const amountReg =
-    /(?:(?:A\$|AU\$|US\$|£|€|\$)\s?\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?|\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?\s?(?:€|£|\$))/g;
+    /(?:(?:A\$|AU\$|US\$|拢|鈧瑋\$)\s?\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?|\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?\s?(?:鈧瑋拢|\$))/g;
   const candidates = [];
   let match;
 
@@ -289,7 +290,7 @@ function extractRewardFromHtml(html, currencyHints, numberFormat) {
     const rawContext = normalizeText(text.slice(left, right));
     const context = rawContext.toLowerCase();
     const numericValue = parseAmountValue(amount);
-    const score = getContextScore(context);
+    const score = getContextScore(context) + getAmountPositionScore(text, index, match[0]);
 
     if (score > 0) {
       candidates.push({ amount, score, index, matchedText: rawContext, numericValue });
@@ -314,14 +315,29 @@ function getContextScore(context) {
     score += 4;
   if (/friend|friends|amico|amici|freund|freunde|amis|famille/.test(context)) score += 3;
   if (
-    /earn|earned|get|receive|reward|bonus|premio|belohnung|pr(a|ä)mie|erhalten|verdient|ricev|ottieni|gagnez|recevez|gratuit/.test(
+    /earn|earned|get|receive|reward|bonus|premio|belohnung|pr(a|盲)mie|erhalten|verdient|ricev|ottieni|gagnez|recevez|gratuit/.test(
       context
     )
   )
     score += 2;
-  if (/up\s?to|upto|bis zu|fino a|jusqu('|’)a|jusqua|free cashback|cashback gratis/.test(context)) score += 3;
+  if (/up\s?to|upto|bis zu|fino a|jusqu.?a|jusqua|free cashback|cashback gratis/.test(context)) score += 3;
   if (/per friend|each friend|for each|pro freund|pour chaque ami|per ogni amico/.test(context)) score += 2;
   if (/their first|first cashback|primo cashback|ersten cashback|premier cashback/.test(context)) score -= 4;
+  return score;
+}
+
+function getAmountPositionScore(fullText, amountIndex, amountRaw) {
+  const left = Math.max(0, amountIndex - 40);
+  const right = Math.min(String(fullText || "").length, amountIndex + String(amountRaw || "").length + 20);
+  const local = String(fullText || "").slice(left, right).toLowerCase();
+  let score = 0;
+
+  // Prefer reward-side amounts: "up to 40 鈧?, "bis zu 15 鈧?, "fino a 40 鈧?
+  if (/(up\s?to|upto|bis zu|fino a|jusqu.?a|jusqua)\s*[\d.,\s]+/.test(local)) score += 8;
+
+  // Suppress threshold-side amounts: "first 1.000 鈧?cashback"
+  if (/(their first|first|primo|ersten|premier)\s*[\d.,\s]+/.test(local)) score -= 10;
+
   return score;
 }
 
@@ -378,9 +394,9 @@ function normalizeAmountToken(token, numberFormat) {
     .replace(/US\$/g, "$")
     .replace(/\s+/g, "")
     .trim();
-  const prefix = raw.match(/^(€|£|\$)(.+)$/);
+  const prefix = raw.match(/^(鈧瑋拢|\$)(.+)$/);
   if (prefix) return `${prefix[1]}${normalizeLocaleNumber(prefix[2], numberFormat)}`;
-  const suffix = raw.match(/^(.+)(€|£|\$)$/);
+  const suffix = raw.match(/^(.+)(鈧瑋拢|\$)$/);
   if (suffix) return `${suffix[2]}${normalizeLocaleNumber(suffix[1], numberFormat)}`;
   return normalizeLocaleNumber(raw, numberFormat);
 }
@@ -433,24 +449,33 @@ function parseAmountValue(amount) {
   return Number.isFinite(value) ? value : 0;
 }
 
-function getCurrencyRate(text) {
-  const t = String(text || "");
-  if (t.startsWith("AU$")) return 0.65;
-  if (t.includes("£")) return 1.27;
-  if (t.includes("€")) return 1.1;
-  return 1;
-}
-
-function getRewardSortValue(rewardText) {
+function getRewardSortValue(region, rewardText) {
   const parts = String(rewardText || "").split("|");
-  let best = -1;
+  let best = 0;
   for (const partRaw of parts) {
     const part = partRaw.trim();
     if (!part || part === "0") continue;
-    const value = parseAmountValue(part) * getCurrencyRate(part);
+    const value = parseAmountValue(part);
     if (value > best) best = value;
   }
-  return best;
+  const hotBonus = isHotReward(region, rewardText) ? 100000 : 0;
+  return hotBonus + best;
+}
+
+function isHotReward(region, rewardText) {
+  const threshold = getHotThreshold(region);
+  const parts = String(rewardText || "").split("|");
+  for (const partRaw of parts) {
+    const part = partRaw.trim();
+    if (!part || part === "0") continue;
+    if (parseAmountValue(part) >= threshold) return true;
+  }
+  return false;
+}
+
+function getHotThreshold(region) {
+  if (!region || !region.name) return 50;
+  return region.name === "US" || region.name === "UK" ? 40 : 50;
 }
 
 function buildNotificationMessage(entries) {
@@ -481,7 +506,7 @@ function collectSymbolSnippets(html, currencyHints, maxCount) {
 }
 
 function logFailureHints(region, error) {
-  const hints = error && Array.isArray(error.debugHints) ? error.debugHints : [];
+  const hints = Array.isArray(currencyHints) && currencyHints.length ? currencyHints : ["$", "€", "£"];
   if (!hints.length) return;
   for (const item of hints) {
     $.log(`${region.flag}${region.name} source: ${item.url}`);
@@ -712,3 +737,9 @@ function Env(name) {
     }
   })(name);
 }
+
+
+
+
+
+
