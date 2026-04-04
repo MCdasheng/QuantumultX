@@ -72,7 +72,7 @@ const REGION_ORDER = ["AU", "US", "DE", "IT", "FR", "UK"];
       logFailureHints(region, error);
       entries.push({ text, sortValue: -1 });
     } finally {
-      $.log("-".repeat(30));
+      $.log("-".repeat(40));
     }
   }
 
@@ -172,7 +172,12 @@ async function fetchUkRegionReward(region) {
     const tag = getSourceTag(url);
     try {
       const html = await fetchHtml(url, region.acceptLanguage);
-      const parsed = extractRewardFromHtml(html, region.currencyHints, getNumberFormat(region));
+      const parsed =
+        tag === "blog"
+          ? extractUkBlogReward(html)
+          : tag === "travel"
+          ? extractUkTravelBannerReward(html)
+          : { reward: "", matchedText: "" };
       if (parsed.reward) {
         matches.push({
           tag,
@@ -232,7 +237,6 @@ function buildUkUrls() {
   const year = now.getFullYear();
   return [
     `https://www.topcashback.co.uk/blog/${monthSlug}-taf-offer-${year}/`,
-    "https://www.topcashback.co.uk/TellAFriend?nid=0",
     "https://www.topcashback.co.uk/category/travel/",
   ];
 }
@@ -247,6 +251,40 @@ function getSourceTag(url) {
 
 function getNumberFormat(region) {
   return region && region.name === "IT" ? "eu" : "default";
+}
+
+function extractUkBlogReward(html) {
+  const cleanHtml = htmlEntityDecode(removeScriptAndStyle(html));
+  const titleMatch = cleanHtml.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+  const h1Match = cleanHtml.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+  const titleText = normalizeText(stripHtml(titleMatch ? titleMatch[1] : ""));
+  const h1Text = normalizeText(stripHtml(h1Match ? h1Match[1] : ""));
+  const merged = `${titleText} ${h1Text}`.trim();
+
+  const amount = extractPoundAmount(merged);
+  if (!amount) return { reward: "", matchedText: merged || "" };
+  return { reward: amount, matchedText: merged };
+}
+
+function extractUkTravelBannerReward(html) {
+  const text = normalizeText(stripHtml(htmlEntityDecode(removeScriptAndStyle(html))));
+  const reg = /refer\s*&\s*earn\s*£\s?(\d{1,4}(?:[.,]\d{1,2})?)/i;
+  const match = reg.exec(text);
+  if (!match) return { reward: "", matchedText: "" };
+
+  const amount = normalizeAmountToken(`£${match[1]}`, "default");
+  const left = Math.max(0, match.index - 40);
+  const right = Math.min(text.length, match.index + 80);
+  return {
+    reward: amount,
+    matchedText: normalizeText(text.slice(left, right)),
+  };
+}
+
+function extractPoundAmount(text) {
+  const m = /£\s?(\d{1,4}(?:[.,]\d{1,2})?)/.exec(String(text || ""));
+  if (!m) return "";
+  return normalizeAmountToken(`£${m[1]}`, "default");
 }
 
 function fetchHtml(url, acceptLanguage) {
@@ -276,7 +314,7 @@ function fetchHtml(url, acceptLanguage) {
 function extractRewardFromHtml(html, currencyHints, numberFormat) {
   const text = extractReferralFocusedText(html);
   const amountReg =
-    /(?:(?:A\$|AU\$|US\$|拢|鈧瑋\$)\s?\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?|\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?\s?(?:鈧瑋拢|\$))/g;
+    /(?:(?:A\$|AU\$|US\$|£|€|\$)\s?\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?|\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?\s?(?:€|£|\$))/g;
   const candidates = [];
   let match;
 
@@ -289,20 +327,58 @@ function extractRewardFromHtml(html, currencyHints, numberFormat) {
     const right = Math.min(text.length, index + 100);
     const rawContext = normalizeText(text.slice(left, right));
     const context = rawContext.toLowerCase();
-    const numericValue = parseAmountValue(amount);
-    const score = getContextScore(context) + getAmountPositionScore(text, index, match[0]);
+    const score = getContextScore(context) + getAmountHintScore(text, index, match[0]);
 
     if (score > 0) {
-      candidates.push({ amount, score, index, matchedText: rawContext, numericValue });
+      candidates.push({ amount, score, index, matchedText: rawContext });
     }
   }
 
   if (!candidates.length) return { reward: "", matchedText: "" };
-  candidates.sort((a, b) => b.score - a.score || b.numericValue - a.numericValue || a.index - b.index);
+  candidates.sort((a, b) => b.score - a.score || a.index - b.index);
   return {
     reward: candidates[0].amount,
     matchedText: candidates[0].matchedText,
   };
+}
+
+function extractReferralFocusedText(html) {
+  const fullText = normalizeText(stripHtml(htmlEntityDecode(removeScriptAndStyle(html))));
+  const lower = fullText.toLowerCase();
+
+  // 1) Prefer the referral body sentence block so all regions use the same anchor style.
+  const bodyHints = [
+    "once they've earned their first",
+    "once they've earned their first $",
+    "sobald sie ihren ersten cashback erhalten haben",
+    "once they've earned their first 10 € cashback",
+    "once they've earned their first 1.000 € cashback",
+    "vous recevrez upto",
+    "you'll receive upto",
+    "erhalten sie bis zu",
+    "riceverai fino a",
+  ];
+  for (const hint of bodyHints) {
+    const idx = lower.indexOf(hint);
+    if (idx !== -1) {
+      const start = Math.max(0, idx - 220);
+      const end = Math.min(fullText.length, idx + 520);
+      return fullText.slice(start, end);
+    }
+  }
+
+  // 2) Fallback to heading anchor when body sentence is not found.
+  const headingHints = ["tell-a-friend", "tell a friend", "freunde werben freunde", "parrainage", "invita & guadagna", "invita"];
+  let start = -1;
+  for (const hint of headingHints) {
+    const idx = lower.indexOf(hint);
+    if (idx !== -1) {
+      start = idx;
+      break;
+    }
+  }
+  if (start === -1) return fullText;
+  return fullText.slice(start, Math.min(fullText.length, start + 2200));
 }
 
 function getContextScore(context) {
@@ -315,69 +391,36 @@ function getContextScore(context) {
     score += 4;
   if (/friend|friends|amico|amici|freund|freunde|amis|famille/.test(context)) score += 3;
   if (
-    /earn|earned|get|receive|reward|bonus|premio|belohnung|pr(a|盲)mie|erhalten|verdient|ricev|ottieni|gagnez|recevez|gratuit/.test(
+    /earn|earned|get|receive|reward|bonus|premio|belohnung|pr(a|ä)mie|erhalten|verdient|ricev|ottieni|gagnez|recevez|gratuit/.test(
       context
     )
   )
     score += 2;
-  if (/up\s?to|upto|bis zu|fino a|jusqu.?a|jusqua|free cashback|cashback gratis/.test(context)) score += 3;
   if (/per friend|each friend|for each|pro freund|pour chaque ami|per ogni amico/.test(context)) score += 2;
-  if (/their first|first cashback|primo cashback|ersten cashback|premier cashback/.test(context)) score -= 4;
   return score;
 }
 
-function getAmountPositionScore(fullText, amountIndex, amountRaw) {
+function getAmountHintScore(fullText, amountIndex, amountRaw) {
   const left = Math.max(0, amountIndex - 40);
-  const right = Math.min(String(fullText || "").length, amountIndex + String(amountRaw || "").length + 20);
+  const right = Math.min(String(fullText || "").length, amountIndex + String(amountRaw || "").length + 30);
   const local = String(fullText || "").slice(left, right).toLowerCase();
   let score = 0;
 
-  // Prefer reward-side amounts: "up to 40 鈧?, "bis zu 15 鈧?, "fino a 40 鈧?
+  // Reward side hint: "up to 25 €", "bis zu 15 €", "fino a 40 €"
   if (/(up\s?to|upto|bis zu|fino a|jusqu.?a|jusqua)\s*[\d.,\s]+/.test(local)) score += 8;
 
-  // Suppress threshold-side amounts: "first 1.000 鈧?cashback"
-  if (/(their first|first|primo|ersten|premier)\s*[\d.,\s]+/.test(local)) score -= 10;
+  // Threshold side hint: "first 10 € cashback" (keep penalty mild)
+  if (/(their first|first|primo|ersten|premier)\s*[\d.,\s]+/.test(local)) score -= 3;
+
+  // Strong reward hint: localized "free cashback" phrases
+  if (
+    /free cash ?back|cash ?back free|cash ?back gratis|gratis cash ?back|cash ?back gratuit|gratuit cash ?back|kostenlos(?:en)? cash ?back|cash ?back kostenlos(?:en)?/.test(
+      local
+    )
+  )
+    score += 6;
 
   return score;
-}
-
-function extractReferralFocusedText(html) {
-  const cleanHtml = htmlEntityDecode(removeScriptAndStyle(html));
-  const headingReg = /<h[1-3][^>]*>([\s\S]*?)<\/h[1-3]>/gi;
-  const blocks = [];
-  let match;
-
-  while ((match = headingReg.exec(cleanHtml)) !== null) {
-    const headingText = normalizeText(stripHtml(match[1]));
-    if (!isReferralHeading(headingText)) continue;
-
-    const start = match.index;
-    const endBySection = cleanHtml.indexOf("</section>", start);
-    const endByNextHeading = findNextHeadingIndex(cleanHtml, headingReg.lastIndex);
-    let end = start + 2600;
-
-    if (endBySection !== -1 && endBySection - start <= 5000) end = endBySection + "</section>".length;
-    else if (endByNextHeading !== -1 && endByNextHeading - start <= 3500) end = endByNextHeading;
-
-    const block = normalizeText(stripHtml(cleanHtml.slice(start, Math.min(cleanHtml.length, end))));
-    if (block) blocks.push(block);
-  }
-
-  if (blocks.length) return blocks.join(" ");
-  return normalizeText(stripHtml(cleanHtml));
-}
-
-function isReferralHeading(text) {
-  return /tell[-\s]?a[-\s]?friend|freunde werben freunde|parrainage|parrainez|invita|invitar|referral/i.test(
-    String(text || "")
-  );
-}
-
-function findNextHeadingIndex(html, fromIndex) {
-  const sub = String(html || "").slice(fromIndex);
-  const m = /<h[1-3][^>]*>/i.exec(sub);
-  if (!m) return -1;
-  return fromIndex + m.index;
 }
 
 function isCurrencyMatch(amount, hints) {
@@ -394,9 +437,9 @@ function normalizeAmountToken(token, numberFormat) {
     .replace(/US\$/g, "$")
     .replace(/\s+/g, "")
     .trim();
-  const prefix = raw.match(/^(鈧瑋拢|\$)(.+)$/);
+  const prefix = raw.match(/^(€|£|\$)(.+)$/);
   if (prefix) return `${prefix[1]}${normalizeLocaleNumber(prefix[2], numberFormat)}`;
-  const suffix = raw.match(/^(.+)(鈧瑋拢|\$)$/);
+  const suffix = raw.match(/^(.+)(€|£|\$)$/);
   if (suffix) return `${suffix[2]}${normalizeLocaleNumber(suffix[1], numberFormat)}`;
   return normalizeLocaleNumber(raw, numberFormat);
 }
@@ -506,7 +549,7 @@ function collectSymbolSnippets(html, currencyHints, maxCount) {
 }
 
 function logFailureHints(region, error) {
-  const hints = Array.isArray(currencyHints) && currencyHints.length ? currencyHints : ["$", "€", "£"];
+  const hints = error && Array.isArray(error.debugHints) ? error.debugHints : [];
   if (!hints.length) return;
   for (const item of hints) {
     $.log(`${region.flag}${region.name} source: ${item.url}`);
