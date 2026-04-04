@@ -629,7 +629,7 @@
       "settings": [
         {
           "id": "tcb_de_avira_rate",
-          "name": "DE Avira rate",
+          "name": "🇩🇪Avira rate",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -637,7 +637,7 @@
         },
         {
           "id": "tcb_de_avira_date",
-          "name": "DE Avira date",
+          "name": "🇩🇪Avira date",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -645,7 +645,7 @@
         },
         {
           "id": "tcb_de_norton-antivirus_rate",
-          "name": "DE Norton Antivirus rate",
+          "name": "🇩🇪Norton Antivirus rate",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -653,7 +653,7 @@
         },
         {
           "id": "tcb_de_norton-antivirus_date",
-          "name": "DE Norton Antivirus date",
+          "name": "🇩🇪Norton Antivirus date",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -661,7 +661,7 @@
         },
         {
           "id": "tcb_de_nordvpn_rate",
-          "name": "DE NordVPN rate",
+          "name": "🇩🇪NordVPN rate",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -669,7 +669,7 @@
         },
         {
           "id": "tcb_de_nordvpn_date",
-          "name": "DE NordVPN date",
+          "name": "🇩🇪NordVPN date",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -677,7 +677,7 @@
         },
         {
           "id": "tcb_de_purevpn_rate",
-          "name": "DE PureVPN rate",
+          "name": "🇩🇪PureVPN rate",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -685,7 +685,7 @@
         },
         {
           "id": "tcb_de_purevpn_date",
-          "name": "DE PureVPN date",
+          "name": "🇩🇪PureVPN date",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -693,7 +693,7 @@
         },
         {
           "id": "tcb_de_surfshark_rate",
-          "name": "DE Surfshark rate",
+          "name": "🇩🇪Surfshark rate",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -701,7 +701,7 @@
         },
         {
           "id": "tcb_de_surfshark_date",
-          "name": "DE Surfshark date",
+          "name": "🇩🇪Surfshark date",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -709,7 +709,7 @@
         },
         {
           "id": "tcb_us_purevpn_rate",
-          "name": "US PureVPN rate",
+          "name": "🇺🇸PureVPN rate",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -717,7 +717,7 @@
         },
         {
           "id": "tcb_us_purevpn_date",
-          "name": "US PureVPN date",
+          "name": "🇺🇸PureVPN date",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -725,7 +725,7 @@
         },
         {
           "id": "tcb_us_private-internet-access_rate",
-          "name": "US Private Internet Access rate",
+          "name": "🇺🇸Private Internet Access rate",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -733,7 +733,7 @@
         },
         {
           "id": "tcb_us_private-internet-access_date",
-          "name": "US Private Internet Access date",
+          "name": "🇺🇸Private Internet Access date",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -741,7 +741,7 @@
         },
         {
           "id": "tcb_us_norton-cps_rate",
-          "name": "US Norton rate",
+          "name": "🇺🇸Norton rate",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -749,7 +749,7 @@
         },
         {
           "id": "tcb_us_norton-cps_date",
-          "name": "US Norton date",
+          "name": "🇺🇸Norton date",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -757,7 +757,7 @@
         },
         {
           "id": "tcb_us_nordvpn_rate",
-          "name": "US NordVPN rate",
+          "name": "🇺🇸NordVPN rate",
           "val": "",
           "type": "text",
           "placeholder": "",
@@ -765,7 +765,7 @@
         },
         {
           "id": "tcb_us_nordvpn_date",
-          "name": "US NordVPN date",
+          "name": "🇺🇸NordVPN date",
           "val": "",
           "type": "text",
           "placeholder": "",

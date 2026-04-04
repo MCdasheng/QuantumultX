@@ -242,7 +242,7 @@ function getRegionConfig(region) {
 }
 
 function getDisplayName(merchant) {
-  return `${getRegionConfig(merchant.region).flag} ${merchant.name}`;
+  return `${getRegionConfig(merchant.region).flag}${merchant.name}`;
 }
 
 function getMerchantIdFromUrl(url) {
