@@ -1,8 +1,8 @@
-// Script: monitor TopCashBack referral reward (AU/US/DE/IT/UK)
+// Script: TopCashBack referral monitor (AU/US/DE/IT/FR/UK)
 // [task_local]
 // 0 */6 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TopCashBack/tcb_aff.js, tag=TopCashBack 邀请奖励监控, enabled=true
 
-const $ = new Env("TopCashBack AFF");
+const $ = new Env("TopCashBack Referral");
 
 const COOKIE = "";
 
@@ -70,11 +70,11 @@ const REGION_ORDER = ["AU", "US", "DE", "IT", "FR", "UK"];
       const text = `${region.flag}${region.name}: 获取失败`;
       $.log(`${text} (${error.message || String(error)})`);
       logFailureHints(region, error);
-      entries.push(text);
+      entries.push({ text, sortValue: -1 });
     }
   }
 
-  $.msg($.name, "邀请奖励", entries.join("\n"), {
+  $.msg($.name, "", buildNotificationMessage(entries), {
     "open-url": REGIONS.AU.urls[0],
   });
 })()
@@ -102,6 +102,9 @@ async function checkRegion(region) {
   if (Array.isArray(result.matches) && result.matches.length) {
     for (const item of result.matches) {
       const tag = item.tag ? `(${item.tag})` : "";
+      if (region.name === "UK") {
+        $.log(`${region.flag}${region.name}${tag} reward: ${formatDisplayReward(region, item.reward)}`);
+      }
       if (item.matchedText) {
         $.log(`${region.flag}${region.name}${tag} matched: ${item.matchedText}`);
       }
@@ -112,7 +115,10 @@ async function checkRegion(region) {
   } else if (result.matchedText) {
     $.log(`${region.flag}${region.name} matched: ${result.matchedText}`);
   }
-  return text;
+  return {
+    text,
+    sortValue: getRewardSortValue(displayReward),
+  };
 }
 
 async function fetchRegionReward(region) {
@@ -127,7 +133,7 @@ async function fetchRegionReward(region) {
   for (const url of urls) {
     try {
       const html = await fetchHtml(url, region.acceptLanguage);
-      const parsed = extractRewardFromHtml(html, region.currencyHints);
+      const parsed = extractRewardFromHtml(html, region.currencyHints, getNumberFormat(region));
       const snippets = collectSymbolSnippets(html, region.currencyHints, 3);
       debugHints.push({ url, snippets });
       if (parsed.reward) {
@@ -163,7 +169,7 @@ async function fetchUkRegionReward(region) {
     const tag = getSourceTag(url);
     try {
       const html = await fetchHtml(url, region.acceptLanguage);
-      const parsed = extractRewardFromHtml(html, region.currencyHints);
+      const parsed = extractRewardFromHtml(html, region.currencyHints, getNumberFormat(region));
       if (parsed.reward) {
         matches.push({
           tag,
@@ -192,8 +198,19 @@ async function fetchUkRegionReward(region) {
     }
   }
 
+  let bestReward = "0";
+  let bestValue = -1;
+  for (const item of matches) {
+    if (item.reward === "0") continue;
+    const value = parseAmountValue(item.reward);
+    if (value > bestValue) {
+      bestValue = value;
+      bestReward = item.reward;
+    }
+  }
+
   return {
-    reward: matches.map((item) => formatDisplayReward(region, item.reward)).join(" | "),
+    reward: bestReward,
     source: matches[0] ? matches[0].source : (urls[0] || ""),
     matches,
     matchedText: "",
@@ -225,6 +242,10 @@ function getSourceTag(url) {
   return "source";
 }
 
+function getNumberFormat(region) {
+  return region && region.name === "IT" ? "eu" : "default";
+}
+
 function fetchHtml(url, acceptLanguage) {
   const headers = {
     "User-Agent":
@@ -249,7 +270,7 @@ function fetchHtml(url, acceptLanguage) {
     });
 }
 
-function extractRewardFromHtml(html, currencyHints) {
+function extractRewardFromHtml(html, currencyHints, numberFormat) {
   const text = normalizeText(stripHtml(htmlEntityDecode(removeScriptAndStyle(html))));
   const amountReg =
     /(?:(?:A\$|AU\$|US\$|£|€|\$)\s?\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?|\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?\s?(?:€|£|\$))/g;
@@ -257,7 +278,7 @@ function extractRewardFromHtml(html, currencyHints) {
   let match;
 
   while ((match = amountReg.exec(text)) !== null) {
-    const amount = normalizeAmountToken(match[0]);
+    const amount = normalizeAmountToken(match[0], numberFormat);
     if (!isCurrencyMatch(amount, currencyHints)) continue;
 
     const index = match.index;
@@ -265,15 +286,16 @@ function extractRewardFromHtml(html, currencyHints) {
     const right = Math.min(text.length, index + 100);
     const rawContext = normalizeText(text.slice(left, right));
     const context = rawContext.toLowerCase();
+    const numericValue = parseAmountValue(amount);
     const score = getContextScore(context);
 
     if (score > 0) {
-      candidates.push({ amount, score, index, matchedText: rawContext });
+      candidates.push({ amount, score, index, matchedText: rawContext, numericValue });
     }
   }
 
   if (!candidates.length) return { reward: "", matchedText: "" };
-  candidates.sort((a, b) => b.score - a.score || a.index - b.index);
+  candidates.sort((a, b) => b.numericValue - a.numericValue || b.score - a.score || a.index - b.index);
   return {
     reward: candidates[0].amount,
     matchedText: candidates[0].matchedText,
@@ -307,23 +329,93 @@ function isCurrencyMatch(amount, hints) {
   return false;
 }
 
-function normalizeAmountToken(token) {
+function normalizeAmountToken(token, numberFormat) {
   const raw = String(token || "")
     .replace(/AU\$/g, "$")
     .replace(/US\$/g, "$")
     .replace(/\s+/g, "")
     .trim();
   const prefix = raw.match(/^(€|£|\$)(.+)$/);
-  if (prefix) return `${prefix[1]}${prefix[2]}`;
+  if (prefix) return `${prefix[1]}${normalizeLocaleNumber(prefix[2], numberFormat)}`;
   const suffix = raw.match(/^(.+)(€|£|\$)$/);
-  if (suffix) return `${suffix[2]}${suffix[1]}`;
-  return raw;
+  if (suffix) return `${suffix[2]}${normalizeLocaleNumber(suffix[1], numberFormat)}`;
+  return normalizeLocaleNumber(raw, numberFormat);
+}
+
+function normalizeLocaleNumber(text, numberFormat) {
+  let n = String(text || "").replace(/\s+/g, "");
+  if (!n) return n;
+
+  if (numberFormat === "eu") {
+    if (n.includes(".") && n.includes(",")) {
+      n = n.replace(/\./g, "").replace(",", ".");
+    } else if (n.includes(".")) {
+      if (/^\d{1,3}(?:\.\d{3})+$/.test(n)) n = n.replace(/\./g, "");
+    } else if (n.includes(",")) {
+      if (/^\d{1,3}(?:,\d{3})+$/.test(n)) n = n.replace(/,/g, "");
+      else n = n.replace(",", ".");
+    }
+  } else {
+    if (n.includes(",") && n.includes(".")) {
+      n = n.replace(/,/g, "");
+    } else if (n.includes(",")) {
+      if (/^\d{1,3}(?:,\d{3})+$/.test(n)) n = n.replace(/,/g, "");
+      else n = n.replace(",", ".");
+    }
+  }
+
+  if (/^\d+\.0+$/.test(n)) n = n.replace(/\.0+$/, "");
+  return n;
 }
 
 function formatDisplayReward(region, reward) {
   if (!reward) return reward;
   if (region && region.name === "AU" && reward.startsWith("$")) return `AU${reward}`;
   return reward;
+}
+
+function parseAmountValue(amount) {
+  const text = String(amount || "").replace(/[^\d.,]/g, "").trim();
+  if (!text) return 0;
+  if (/^\d{1,3}(?:\.\d{3})+$/.test(text)) {
+    const n = Number(text.replace(/\./g, ""));
+    return Number.isFinite(n) ? n : 0;
+  }
+  if (/^\d{1,3}(?:,\d{3})+$/.test(text)) {
+    const n = Number(text.replace(/,/g, ""));
+    return Number.isFinite(n) ? n : 0;
+  }
+  const normalized = text.replace(/\.(?=\d{3}\b)/g, "").replace(/,/g, ".");
+  const value = Number(normalized);
+  return Number.isFinite(value) ? value : 0;
+}
+
+function getCurrencyRate(text) {
+  const t = String(text || "");
+  if (t.startsWith("AU$")) return 0.65;
+  if (t.includes("£")) return 1.27;
+  if (t.includes("€")) return 1.1;
+  return 1;
+}
+
+function getRewardSortValue(rewardText) {
+  const parts = String(rewardText || "").split("|");
+  let best = -1;
+  for (const partRaw of parts) {
+    const part = partRaw.trim();
+    if (!part || part === "0") continue;
+    const value = parseAmountValue(part) * getCurrencyRate(part);
+    if (value > best) best = value;
+  }
+  return best;
+}
+
+function buildNotificationMessage(entries) {
+  return entries
+    .slice()
+    .sort((a, b) => b.sortValue - a.sortValue)
+    .map((item) => item.text)
+    .join("\n");
 }
 
 function collectSymbolSnippets(html, currencyHints, maxCount) {
