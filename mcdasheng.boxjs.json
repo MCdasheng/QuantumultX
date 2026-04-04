@@ -779,6 +779,130 @@
         "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/TopCashback.png",
         "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/TopCashback.png"
       ]
+    },
+    {
+      "id": "topcashback_ref",
+      "name": "TopCashBack Referral",
+      "keys": [
+        "tcb_aff_au_reward",
+        "tcb_aff_au_date",
+        "tcb_aff_us_reward",
+        "tcb_aff_us_date",
+        "tcb_aff_de_reward",
+        "tcb_aff_de_date",
+        "tcb_aff_it_reward",
+        "tcb_aff_it_date",
+        "tcb_aff_fr_reward",
+        "tcb_aff_fr_date",
+        "tcb_aff_uk_reward",
+        "tcb_aff_uk_date"
+      ],
+      "desc": "Monitor TopCashBack referral rewards",
+      "settings": [
+        {
+          "id": "tcb_aff_au_reward",
+          "name": "AU reward",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached referral reward"
+        },
+        {
+          "id": "tcb_aff_au_date",
+          "name": "AU date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_aff_us_reward",
+          "name": "US reward",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached referral reward"
+        },
+        {
+          "id": "tcb_aff_us_date",
+          "name": "US date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_aff_de_reward",
+          "name": "DE reward",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached referral reward"
+        },
+        {
+          "id": "tcb_aff_de_date",
+          "name": "DE date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_aff_it_reward",
+          "name": "IT reward",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached referral reward"
+        },
+        {
+          "id": "tcb_aff_it_date",
+          "name": "IT date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_aff_fr_reward",
+          "name": "FR reward",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached referral reward"
+        },
+        {
+          "id": "tcb_aff_fr_date",
+          "name": "FR date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_aff_uk_reward",
+          "name": "UK reward",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached referral reward"
+        },
+        {
+          "id": "tcb_aff_uk_date",
+          "name": "UK date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        }
+      ],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TopCashBack/tcb_aff.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/TopCashback.png",
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/TopCashback.png"
+      ]
     }
   ]
 }
