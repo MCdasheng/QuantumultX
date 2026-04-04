@@ -39,6 +39,14 @@ const REGIONS = {
     currencyHints: ["€"],
     urls: ["https://www.topcashback.it/tellafriend"],
   },
+  FR: {
+    flag: "🇫🇷",
+    name: "FR",
+    storePrefix: "tcb_aff_fr",
+    acceptLanguage: "fr-FR,fr;q=0.9,en;q=0.8",
+    currencyHints: ["€"],
+    urls: ["https://www.topcashback.fr/tellafriend"],
+  },
   UK: {
     flag: "🇬🇧",
     name: "UK",
@@ -49,7 +57,7 @@ const REGIONS = {
   },
 };
 
-const REGION_ORDER = ["AU", "US", "DE", "IT", "UK"];
+const REGION_ORDER = ["AU", "US", "DE", "IT", "FR", "UK"];
 
 !(async () => {
   const entries = [];
@@ -61,6 +69,7 @@ const REGION_ORDER = ["AU", "US", "DE", "IT", "UK"];
     } catch (error) {
       const text = `${region.flag}${region.name}: 获取失败`;
       $.log(`${text} (${error.message || String(error)})`);
+      logFailureHints(region, error);
       entries.push(text);
     }
   }
@@ -107,10 +116,13 @@ async function fetchRegionReward(region) {
   const urls = getRegionUrls(region);
   let lastError = null;
   const matches = [];
+  const debugHints = [];
   for (const url of urls) {
     try {
       const html = await fetchHtml(url, region.acceptLanguage);
       const parsed = extractRewardFromHtml(html, region.currencyHints);
+      const snippets = collectSymbolSnippets(html, region.currencyHints, 3);
+      debugHints.push({ url, snippets });
       if (parsed.reward) {
         matches.push({
           reward: parsed.reward,
@@ -130,6 +142,7 @@ async function fetchRegionReward(region) {
       lastError = new Error("未匹配到邀请奖励金额");
     } catch (error) {
       lastError = error;
+      debugHints.push({ url, snippets: [] });
     }
   }
   if (region.name === "UK" && matches.length) {
@@ -148,7 +161,9 @@ async function fetchRegionReward(region) {
       matchedText: "",
     };
   }
-  throw lastError || new Error("未知错误");
+  const finalError = lastError || new Error("未知错误");
+  finalError.debugHints = debugHints;
+  throw finalError;
 }
 
 function getRegionUrls(region) {
@@ -202,7 +217,8 @@ function fetchHtml(url, acceptLanguage) {
 
 function extractRewardFromHtml(html, currencyHints) {
   const text = normalizeText(stripHtml(htmlEntityDecode(removeScriptAndStyle(html))));
-  const amountReg = /(A\$|AU\$|US\$|£|€|\$)\s?\d{1,4}(?:[.,]\d{1,2})?/g;
+  const amountReg =
+    /(?:(?:A\$|AU\$|US\$|£|€|\$)\s?\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?|\d{1,4}(?:[.,\s]\d{3})*(?:[.,]\d{1,2})?\s?(?:€|£|\$))/g;
   const candidates = [];
   let match;
 
@@ -232,33 +248,84 @@ function extractRewardFromHtml(html, currencyHints) {
 
 function getContextScore(context) {
   let score = 0;
-  if (/refer|referral|invite|invita|invitar|tell a friend/.test(context)) score += 4;
-  if (/friend|friends|amico|freund/.test(context)) score += 3;
-  if (/earn|get|receive|reward|bonus|premio|belohnung|pr(a|ä)mie/.test(context)) score += 2;
-  if (/per friend|each friend|for each|pro freund/.test(context)) score += 2;
+  if (
+    /refer|referral|tell[-\s]?a[-\s]?friend|invite|invita|invitar|einladen|werben|parrain|parrainage|invitez/.test(
+      context
+    )
+  )
+    score += 4;
+  if (/friend|friends|amico|amici|freund|freunde|amis|famille/.test(context)) score += 3;
+  if (
+    /earn|earned|get|receive|reward|bonus|premio|belohnung|pr(a|ä)mie|erhalten|verdient|ricev|ottieni|gagnez|recevez|gratuit/.test(
+      context
+    )
+  )
+    score += 2;
+  if (/per friend|each friend|for each|pro freund|pour chaque ami|per ogni amico/.test(context)) score += 2;
   return score;
 }
 
 function isCurrencyMatch(amount, hints) {
   if (!Array.isArray(hints) || !hints.length) return true;
   for (const hint of hints) {
-    if (amount.startsWith(hint)) return true;
+    if (amount.includes(hint)) return true;
   }
   return false;
 }
 
 function normalizeAmountToken(token) {
-  return String(token || "")
+  const raw = String(token || "")
     .replace(/AU\$/g, "$")
     .replace(/US\$/g, "$")
     .replace(/\s+/g, "")
     .trim();
+  const prefix = raw.match(/^(€|£|\$)(.+)$/);
+  if (prefix) return `${prefix[1]}${prefix[2]}`;
+  const suffix = raw.match(/^(.+)(€|£|\$)$/);
+  if (suffix) return `${suffix[2]}${suffix[1]}`;
+  return raw;
 }
 
 function formatDisplayReward(region, reward) {
   if (!reward) return reward;
   if (region && region.name === "AU" && reward.startsWith("$")) return `AU${reward}`;
   return reward;
+}
+
+function collectSymbolSnippets(html, currencyHints, maxCount) {
+  const text = normalizeText(stripHtml(htmlEntityDecode(removeScriptAndStyle(html))));
+  const snippets = [];
+  const hints = Array.isArray(currencyHints) && currencyHints.length ? currencyHints : ["$", "€", "£"];
+
+  for (const hint of hints) {
+    const escaped = escapeRegExp(hint);
+    const reg = new RegExp(escaped, "g");
+    let match;
+    while ((match = reg.exec(text)) !== null) {
+      const left = Math.max(0, match.index - 60);
+      const right = Math.min(text.length, match.index + 120);
+      snippets.push(normalizeText(text.slice(left, right)));
+      if (snippets.length >= maxCount) return snippets;
+    }
+  }
+  return snippets;
+}
+
+function logFailureHints(region, error) {
+  const hints = error && Array.isArray(error.debugHints) ? error.debugHints : [];
+  if (!hints.length) return;
+  for (const item of hints) {
+    $.log(`${region.flag}${region.name} source: ${item.url}`);
+    if (item.snippets && item.snippets.length) {
+      for (const snippet of item.snippets) {
+        $.log(`${region.flag}${region.name} near-symbol: ${snippet}`);
+      }
+    }
+  }
+}
+
+function escapeRegExp(text) {
+  return String(text || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function removeScriptAndStyle(html) {
