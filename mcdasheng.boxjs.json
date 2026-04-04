@@ -601,6 +601,184 @@
         "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png",
         "https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png"
       ]
+    },
+    {
+      "id": "topcashback",
+      "name": "TopCashBack",
+      "keys": [
+        "tcb_de_avira_rate",
+        "tcb_de_avira_date",
+        "tcb_de_norton-antivirus_rate",
+        "tcb_de_norton-antivirus_date",
+        "tcb_de_nordvpn_rate",
+        "tcb_de_nordvpn_date",
+        "tcb_de_purevpn_rate",
+        "tcb_de_purevpn_date",
+        "tcb_de_surfshark_rate",
+        "tcb_de_surfshark_date",
+        "tcb_us_purevpn_rate",
+        "tcb_us_purevpn_date",
+        "tcb_us_private-internet-access_rate",
+        "tcb_us_private-internet-access_date",
+        "tcb_us_norton-cps_rate",
+        "tcb_us_norton-cps_date",
+        "tcb_us_nordvpn_rate",
+        "tcb_us_nordvpn_date"
+      ],
+      "desc": "Monitor TopCashBack cashback rates",
+      "settings": [
+        {
+          "id": "tcb_de_avira_rate",
+          "name": "DE Avira rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_de_avira_date",
+          "name": "DE Avira date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_de_norton-antivirus_rate",
+          "name": "DE Norton Antivirus rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_de_norton-antivirus_date",
+          "name": "DE Norton Antivirus date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_de_nordvpn_rate",
+          "name": "DE NordVPN rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_de_nordvpn_date",
+          "name": "DE NordVPN date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_de_purevpn_rate",
+          "name": "DE PureVPN rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_de_purevpn_date",
+          "name": "DE PureVPN date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_de_surfshark_rate",
+          "name": "DE Surfshark rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_de_surfshark_date",
+          "name": "DE Surfshark date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_us_purevpn_rate",
+          "name": "US PureVPN rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_us_purevpn_date",
+          "name": "US PureVPN date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_us_private-internet-access_rate",
+          "name": "US Private Internet Access rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_us_private-internet-access_date",
+          "name": "US Private Internet Access date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_us_norton-cps_rate",
+          "name": "US Norton rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_us_norton-cps_date",
+          "name": "US Norton date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_us_nordvpn_rate",
+          "name": "US NordVPN rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_us_nordvpn_date",
+          "name": "US NordVPN date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        }
+      ],
+      "script": "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TopCashBack/tcb.js",
+      "author": "@mcdasheng",
+      "repo": "https://github.com/mcdasheng",
+      "icons": [
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/TopCashback.png",
+        "https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Icons/TopCashback.png"
+      ]
     }
   ]
 }
