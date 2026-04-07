@@ -794,6 +794,8 @@
         "tcb_aff_it_date",
         "tcb_aff_fr_reward",
         "tcb_aff_fr_date",
+        "tcb_aff_es_reward",
+        "tcb_aff_es_date",
         "tcb_aff_uk_reward",
         "tcb_aff_uk_date"
       ],
@@ -874,6 +876,22 @@
         {
           "id": "tcb_aff_fr_date",
           "name": "FR date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_aff_es_reward",
+          "name": "ES reward",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached referral reward"
+        },
+        {
+          "id": "tcb_aff_es_date",
+          "name": "ES date",
           "val": "",
           "type": "text",
           "placeholder": "",

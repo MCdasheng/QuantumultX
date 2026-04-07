@@ -1,4 +1,5 @@
-﻿// Script: TopCashBack referral monitor (AU/US/DE/IT/FR/UK)
+﻿// Script: TopCashBack referral monitor
+// Regions: AU / US / DE / IT / FR / ES / UK
 // [task_local]
 // 0 */6 * * * https://raw.githubusercontent.com/MCdasheng/QuantumultX/main/Scripts/myScripts/TopCashBack/tcb_aff.js, tag=TopCashBack 邀请奖励监控, enabled=true
 
@@ -47,6 +48,14 @@ const REGIONS = {
     currencyHints: ["€"],
     urls: ["https://www.topcashback.fr/tellafriend"],
   },
+  ES: {
+    flag: "🇪🇸",
+    name: "ES",
+    storePrefix: "tcb_aff_es",
+    acceptLanguage: "es-ES,es;q=0.9,en;q=0.8",
+    currencyHints: ["€"],
+    urls: ["https://www.topcashback.es/tellafriend"],
+  },
   UK: {
     flag: "🇬🇧",
     name: "UK",
@@ -57,7 +66,7 @@ const REGIONS = {
   },
 };
 
-const REGION_ORDER = ["AU", "US", "DE", "IT", "FR", "UK"];
+const REGION_ORDER = ["AU", "US", "DE", "IT", "FR", "ES", "UK"];
 
 !(async () => {
   const entries = [];
@@ -88,8 +97,7 @@ const REGION_ORDER = ["AU", "US", "DE", "IT", "FR", "UK"];
 
 async function checkRegion(region) {
   const result = await fetchRegionReward(region);
-  const rewardKey = `${region.storePrefix}_reward`;
-  const dateKey = `${region.storePrefix}_date`;
+  const { rewardKey, dateKey } = getRegionStoreKeys(region);
   const displayReward = formatDisplayReward(region, result.reward);
   const prevReward = $.getdata(rewardKey);
   const date = $.time("MM-dd");
@@ -121,6 +129,14 @@ async function checkRegion(region) {
   return {
     text,
     sortValue: getRewardSortValue(region, displayReward),
+  };
+}
+
+function getRegionStoreKeys(region) {
+  const prefix = region && region.storePrefix ? region.storePrefix : "tcb_aff";
+  return {
+    rewardKey: `${prefix}_reward`,
+    dateKey: `${prefix}_date`,
   };
 }
 
@@ -353,6 +369,10 @@ function extractReferralFocusedText(html) {
     "sobald sie ihren ersten cashback erhalten haben",
     "once they've earned their first 10 € cashback",
     "once they've earned their first 1.000 € cashback",
+    "una vez que hayan ganado su primer",
+    "una vez que hayan ganado 10,00 €",
+    "ganarás hasta",
+    "recomiéndanos y gana",
     "vous recevrez upto",
     "you'll receive upto",
     "erhalten sie bis zu",
@@ -368,7 +388,16 @@ function extractReferralFocusedText(html) {
   }
 
   // 2) Fallback to heading anchor when body sentence is not found.
-  const headingHints = ["tell-a-friend", "tell a friend", "freunde werben freunde", "parrainage", "invita & guadagna", "invita"];
+  const headingHints = [
+    "tell-a-friend",
+    "tell a friend",
+    "freunde werben freunde",
+    "parrainage",
+    "invita & guadagna",
+    "invita a un amigo",
+    "recomiéndanos y gana",
+    "invita",
+  ];
   let start = -1;
   for (const hint of headingHints) {
     const idx = lower.indexOf(hint);
@@ -384,19 +413,19 @@ function extractReferralFocusedText(html) {
 function getContextScore(context) {
   let score = 0;
   if (
-    /refer|referral|tell[-\s]?a[-\s]?friend|invite|invita|invitar|einladen|werben|parrain|parrainage|invitez/.test(
+    /refer|referral|tell[-\s]?a[-\s]?friend|invite|invita|invitar|invitaciones|recomienda|recomi[eé]ndanos|einladen|werben|parrain|parrainage|invitez/.test(
       context
     )
   )
     score += 4;
-  if (/friend|friends|amico|amici|freund|freunde|amis|famille/.test(context)) score += 3;
+  if (/friend|friends|amigo|amigos|amico|amici|freund|freunde|amis|famille/.test(context)) score += 3;
   if (
-    /earn|earned|get|receive|reward|bonus|premio|belohnung|pr(a|ä)mie|erhalten|verdient|ricev|ottieni|gagnez|recevez|gratuit/.test(
+    /earn|earned|get|receive|reward|bonus|premio|gana|ganar[aá]s|recibe|recompensa|belohnung|pr(a|ä)mie|erhalten|verdient|ricev|ottieni|gagnez|recevez|gratuit/.test(
       context
     )
   )
     score += 2;
-  if (/per friend|each friend|for each|pro freund|pour chaque ami|per ogni amico/.test(context)) score += 2;
+  if (/per friend|each friend|for each|por cada amigo|pro freund|pour chaque ami|per ogni amico/.test(context)) score += 2;
   return score;
 }
 
@@ -407,10 +436,10 @@ function getAmountHintScore(fullText, amountIndex, amountRaw) {
   let score = 0;
 
   // Reward side hint: "up to 25 €", "bis zu 15 €", "fino a 40 €"
-  if (/(up\s?to|upto|bis zu|fino a|jusqu.?a|jusqua)\s*[\d.,\s]+/.test(local)) score += 8;
+  if (/(up\s?to|upto|bis zu|fino a|jusqu.?a|jusqua|hasta)\s*[\d.,\s]+/.test(local)) score += 8;
 
   // Threshold side hint: "first 10 € cashback" (keep penalty mild)
-  if (/(their first|first|primo|ersten|premier)\s*[\d.,\s]+/.test(local)) score -= 3;
+  if (/(their first|first|primo|primer|ersten|premier)\s*[\d.,\s]+/.test(local)) score -= 3;
 
   // Strong reward hint: localized "free cashback" phrases
   if (
