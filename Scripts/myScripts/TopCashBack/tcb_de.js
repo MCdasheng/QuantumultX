@@ -27,6 +27,12 @@ const MONITORS = [
     title: "NordVPN Cashback",
   },
   {
+    id: "private-internet-access",
+    name: "Private Internet Access",
+    url: "https://www.topcashback.de/private-internet-access/",
+    title: "Private Internet Access Cashback",
+  },
+  {
     id: "purevpn",
     name: "PureVPN",
     url: "https://www.topcashback.de/purevpn/",

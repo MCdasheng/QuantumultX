@@ -46,6 +46,12 @@ const MERCHANTS = [
   },
   {
     region: "DE",
+    name: "Private Internet Access",
+    url: "https://www.topcashback.de/private-internet-access/",
+    title: "Private Internet Access Cashback",
+  },
+  {
+    region: "DE",
     name: "PureVPN",
     url: "https://www.topcashback.de/purevpn/",
     title: "PureVPN Cashback",

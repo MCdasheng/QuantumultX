@@ -612,6 +612,8 @@
         "tcb_de_norton-antivirus_date",
         "tcb_de_nordvpn_rate",
         "tcb_de_nordvpn_date",
+        "tcb_de_private-internet-access_rate",
+        "tcb_de_private-internet-access_date",
         "tcb_de_purevpn_rate",
         "tcb_de_purevpn_date",
         "tcb_de_surfshark_rate",
@@ -676,6 +678,22 @@
         {
           "id": "tcb_de_nordvpn_date",
           "name": "🇩🇪NordVPN date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_de_private-internet-access_rate",
+          "name": "🇩🇪Private Internet Access rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_de_private-internet-access_date",
+          "name": "🇩🇪Private Internet Access date",
           "val": "",
           "type": "text",
           "placeholder": "",
