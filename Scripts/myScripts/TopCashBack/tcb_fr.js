@@ -15,6 +15,12 @@ const MONITORS = [
     title: "Cashback Surfshark",
   },
   {
+    id: "private-internet-access",
+    name: "Private Internet Access",
+    url: "https://www.topcashback.fr/private-internet-access/",
+    title: "Cashback Private Internet Access",
+  },
+  {
     id: "norton",
     name: "Norton",
     url: "https://www.topcashback.fr/norton/",
