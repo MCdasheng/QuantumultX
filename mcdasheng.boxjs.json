@@ -624,6 +624,12 @@
         "tcb_fr_private-internet-access_date",
         "tcb_fr_norton_rate",
         "tcb_fr_norton_date",
+        "tcb_it_surfshark_rate",
+        "tcb_it_surfshark_date",
+        "tcb_it_private-internet-access_rate",
+        "tcb_it_private-internet-access_date",
+        "tcb_it_norton_rate",
+        "tcb_it_norton_date",
         "tcb_us_purevpn_rate",
         "tcb_us_purevpn_date",
         "tcb_us_private-internet-access_rate",
@@ -774,6 +780,54 @@
         {
           "id": "tcb_fr_norton_date",
           "name": "🇫🇷Norton date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_it_surfshark_rate",
+          "name": "🇮🇹Surfshark rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_it_surfshark_date",
+          "name": "🇮🇹Surfshark date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_it_private-internet-access_rate",
+          "name": "🇮🇹Private Internet Access rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_it_private-internet-access_date",
+          "name": "🇮🇹Private Internet Access date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_it_norton_rate",
+          "name": "🇮🇹Norton rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_it_norton_date",
+          "name": "🇮🇹Norton date",
           "val": "",
           "type": "text",
           "placeholder": "",

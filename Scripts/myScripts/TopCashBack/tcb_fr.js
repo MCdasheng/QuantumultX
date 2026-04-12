@@ -158,7 +158,7 @@ function formatRateValue(value) {
 
 function getRateMarker(rate) {
   const value = parseRateValue(rate);
-  return value !== null && value >= 100 ? "🔥 " : "";
+  return value !== null && value >= 100 ? "💯 " : "";
 }
 
 function createMessageEntry(text, rate, index) {

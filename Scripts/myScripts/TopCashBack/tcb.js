@@ -18,6 +18,11 @@ const REGIONS = {
     acceptLanguage: "fr-FR,fr;q=0.9,en;q=0.8,zh-CN;q=0.7",
     storePrefix: "tcb_fr",
   },
+  IT: {
+    flag: "🇮🇹",
+    acceptLanguage: "it-IT,it;q=0.9,en;q=0.8,zh-CN;q=0.7",
+    storePrefix: "tcb_it",
+  },
   US: {
     flag: "🇺🇸",
     acceptLanguage: "en-US,en;q=0.9,zh-CN;q=0.7",
@@ -79,6 +84,24 @@ const MERCHANTS = [
     name: "Norton",
     url: "https://www.topcashback.fr/norton/",
     title: "Cashback Norton",
+  },
+  {
+    region: "IT",
+    name: "Surfshark",
+    url: "https://www.topcashback.it/surfshark/",
+    title: "Surfshark Cashback",
+  },
+  {
+    region: "IT",
+    name: "Private Internet Access",
+    url: "https://www.topcashback.it/private-internet-access/",
+    title: "Private Internet Access Cashback",
+  },
+  {
+    region: "IT",
+    name: "Norton",
+    url: "https://www.topcashback.it/norton/",
+    title: "Norton Cashback",
   },
   {
     region: "US",
