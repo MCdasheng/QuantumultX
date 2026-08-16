@@ -637,7 +637,13 @@
         "tcb_us_norton-cps_rate",
         "tcb_us_norton-cps_date",
         "tcb_us_nordvpn_rate",
-        "tcb_us_nordvpn_date"
+        "tcb_us_nordvpn_date",
+        "tcb_uk_cyberghost-vpn_rate",
+        "tcb_uk_cyberghost-vpn_date",
+        "tcb_uk_avira_rate",
+        "tcb_uk_avira_date",
+        "tcb_uk_nordvpn_rate",
+        "tcb_uk_nordvpn_date"
       ],
       "desc": "Monitor TopCashBack cashback rates",
       "settings": [
@@ -892,6 +898,54 @@
         {
           "id": "tcb_us_nordvpn_date",
           "name": "🇺🇸NordVPN date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_uk_cyberghost-vpn_rate",
+          "name": "🇬🇧CyberGhost VPN rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_uk_cyberghost-vpn_date",
+          "name": "🇬🇧CyberGhost VPN date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_uk_avira_rate",
+          "name": "🇬🇧Avira rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_uk_avira_date",
+          "name": "🇬🇧Avira date",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Last update date"
+        },
+        {
+          "id": "tcb_uk_nordvpn_rate",
+          "name": "🇬🇧NordVPN rate",
+          "val": "",
+          "type": "text",
+          "placeholder": "",
+          "desc": "Cached cashback rate"
+        },
+        {
+          "id": "tcb_uk_nordvpn_date",
+          "name": "🇬🇧NordVPN date",
           "val": "",
           "type": "text",
           "placeholder": "",

@@ -28,6 +28,11 @@ const REGIONS = {
     acceptLanguage: "en-US,en;q=0.9,zh-CN;q=0.7",
     storePrefix: "tcb_us",
   },
+  UK: {
+    flag: "🇬🇧",
+    acceptLanguage: "en-GB,en;q=0.9,zh-CN;q=0.7",
+    storePrefix: "tcb_uk",
+  },
 };
 
 const MERCHANTS = [
@@ -126,6 +131,24 @@ const MERCHANTS = [
     name: "NordVPN",
     url: "https://www.topcashback.com/nordvpn/",
     title: "NordVPN Cash Back",
+  },
+  {
+    region: "UK",
+    name: "CyberGhost VPN",
+    url: "https://www.topcashback.co.uk/cyberghost-vpn/",
+    title: "Cyberghost VPN Cashback",
+  },
+  {
+    region: "UK",
+    name: "Avira",
+    url: "https://www.topcashback.co.uk/avira/",
+    title: "Avira Cashback",
+  },
+  {
+    region: "UK",
+    name: "NordVPN",
+    url: "https://www.topcashback.co.uk/nordvpn/",
+    title: "NordVPN Cashback",
   },
 ].map((merchant) => ({
   ...merchant,
